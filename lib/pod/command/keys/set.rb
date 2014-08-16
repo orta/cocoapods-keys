@@ -42,9 +42,9 @@ module Pod
 
         def current_keyring
           current_dir = Dir.getwd
-          this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
-
-          unless this_keyring
+          keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
+          
+          unless keyring
               keyring = CocoaPodsKeys::Keyring.new("name", current_dir, [])
           end
         end
