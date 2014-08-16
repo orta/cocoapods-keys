@@ -5,14 +5,15 @@ module Pod
     class Keys
 
       class List < Keys
-        self.summary = "A key value store for environment settings in Cocoa Apps."
+        self.summary = "Lists all known keys and values."
 
         self.description = <<-DESC
-          Longer description of cocoapods-keys.
+          Shows all the current keys and values for your current working directory.
+
+          Also lists all known projects with variable stores.
         DESC
 
         def run
-
             # List all settings for current app
             this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
             if this_keyring
@@ -23,7 +24,7 @@ module Pod
 
             all_keyrings = CocoaPodsKeys::KeyringLiberator.get_all_keyrings()
             all_keyrings.each do |keyring|
-              display_keyring(keyring) if keyring != this_keyring
+              display_keyring(keyring) if keyring.path != this_keyring.path
             end
         end
 
