@@ -1,4 +1,5 @@
 require "osx_keychain"
+require "keyring_liberator"
 
 module Pod
   class Command
@@ -29,11 +30,25 @@ module Pod
         def run
           # set a key to a folder id in ~/.cocoapods/keys
           # info "Saving into the keychain."
-          
+
+          keyring = current_keyring
+          keyring.keys << @key_name
+          CocoaPodsKeys::KeyringLiberator.save_keyring keyring
+
           keychain = OSXKeychain.new
-          keychain["cocoapods-keys-bundle", @key_name] = @key_value
+          keychain["cocoapods-keys-bundle-#{keyring.name}", @key_name] = @key_value
 
         end
+
+        def current_keyring
+          current_dir = Dir.getwd
+          this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
+
+          unless this_keyring
+              keyring = CocoaPodsKeys::Keyring.new("name", current_dir, [])
+          end
+        end
+
       end
     end
   end

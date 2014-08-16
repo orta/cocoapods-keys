@@ -1,6 +1,6 @@
 require 'set'
 
-module CocoapodsKeys
+module CocoaPodsKeys
   class KeyMaster
 
     def initialize(keys)

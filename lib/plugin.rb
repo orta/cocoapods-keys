@@ -1,4 +1,4 @@
-module CocoapodsKeys
+module CocoaPodsKeys
 
   # Pod::Plugins.register(:post_install) do |options|
   #   # require 'xcodeproj/ext'

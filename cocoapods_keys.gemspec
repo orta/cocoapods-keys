@@ -5,7 +5,7 @@ require 'cocoapods_keys.rb'
 
 Gem::Specification.new do |spec|
   spec.name          = "cocoapods-keys"
-  spec.version       = CocoapodsKeys::VERSION
+  spec.version       = CocoaPodsKeys::VERSION
   spec.authors       = ["Orta Therox"]
   spec.email         = ["orta.therox@gmail.com"]
   spec.description   = %q{A short description of cocoapods-keys.}

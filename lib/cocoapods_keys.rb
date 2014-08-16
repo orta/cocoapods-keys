@@ -1,3 +1,3 @@
-module CocoapodsKeys
-  VERSION = "0.5.0"
+module CocoaPodsKeys
+  VERSION = "0.5.2"
 end
