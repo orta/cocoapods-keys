@@ -13,10 +13,8 @@ module Pod
           require 'key_master'
           require 'keyring_liberator'
 
-          # CocoapodsKeys::KeyMaster.new({
-          #   'hellos' => 'Orta',
-          #   'bundleID' => 'com.cocopods.keys'
-          #   })
+          keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
+          CocoaPodsKeys::KeyMaster.new(keyring.keychain_data)
 
             # List all settings for current app
 
