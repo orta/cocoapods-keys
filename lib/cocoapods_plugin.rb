@@ -1,1 +1,3 @@
-require 'pod/command/spec/keys'
+require "keyring"
+require 'pod/command/keys'
+require 'plugin'
