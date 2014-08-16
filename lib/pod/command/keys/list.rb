@@ -16,10 +16,8 @@ module Pod
             # List all settings for current app
             this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
             if this_keyring
-              display_keyring(this_keyring, true)
+              display_current_keyring this_keyring
             end
-
-            puts "-"
 
             # List all known bundle ids
 
@@ -29,11 +27,24 @@ module Pod
             end
         end
 
-        def display_keyring(keyring, display_values=false)
-          puts "keyring: #{keyring.name}"
-          keyring.keychain_data.each do |key, value|
-            puts "\t#{key}: " + (display_values ? value : '*****')
+        def display_current_keyring(keyring)
+          puts "Keys for #{keyring.name}"
+          data = keyring.keychain_data
+          data.each_with_index do |(key, value), index|
+            prefix = (index == data.length - 1) ? " └ ": " ├ "
+            puts prefix + " #{key} - #{ value}"
           end
+          puts ""
+        end
+
+        def display_keyring(keyring)
+          puts "#{keyring.name} - #{keyring.path}"
+          if keyring.keys.length == 1
+            puts " └ " + keyring.keys[0]
+          else
+            puts " └ " + keyring.keys[0...-1].join(" ") + " & " + keyring.keys[-1]
+          end
+          puts ""
         end
       end
     end

@@ -30,7 +30,7 @@ module CocoaPodsKeys
       def self.get_all_keyrings()
         return [] unless Dir.exist? keys_dir
         rings = []
-        Dir.glob(keys_dir + "*.yml").each do |path|
+        Dir.glob(keys_dir + "/*.yml").each do |path|
           rings << get_keyring_at_path(path)
         end
         rings
