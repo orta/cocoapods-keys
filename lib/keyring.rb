@@ -16,5 +16,12 @@ module CocoaPodsKeys
       { "keys" => @keys, "path" => @path, "name" => @name }
     end
 
+    def keychain_data
+      keychain = OSXKeychain.new
+      Hash[
+        @keys.map { |key| [key, keychain["cocoapods-keys-bundle-#{name}", key]] }
+      ]
+    end
+
   end
 end

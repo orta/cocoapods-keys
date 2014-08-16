@@ -1,11 +1,17 @@
 PATH
   remote: .
   specs:
-    cocoapods-keys (0.0.1)
+    cocoapods-keys (0.5.0)
+      osx_keychain
 
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.12.3)
+      ZenTest (~> 4.3)
+    ZenTest (4.10.1)
+    osx_keychain (1.0.0)
+      RubyInline (~> 3)
     rake (10.3.2)
 
 PLATFORMS

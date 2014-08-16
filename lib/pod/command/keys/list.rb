@@ -16,7 +16,7 @@ module Pod
             # List all settings for current app
             this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
             if this_keyring
-              display_keyring this_keyring
+              display_keyring(this_keyring, true)
             end
 
             puts "-"
@@ -29,8 +29,11 @@ module Pod
             end
         end
 
-        def display_keyring(keyring)
-          puts "keyring #{keyring.name}"
+        def display_keyring(keyring, display_values=false)
+          puts "keyring: #{keyring.name}"
+          keyring.keychain_data.each do |key, value|
+            puts "\t#{key}: " + (display_values ? value : '*****')
+          end
         end
       end
     end

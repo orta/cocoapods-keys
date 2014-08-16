@@ -4,6 +4,7 @@ module Pod
     class Keys < Command
       require 'pod/command/keys/list'
       require 'pod/command/keys/set'
+      require 'pod/command/keys/install'
 
       self.summary = "A key value store for environment settings in Cocoa Apps."
 
