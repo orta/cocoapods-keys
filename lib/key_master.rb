@@ -16,9 +16,15 @@ module CocoaPodsKeys
     end
 
     def generate_data
-      @data_length = @keys.values.map(&:length).reduce(:+) * 25
+
+      # Generate a base64 hash string that is ~25 times the length of all keys
+
+      @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
       data = `head -c #{@data_length} /dev/random | base64 | head -c #{@data_length}`
       length = data.length
+
+      # Swap the characters within the hashed string with the characters from
+      # the keyring values. Then store that index in a index-ed copy of the values.
 
       @keys.each do |key, value|
         @indexed_keys[key] = []

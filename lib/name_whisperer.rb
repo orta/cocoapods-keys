@@ -18,7 +18,6 @@ module CocoaPodsKeys
         if podfile.target_definition_list.length > 0
           return podfile.target_definition_list[0].user_project_path
         end
-
         nil
       end
 
