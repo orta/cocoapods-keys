@@ -9,7 +9,7 @@ module Pod
         self.summary = "A key value store for environment settings in Cocoa Apps."
 
         self.description = <<-DESC
-          Longer description of cocoapods-keys.
+
         DESC
 
         self.arguments = ["key_name", "key_value"]
@@ -23,6 +23,7 @@ module Pod
 
         def validate!
           super
+          verify_podfile_exists!
           help! "A key name is required to save." unless @key_name
           help! "A value is required for the key." unless @key_value
         end

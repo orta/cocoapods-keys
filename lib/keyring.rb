@@ -18,6 +18,10 @@ module CocoaPodsKeys
       { "keys" => @keys, "path" => @path, "name" => @name }
     end
 
+    def code_name
+      name.titlecase.gsub(/![a-zA-Z0-9\-_]/, '')
+    end
+
     def save(key, value)
       keychain = OSXKeychain.new
       keychain[keychain_prefix + name, key] = key
@@ -36,3 +40,13 @@ module CocoaPodsKeys
 
   end
 end
+
+class String
+  def titlecase
+    downcase.split.map(&:capitalize).join(" ").upfirst
+  end
+
+  def upfirst
+    self[0,1].capitalize + self[1,length-1]
+  end
+ end
