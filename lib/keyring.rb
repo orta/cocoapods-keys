@@ -24,7 +24,7 @@ module CocoaPodsKeys
 
     def save(key, value)
       keychain = OSXKeychain.new
-      keychain[keychain_prefix + name, key] = key
+      keychain[keychain_prefix + name, key] = value
     end
 
     def keychain_data
