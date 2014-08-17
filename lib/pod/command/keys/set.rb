@@ -10,6 +10,9 @@ module Pod
 
         self.description = <<-DESC
             Save a environment key to be added to your project on the next pod install.
+
+            If a third argument is given then that will be used as the project name if
+            you need to skip the project naming process.
         DESC
 
         self.arguments = ['key','value', 'project_name']
@@ -18,7 +21,6 @@ module Pod
           @key_name = argv.shift_argument
           @key_value = argv.shift_argument
           @project_name = argv.shift_argument
-
           super
         end
 
