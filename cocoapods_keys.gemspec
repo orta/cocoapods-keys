@@ -6,10 +6,10 @@ require 'cocoapods_keys.rb'
 Gem::Specification.new do |spec|
   spec.name          = "cocoapods-keys"
   spec.version       = CocoaPodsKeys::VERSION
-  spec.authors       = ["Orta Therox"]
-  spec.email         = ["orta.therox@gmail.com"]
-  spec.description   = %q{A short description of cocoapods-keys.}
-  spec.summary       = %q{A longer description of cocoapods-keys.}
+  spec.authors       = ["Orta Therox", 'Samuel E. Giddins']
+  spec.email         = ["orta.therox@gmail.com", 'segiddins@segiddins.me']
+  spec.description   = %q{A key value store for environment settings in Cocoa Apps.}
+  spec.summary       = %q{CocoaPods Keys will store sensitive data in your Mac's keychain. Then on running pod install they will be installed into your app's source code via the Pods library.}
   spec.homepage      = "https://github.com/cocoapods/cocoapods-keys"
   spec.license       = "MIT"
 
