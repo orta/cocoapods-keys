@@ -1,4 +1,3 @@
-require "osx_keychain"
 require "keyring_liberator"
 require "name_whisperer"
 
@@ -36,9 +35,9 @@ module Pod
           keyring.keys << @key_name
           CocoaPodsKeys::KeyringLiberator.save_keyring keyring
 
-          keychain = OSXKeychain.new
-          keychain["cocoapods-keys-bundle-#{keyring.name}", @key_name] = @key_value
+          keyring.save @key_name, @key_value
 
+          puts "Saved #{@key_name} to #{keyring.name}."
         end
 
         def current_keyring

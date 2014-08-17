@@ -1,3 +1,5 @@
+require "osx_keychain"
+
 module CocoaPodsKeys
   class Keyring
     attr_accessor :keys, :path, :name
@@ -16,11 +18,20 @@ module CocoaPodsKeys
       { "keys" => @keys, "path" => @path, "name" => @name }
     end
 
+    def save(key, value)
+      keychain = OSXKeychain.new
+      keychain[keychain_prefix + name, key] = key
+    end
+
     def keychain_data
       keychain = OSXKeychain.new
       Hash[
-        @keys.map { |key| [key, keychain["cocoapods-keys-bundle-#{name}", key]] }
+        @keys.map { |key| [key, keychain[keychain_prefix + name, key]] }
       ]
+    end
+
+    def keychain_prefix
+      "cocoapods-keys-"
     end
 
   end
