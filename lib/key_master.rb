@@ -7,7 +7,7 @@ module CocoaPodsKeys
 
     def initialize(keyring)
       @keys = keyring.keychain_data
-      @name = keyring.name + 'Keys'
+      @name = keyring.code_name + 'Keys'
       @used_indexes = Set.new
       @indexed_keys = {}
       @data = generate_data
@@ -16,7 +16,8 @@ module CocoaPodsKeys
     end
 
     def generate_data
-      data = `head -c 10000 /dev/random | base64 | head -c 10000`
+      @data_length = @keys.values.map(&:length).reduce(:+) * 10
+      data = `head -c #{@data_length} /dev/random | base64 | head -c #{@data_length}`
       length = data.length
 
       @keys.each do |key, value|
@@ -94,13 +95,13 @@ SOURCE
 <% @keys.each do |key, value| %>
 
 static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SEL _cmd) {
-  char cString[<%= key_data_arrays[key].length %>] = { <%= key_data_arrays[key] %> };
+  char cString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\\0' };
   return [NSString stringWithCString:cString encoding:NSUTF8StringEncoding];
 }
 
 <% end %>
 
-static char <%= name %>Data[10000] = "<%= @data %>";
+static char <%= name %>Data[<%= @data_length %>] = "<%= @data %>";
 
 @end
 

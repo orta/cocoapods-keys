@@ -19,7 +19,7 @@ module CocoaPodsKeys
     end
 
     def code_name
-      name.titlecase.gsub(/![a-zA-Z0-9\-_]/, '')
+      name.split(/[^a-zA-Z0-9_-]/).map { |s| s[0].upcase + s[1..-1] }.join('')
     end
 
     def save(key, value)
@@ -40,13 +40,3 @@ module CocoaPodsKeys
 
   end
 end
-
-class String
-  def titlecase
-    downcase.split.map(&:capitalize).join(" ").upfirst
-  end
-
-  def upfirst
-    self[0,1].capitalize + self[1,length-1]
-  end
- end
