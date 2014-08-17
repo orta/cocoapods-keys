@@ -1,5 +1,6 @@
 require "osx_keychain"
 require "keyring_liberator"
+require "name_whisperer"
 
 module Pod
   class Command
@@ -43,8 +44,10 @@ module Pod
         def current_keyring
           current_dir = Dir.getwd
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
+
           unless keyring
-              keyring = CocoaPodsKeys::Keyring.new("name", current_dir, [])
+            name = CocoaPodsKeys::NameWhisperer.get_project_name
+            keyring = CocoaPodsKeys::Keyring.new(name, current_dir, [])
           end
 
           keyring
