@@ -3,12 +3,16 @@ require 'set'
 module CocoaPodsKeys
   class KeyMaster
 
-    def initialize(keys)
-      @keys = keys
+    attr_accessor :name, :interface, :implementation
+
+    def initialize(keyring)
+      @keys = keyring.keychain_data
+      @name = keyring.name + 'Keys'
       @used_indexes = Set.new
       @indexed_keys = {}
       @data = generate_data
-      generate_source_code
+      @interface = generate_interface
+      @implementation = generate_implementation
     end
 
     def generate_data
@@ -37,16 +41,12 @@ module CocoaPodsKeys
       data
     end
 
-    def generate_source_code
-      require 'pathname'
-      require 'erb'
-      require 'digest'
-
+    def generate_interface
       erb = <<-SOURCE
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
-@interface Keys : NSObject
+@interface <%= @name %> : NSObject
 
 <% @keys.each do |key, value| %>
 
@@ -56,11 +56,27 @@ module CocoaPodsKeys
 
 @end
 
-@implementation Keys
+SOURCE
+
+      render_erb(erb)
+    end
+
+    def generate_implementation
+      require 'digest'
+
+      erb = <<-SOURCE
+#import "<%= @name %>.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wincomplete-implementation"
+
+@implementation <%= @name %>
+
+#pragma clang diagnostic pop
 
 + (BOOL)resolveInstanceMethod:(SEL)name {
   NSString *key = NSStringFromSelector(name);
-  IMP implementation = NULL;
+  NSString * (*implementation)(<%= name %> *, SEL) = NULL;
 <% @keys.each do |key, value| %>
   if ([key isEqualToString:@"<%= key %>"]) {
     implementation = _podKeys<%= Digest::MD5.hexdigest(key) %>;
@@ -77,30 +93,29 @@ module CocoaPodsKeys
 
 <% @keys.each do |key, value| %>
 
-static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>() {
-  char cString[<%= hash[key].length %>] = { <%= hash[key] %> };
+static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SEL _cmd) {
+  char cString[<%= key_data_arrays[key].length %>] = { <%= key_data_arrays[key] %> };
   return [NSString stringWithCString:cString encoding:NSUTF8StringEncoding];
 }
 
 <% end %>
 
-static char PodKeysData[10000] = "<%= @data %>";
+static char <%= name %>Data[10000] = "<%= @data %>";
 
 @end
 
-int main(int argc, char **argv) {
-  NSLog(@"%@", [[Keys new] <%= @keys.keys.first %>]);
-}
-
 SOURCE
 
-      hash = Hash[@indexed_keys.map {|key, value| [key, value.map { |i| "PodKeysData[#{i}]" }.join(', ')]}]
+      render_erb(erb)
+    end
 
-      b = binding
+    private def render_erb(erb)
+      require 'erb'
+      ERB.new(erb).result(binding)
+    end
 
-      source = ERB.new(erb).result(b)
-
-      Pathname.new('~/Keys.m').expand_path.open('w') {|f| f.write source}
+    private def key_data_arrays
+      Hash[@indexed_keys.map {|key, value| [key, value.map { |i| name + "Data[#{i}]" }.join(', ')]}]
     end
 
   end
