@@ -6,7 +6,7 @@ module CocoaPodsKeys
     attr_accessor :name, :interface, :implementation
 
     def initialize(keyring)
-      @keys = keyring.keychain_data
+      @keys = Hash[keyring.keychain_data.map { |(key, value)| [key[0].downcase + key[1..-1], value] }]
       @name = keyring.code_name + 'Keys'
       @used_indexes = Set.new
       @indexed_keys = {}
