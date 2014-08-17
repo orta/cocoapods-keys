@@ -6,17 +6,18 @@ module Pod
     class Keys
 
       class Set < Keys
-        self.summary = "A key value store for environment settings in Cocoa Apps."
+        self.summary = "A set values for keys."
 
         self.description = <<-DESC
-
+            Save a environment key to be added to your project on the next pod install.
         DESC
 
-        self.arguments = ["key_name", "key_value"]
+        self.arguments = ['key','value', 'project_name']
 
         def initialize(argv)
           @key_name = argv.shift_argument
           @key_value = argv.shift_argument
+          @project_name = argv.shift_argument
 
           super
         end
@@ -46,7 +47,7 @@ module Pod
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
 
           unless keyring
-            name = CocoaPodsKeys::NameWhisperer.get_project_name
+            name = @name || CocoaPodsKeys::NameWhisperer.get_project_name
             keyring = CocoaPodsKeys::Keyring.new(name, current_dir, [])
           end
 

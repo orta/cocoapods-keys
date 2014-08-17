@@ -9,7 +9,7 @@ module CocoaPodsKeys
           user_xcodeproj = xcodeproj_from_podfile(podfile)
         end
         user_xcodeproj ||= self.search_folders_for_xcodeproj
-        user_xcodeproj.gsub(".xcproject", "")
+        user_xcodeproj.gsub(".xcodeproj", "")
       end
 
     private
