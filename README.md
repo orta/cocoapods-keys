@@ -10,6 +10,12 @@ Requires CocoaPods 0.34, which is currently unreleased.
 
     $ gem install cocoapods-keys
 
+## How it works
+
+Keys names are stored in `~/cocoapods/keys/` and key values in the OS X keychain. When you run `pod install` or `pod update`, an Objective-C class is created with scrambled versions of the keys, making it difficult to just [dump](https://github.com/stefanesser/dumpdecrypted) the contents of the decrypted binary and extra the keys. At runtime, the keys are unscrambled for use in your app. 
+
+The generated Objective-C classes are stored in the `Pods/Keys` directory, so if you're checking in your [Pods folder](http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control), just add `Pods/Keys` to your `.gitignore` file. 
+
 ## Usage
 
 You can save keys on a per-project basis by running the command:
