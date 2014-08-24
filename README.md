@@ -45,7 +45,7 @@ For example:
    └ redditAPIToken & mixpanelAPIToken
 ```
 
-After the next `pod install` or `pod update` keys will add a new Objective-C class to your Pods xcworkspace. This provides an API* to your keys from Cocoa code. For example the application code above would look like:
+After the next `pod install` or `pod update` keys will add a new Objective-C class to your Pods xcworkspace. This provides an API to your keys from Cocoa code. For example the application code above would look like:
 
 ``` objc
 
@@ -71,10 +71,10 @@ After the next `pod install` or `pod update` keys will add a new Objective-C cla
 
 Key security is difficult. Right now even the biggest apps get their keys [leaked](https://threatpost.com/twitter-oauth-api-keys-leaked-030713/77597). This is neatly summed up by John Adams of the Twitter Security Team on [Quora](http://www.quora.com/Twitter-1/How-were-the-Twitter-iPhone-and-Android-OAuth-keys-leaked). 
 
-> Putting this in the context of, "should you storing keys in software", is more appropriate. Many companies do this. It's never a good idea.
+> Putting this in the context of, "should you be storing keys in software", is more appropriate. Many companies do this. It's never a good idea.
 
 > When developers do that, other developers can use debuggers and string searching commands to extract those keys from the running application. There are numerous talks on how to do that, but leave that as an exercise to the reader to find those talks.
 
 > Many people believe that obfuscating these keys in code will help. It usually won't because you can just run a debugger and find the fully functional keys.
 
-So in summery, the ideal way to store keys is to not store keys. In reality though most Apps embed keys, and this does that and adds some rudimentary obfuscation to the keys. A well motivated app cracker could probably extract this within a few minutes however.
+So in summary, the ideal way to store keys is to not store keys. In reality though most Apps embed keys, and this does that and adds some rudimentary obfuscation to the keys. A well motivated app cracker could probably extract this within a few minutes however.
