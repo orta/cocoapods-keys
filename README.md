@@ -78,3 +78,7 @@ Key security is difficult. Right now even the biggest apps get their keys [leake
 > Many people believe that obfuscating these keys in code will help. It usually won't because you can just run a debugger and find the fully functional keys.
 
 So in summary, the ideal way to store keys is to not store keys. In reality though most Apps embed keys, and this does that and adds some rudimentary obfuscation to the keys. A well motivated app cracker could probably extract this within a few minutes however.
+
+#### Thanks
+
+This was built with a lot of help from [@segiddins](https://github.com/segiddins).
