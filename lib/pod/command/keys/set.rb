@@ -15,7 +15,9 @@ module Pod
             you need to skip the project naming process.
         DESC
 
-        self.arguments = ['key','value', 'project_name']
+        self.arguments = [CLAide::Argument.new('key', true),
+                          CLAide::Argument.new('value', true),
+                          CLAide::Argument.new('project_name', false)]
 
         def initialize(argv)
           @key_name = argv.shift_argument
