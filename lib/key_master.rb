@@ -106,8 +106,12 @@ SOURCE
 <% @keys.each do |key, value| %>
 static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SEL _cmd)
 {
-  char cString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\\0' };
-  return [NSString stringWithCString:cString encoding:NSUTF8StringEncoding];
+  <% if @indexed_keys.length > 0 %>
+    char cString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\\0' };
+    return [NSString stringWithCString:cString encoding:NSUTF8StringEncoding];
+  <% else %>
+    return @"";
+  <% end %>
 }
 <% end %>
 
