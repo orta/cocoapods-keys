@@ -16,7 +16,7 @@ module CocoaPodsKeys
         key_master = KeyMaster.new(keyring)
 
         keys_folder = File.join(@sandbox_root, 'Keys')
-        keys_headers_folder = File.join(@sandbox_root, 'Headers', 'CocoaPods-Keys')
+        keys_headers_folder = File.join(@sandbox_root, 'Headers', 'Public', 'CocoaPods-Keys')
         interface_file = File.join(keys_headers_folder, key_master.name + '.h')
         implementation_file = File.join(keys_folder, key_master.name + '.m')
         Dir.mkdir keys_folder unless Dir.exists? keys_folder
