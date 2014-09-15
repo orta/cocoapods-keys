@@ -31,7 +31,7 @@ module CocoaPodsKeys
         implementation = group.new_file(implementation_file)
 
         pods_target = project.targets.detect { |t| t.name == 'Pods' }
-        if not pods_target
+        unless pods_target
           pods_target = project.targets.detect { |t| t.name == 'Pods-' + keyring.name }
         end
         pods_target.add_file_references [implementation]
