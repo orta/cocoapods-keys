@@ -119,12 +119,14 @@ SOURCE
       render_erb(erb)
     end
 
-    private def render_erb(erb)
+    :private
+
+    def render_erb(erb)
       require 'erb'
       ERB.new(erb).result(binding)
     end
 
-    private def key_data_arrays
+    def key_data_arrays
       Hash[@indexed_keys.map {|key, value| [key, value.map { |i| name + "Data[#{i}]" }.join(', ')]}]
     end
 

@@ -36,7 +36,7 @@ module CocoaPodsKeys
         rings
       end
 
-      private
+      :private
 
       def self.get_keyring_at_path(path)
         Keyring.from_hash(YAML.load(File.read(path))) if File.exist?(path)

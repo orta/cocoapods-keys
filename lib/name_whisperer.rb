@@ -12,7 +12,7 @@ module CocoaPodsKeys
         user_xcodeproj.gsub(".xcodeproj", "")
       end
 
-    private
+    :private
 
       def self.xcodeproj_from_podfile(podfile)
         if podfile.target_definition_list.length > 0
