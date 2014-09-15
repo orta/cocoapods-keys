@@ -20,7 +20,7 @@ module Pod
                           CLAide::Argument.new('project_name', false)]
 
         def initialize(argv)
-          @key_name = argv.shift_argument
+          @key_name = argv.shift_argument.gsub("-", "_")
           @key_value = argv.shift_argument
           @project_name = argv.shift_argument
           super
