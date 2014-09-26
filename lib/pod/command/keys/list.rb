@@ -24,7 +24,7 @@ module Pod
 
             all_keyrings = CocoaPodsKeys::KeyringLiberator.get_all_keyrings()
             all_keyrings.each do |keyring|
-              display_keyring(keyring) if keyring.path != this_keyring.path
+              display_keyring(keyring) if !this_keyring || keyring.path != this_keyring.path
             end
         end
 
