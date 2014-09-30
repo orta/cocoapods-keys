@@ -107,7 +107,11 @@ SOURCE
 static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SEL _cmd)
 {
   <% if @indexed_keys.length > 0 %>
-    char cString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\\0' };
+    <% if @indexed_keys[key].length > 0 %>
+      char cString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\\0' };
+    <% else %>
+      char cString[1] = { '\\0' };
+    <% end %>
     return [NSString stringWithCString:cString encoding:NSUTF8StringEncoding];
   <% else %>
     return @"";
