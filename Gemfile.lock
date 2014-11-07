@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-keys (0.5.2)
+    cocoapods-keys (0.9.0)
       osx_keychain
 
 GEM
@@ -9,7 +9,7 @@ GEM
   specs:
     RubyInline (3.12.3)
       ZenTest (~> 4.3)
-    ZenTest (4.10.1)
+    ZenTest (4.11.0)
     osx_keychain (1.0.0)
       RubyInline (~> 3)
     rake (10.3.2)
