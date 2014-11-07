@@ -20,7 +20,7 @@ module Pod
                           CLAide::Argument.new('project_name', false)]
 
         def initialize(argv)
-          @key_name = argv.shift_argument.gsub("-", "_")
+          @key_name = argv.shift_argument
           @key_value = argv.shift_argument
           @project_name = argv.shift_argument
           super
@@ -38,7 +38,7 @@ module Pod
           # info "Saving into the keychain."
 
           keyring = current_keyring
-          keyring.keys << @key_name
+          keyring.keys << @key_name.gsub("-", "_")
           CocoaPodsKeys::KeyringLiberator.save_keyring keyring
 
           keyring.save @key_name, @key_value
@@ -51,7 +51,7 @@ module Pod
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
 
           unless keyring
-            name = @name || CocoaPodsKeys::NameWhisperer.get_project_name
+            name = @project_name || CocoaPodsKeys::NameWhisperer.get_project_name
             keyring = CocoaPodsKeys::Keyring.new(name, current_dir, [])
           end
 
