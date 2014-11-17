@@ -17,8 +17,10 @@ module CocoaPodsKeys
 
         keys_folder = File.join(@sandbox_root, 'Keys')
         keys_headers_folder = File.join(@sandbox_root, 'Headers', 'Public', 'CocoaPods-Keys')
-        interface_file = File.join(keys_headers_folder, key_master.name + '.h')
+        interface_name = key_master.name + '.h'
+        interface_file = File.join(keys_headers_folder, interface_name)
         implementation_file = File.join(keys_folder, key_master.name + '.m')
+     
         Dir.mkdir keys_folder unless Dir.exists? keys_folder
         Dir.mkdir keys_headers_folder unless Dir.exists? keys_headers_folder
         File.open(interface_file, 'w') { |f| f.write(key_master.interface) }
@@ -27,7 +29,7 @@ module CocoaPodsKeys
         project = Xcodeproj::Project.open File.join(@sandbox_root, 'Pods.xcodeproj')
 
         group = project.new_group('Keys')
-        group.new_file(interface_file)
+        interface = group.new_file(interface_file)
         implementation = group.new_file(implementation_file)
 
         pods_target = project.targets.detect { |t| t.name == 'Pods' }
@@ -35,13 +37,13 @@ module CocoaPodsKeys
           pods_target = project.targets.detect { |t| t.name == 'Pods-' + keyring.name }
         end
 
+        pods_target.add_file_references [implementation]
+
         # Swift Pod support
         if pods_target.product_type == "com.apple.product-type.framework"
-          headers_build_phase = pods_target.build_phases.detect { |t| t.isa == 'PBXHeadersBuildPhase' }
-          pods_target.add_file_references [implementation]
-
-        else
-          pods_target.add_file_references [implementation]
+          pods_target.add_file_references [interface]
+          header_ref = pods_target.headers_build_phase.files[-1]
+          header_ref.settings = { "ATTRIBUTES" => ["Public"] }
         end
 
         project.save
