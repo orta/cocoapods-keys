@@ -34,7 +34,15 @@ module CocoaPodsKeys
         unless pods_target
           pods_target = project.targets.detect { |t| t.name == 'Pods-' + keyring.name }
         end
-        pods_target.add_file_references [implementation]
+
+        # Swift Pod support
+        if pods_target.product_type == "com.apple.product-type.framework"
+          headers_build_phase = pods_target.build_phases.detect { |t| t.isa == 'PBXHeadersBuildPhase' }
+          pods_target.add_file_references [implementation]
+
+        else
+          pods_target.add_file_references [implementation]
+        end
 
         project.save
       end
