@@ -14,7 +14,7 @@ Requires CocoaPods 0.34+.
 
 Key names are stored in `~/cocoapods/keys/` and key values in the OS X keychain. When you run `pod install` or `pod update`, an Objective-C class is created with scrambled versions of the keys, making it difficult to just [dump](https://github.com/stefanesser/dumpdecrypted) the contents of the decrypted binary and extract the keys. At runtime, the keys are unscrambled for use in your app.
 
-The generated Objective-C classes are stored in the `Pods/Keys` directory, so if you're checking in your [Pods folder](http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control), just add `Pods/Keys` to your `.gitignore` file.
+The generated Objective-C classes are stored in the `Pods/Keys` directory, so if you're checking in your [Pods folder](http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control), just add `Pods/Keys` to your `.gitignore` file. CocoaPods-Keys supports integration in Swift or Objective-C projects.
 
 ## Usage
 
@@ -66,6 +66,35 @@ After the next `pod install` or `pod update` keys will add a new Objective-C cla
 @end
 
 ```
+
+## Usage via CocoaPods 0.36
+
+Using the new Plugin API in CocoaPods we can automate a lot of the fiddly bits away. You define what you keys you want inside your `[Podfile](https://github.com/artsy/eidolon/blob/0a9f5947914eb637fd4abf364fa3532b56da3c52/Podfile#L6-L21)` and Keys will detect what keys are not yet set.
+
+```
+plugin 'cocoapods-keys', {
+  :project => "Eidolon",
+  :keys => [
+    "ArtsyAPIClientSecret",
+    "ArtsyAPIClientKey",
+    "HockeyProductionSecret",
+    "HockeyBetaSecret",
+    "MixpanelProductionAPIClientKey",
+    ...
+  ]}
+```
+
+Then running `pod install` will prompt for the keys not yet set and you can ensure everyone has the same setup.
+
+#### Other commands
+
+CocoaPods-keys has 2 other commands:
+
+ * `pod keys get [key] [optional project]`
+   Which will output the key to STDOUT, useful for scripting
+
+ * `pod keys rm [key] [optional project]`
+   Will remove a key from a project
 
 #### Security
 
