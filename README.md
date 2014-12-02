@@ -69,7 +69,7 @@ After the next `pod install` or `pod update` keys will add a new Objective-C cla
 
 ## Usage via CocoaPods 0.36
 
-Using the new Plugin API in CocoaPods we can automate a lot of the fiddly bits away. You define what you keys you want inside your `[Podfile](https://github.com/artsy/eidolon/blob/0a9f5947914eb637fd4abf364fa3532b56da3c52/Podfile#L6-L21)` and Keys will detect what keys are not yet set.
+Using the new Plugin API in CocoaPods we can automate a lot of the fiddly bits away. You define what you keys you want inside your [Podfile](https://github.com/artsy/eidolon/blob/0a9f5947914eb637fd4abf364fa3532b56da3c52/Podfile#L6-L21) and Keys will detect what keys are not yet set.
 
 ```
 plugin 'cocoapods-keys', {
@@ -91,10 +91,10 @@ Then running `pod install` will prompt for the keys not yet set and you can ensu
 CocoaPods-keys has 2 other commands:
 
  * `pod keys get [key] [optional project]`
-   Which will output the key to STDOUT, useful for scripting
+   Which will output the value of the key to STDOUT, useful for scripting.
 
  * `pod keys rm [key] [optional project]`
-   Will remove a key from a project
+   Will remove a key from a project.
 
 #### Security
 
