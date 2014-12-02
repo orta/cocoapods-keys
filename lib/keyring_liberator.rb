@@ -22,7 +22,7 @@ module CocoaPodsKeys
       end
       
       def self.get_keyring_named(name)
-        self.get_all_keyrings.select { |k| k.name == name }.first
+        self.get_all_keyrings.find { |k| k.name == name }
       end
 
       def self.save_keyring(keyring)

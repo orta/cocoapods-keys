@@ -1,15 +1,15 @@
 module CocoaPodsKeys
   class Installer
-    def initialize(sandbox_root)
+    def initialize(sandbox_root, user_options)
       @sandbox_root = sandbox_root
+      @options = user_options
     end
 
     def install!
       require 'key_master'
       require 'keyring_liberator'
 
-      keyring = KeyringLiberator.get_keyring(Dir.getwd)
-
+      keyring = KeyringLiberator.get_keyring_named(@options["project"]) || KeyringLiberator.get_keyring(Dir.getwd)
       return unless keyring
 
       Pod::UI.section 'Adding keys' do

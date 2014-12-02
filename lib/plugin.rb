@@ -1,8 +1,10 @@
 module CocoaPodsKeys
 
-  Pod::HooksManager.register('cocoapods-keys', :post_install) do |options|
+  Pod::HooksManager.register('cocoapods-keys', :post_install) do |context, user_options|
     require 'installer'
+    require 'preinstaller'
 
-    Installer.new(options.sandbox_root).install!
+    PreInstaller.new(user_options).setup
+    Installer.new(context.sandbox_root, user_options).install!
   end
 end
