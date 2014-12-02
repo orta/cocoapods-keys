@@ -20,6 +20,10 @@ module CocoaPodsKeys
       def self.get_keyring(path)
         get_keyring_at_path(yaml_path_for_path(path))
       end
+      
+      def self.get_keyring_named(name)
+        self.get_all_keyrings.select { |k| k.name == name }.first
+      end
 
       def self.save_keyring(keyring)
         `mkdir -p #{keys_dir}`
