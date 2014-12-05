@@ -1,4 +1,5 @@
 require "keyring_liberator"
+require "keyring"
 require "name_whisperer"
 
 module Pod
@@ -36,13 +37,22 @@ module Pod
           end
 
           if keyring.keys.include? @key_name
-            # overwrite value in keychain, we don't havea delete API
             keyring.save(@key_name, "")
             keyring.keys.delete @key_name
             CocoaPodsKeys::KeyringLiberator.save_keyring(keyring)
-            $stderr.puts "Removed value for #{@key_name}"
-          else 
-            $stderr.puts "Could not find value"
+
+            prefix = CocoaPodsKeys::Keyring.keychain_prefix
+            delete_generic = `security delete-generic-password -a #{@key_name} -l #{prefix+keyring.name} > /dev/null`
+
+            if delete_generic.include? "security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain."
+              $stderr.puts "Removed value for #{@key_name}, but could not delete from KeyChain."
+            elsif delete_generic.include? "password has been deleted."
+              $stderr.puts "Removed value for #{@key_name}, and deleted associated key in KeyChain."
+            else
+              $stderr.puts "Removed value for #{@key_name}."
+            end
+          else
+            $stderr.puts "Could not find key named #{@key_name}."
           end
         end
 
