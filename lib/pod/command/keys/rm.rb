@@ -42,12 +42,12 @@ module Pod
             CocoaPodsKeys::KeyringLiberator.save_keyring(keyring)
 
             prefix = CocoaPodsKeys::Keyring.keychain_prefix
-            delete_generic = `security delete-generic-password -a #{@key_name} -l #{prefix+keyring.name} > /dev/null`
+            delete_generic = `security delete-generic-password -a #{@key_name} -l #{prefix+keyring.name} 2>&1`
 
             if delete_generic.include? "security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain."
-              $stderr.puts "Removed value for #{@key_name}, but could not delete from KeyChain."
+              $stderr.puts "Removed value for #{@key_name}, but could not delete from Keychain."
             elsif delete_generic.include? "password has been deleted."
-              $stderr.puts "Removed value for #{@key_name}, and deleted associated key in KeyChain."
+              $stderr.puts "Removed value for #{@key_name}, and deleted associated key in Keychain."
             else
               $stderr.puts "Removed value for #{@key_name}."
             end
