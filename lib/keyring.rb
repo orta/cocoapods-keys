@@ -22,20 +22,20 @@ module CocoaPodsKeys
       name.split(/[^a-zA-Z0-9_]/).map { |s| s[0].upcase + s[1..-1] }.join('')
     end
 
+    def self.keychain_prefix
+      "cocoapods-keys-"
+    end
+
     def save(key, value)
       keychain = OSXKeychain.new
-      keychain[keychain_prefix + name, key] = value
+      keychain[self.class.keychain_prefix + name, key] = value
     end
 
     def keychain_data
       keychain = OSXKeychain.new
       Hash[
-        @keys.map { |key| [key, keychain[keychain_prefix + name, key]] }
+        @keys.map { |key| [key, keychain[self.class.keychain_prefix + name, key]] }
       ]
-    end
-
-    def keychain_prefix
-      "cocoapods-keys-"
     end
 
   end
