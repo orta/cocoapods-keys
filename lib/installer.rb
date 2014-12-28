@@ -37,6 +37,13 @@ module CocoaPodsKeys
           pods_target = project.targets.detect { |t| t.name == 'Pods-' + keyring.name }
         end
 
+        unless pods_target
+          puts " Could not find the CocoaPods project target for Keys integration.".red
+          puts " - Found #{ project.targets.map(&:name) }"
+          puts " - Set the plugin target in the Podfile to match the part after 'Pods-' for your main App target."
+          return
+        end
+
         pods_target.add_file_references [implementation]
 
         # Swift Pod support
