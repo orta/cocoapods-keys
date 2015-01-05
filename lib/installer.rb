@@ -34,7 +34,9 @@ module CocoaPodsKeys
 
         pods_target = project.targets.detect { |t| t.name == 'Pods' }
         unless pods_target
-          pods_target = project.targets.detect { |t| t.name == 'Pods-' + keyring.name }
+          target_name = @options["target"]
+          target_name ||= keyring.name
+          pods_target = project.targets.detect { |t| t.name == 'Pods-' + target_name }
         end
 
         unless pods_target
