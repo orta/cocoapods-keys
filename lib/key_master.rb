@@ -79,6 +79,7 @@ SOURCE
 //
 
 #import <objc/runtime.h>
+#import <Foundation/NSDictionary.h>
 #import "<%= @name %>.h"
 
 #pragma clang diagnostic push
@@ -121,6 +122,20 @@ static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SE
 
 static char <%= name %>Data[<%= @data_length %>] = "<%= @data %>";
 
+- (NSString *)description
+{
+  return [@{
+<%- @keys.each do |key, value| -%>
+            @"<%= key %>": self.<%= key %>,
+<%- end -%>
+  } description];
+}
+
+- (id)debugQuickLookObject
+{
+  return [self description];
+}
+
 @end
 SOURCE
 
@@ -131,7 +146,7 @@ SOURCE
 
     def render_erb(erb)
       require 'erb'
-      ERB.new(erb).result(binding)
+      ERB.new(erb, nil, '-').result(binding)
     end
 
     def key_data_arrays
