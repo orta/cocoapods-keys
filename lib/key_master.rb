@@ -21,6 +21,7 @@ module CocoaPodsKeys
 
       @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
       data = `head -c #{@data_length} /dev/random | base64 | head -c #{@data_length}`
+      data = data + '\\"'
       length = data.length
 
       # Swap the characters within the hashed string with the characters from
@@ -32,15 +33,20 @@ module CocoaPodsKeys
         value.chars.each_with_index do |char, char_index|
           loop do
 
-            index = rand data.length
-            unless @used_indexes.include?(index)
-              data[index] = char
-
-              @used_indexes << index
+            if char == '"'
+              index = data.delete('\\').length - 1
               @indexed_keys[key][char_index] = index
               break
-            end
+            else
+              index = rand data.length
+              unless @used_indexes.include?(index)
+                data[index] = char
 
+                @used_indexes << index
+                @indexed_keys[key][char_index] = index
+                break
+              end
+            end
           end
         end
       end
