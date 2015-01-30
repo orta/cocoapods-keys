@@ -22,7 +22,7 @@ module CocoaPodsKeys
       @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
       data = `head -c #{@data_length} /dev/random | base64 | head -c #{@data_length}`
       data = data + '\\"'
-      length = data.length
+      @data_length = data.length
 
       # Swap the characters within the hashed string with the characters from
       # the keyring values. Then store that index in a index-ed copy of the values.
