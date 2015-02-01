@@ -33,6 +33,10 @@ module Pod
       # tests doubles? But then how do I call private methods to add that spec
       # to our list? 
 
+      # ORRRR maybe I can use a podspec that refers to any (maybe empty?) GH repo
+      # but specifies *no* source files. After installation, I can add the Keys
+      # .m/.h files to that empty pod's target. Maybe? 
+
       config.podfile.pod :podspec => '/Users/ash/bin/eidolon/Keys.podspec'
 
       puts @podfile.to_hash["target_definitions"].map { |d| d["dependencies"] }
