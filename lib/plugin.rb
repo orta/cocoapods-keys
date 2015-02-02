@@ -25,7 +25,7 @@ module Pod
 
       # puts @podfile.to_hash["target_definitions"].map { |d| d["dependencies"] }
       original_install!
-      abort "\'Nuff said."
+      # abort "\'Nuff said."
     end
 
     def install_source_of_pod(pod_name) 
@@ -58,18 +58,22 @@ module Pod
     end
   end
 
+  class Specification
+    class << self 
 
-  class << self
-    alias_method :original_eval_podspec, :_eval_podspec
+      alias_method :original_from_string, :from_string
 
-    # TODO: This isn't being called on all the pods, just the stuff in the Artsy Specs repo. Find out where to modify the actual specs.
-    def _eval_podspec(string, path)
-      spec = original_eval_podspec(string, path)
+      def from_string(spec_contents, path, subspec_name = nil)
+        spec = original_from_string(spec_contents, path, subspec_name)
 
-      # TODO: Change source_files
-      puts "Stole #{spec.name}"
+        if spec.name == 'Keys'
+          # TODO: This isnt' working :\
+          puts "Keys!"
+          spec.attributes_hash["source_files"] = "/Users/ash/bin/eidolon/EidolonKeys.{h,m}"
+        end
 
-      spec
+        spec
+      end
     end
   end
 end
