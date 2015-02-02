@@ -21,10 +21,27 @@ module Pod
 
     def install!
 
-      config.podfile.pod 'UIAlertView-Blocks', :git => 'https://github.com/jivadevoe/UIAlertView-Blocks.git'
+      config.podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
 
       puts @podfile.to_hash["target_definitions"].map { |d| d["dependencies"] }
       original_install!
+    end
+
+    class Analyzer
+      class SandboxAnalyzer
+
+        alias_method :original_pod_state, :pod_state
+
+        def pod_state(pod) 
+          if pod == 'Keys'
+            #return added if we were, otherwise assume the Keys have changed since last install.
+            return :added if pod_added?(pod)
+            :changed
+          else
+            original_pod_state(pod)
+          end
+        end
+      end
     end
   end
 end
