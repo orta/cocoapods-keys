@@ -37,6 +37,8 @@ module Pod
       # but specifies *no* source files. After installation, I can add the Keys
       # .m/.h files to that empty pod's target. Maybe? 
 
+      # Use the prepare command in the podspe to generate the .m file. 
+
       config.podfile.pod :podspec => '/Users/ash/bin/eidolon/Keys.podspec'
 
       puts @podfile.to_hash["target_definitions"].map { |d| d["dependencies"] }
