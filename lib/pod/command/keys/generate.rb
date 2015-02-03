@@ -4,8 +4,9 @@ require 'key_master'
 module Pod
   class Command
     class Keys
-
       class Generate < Keys
+        include CocoaPodsKeys
+
         self.summary = "Generates the .h and .m files representing the keys."
 
         self.description = <<-DESC
@@ -20,7 +21,7 @@ module Pod
         end
 
         def run
-          key_master = CocoaPodsKeys::KeyMaster.new(@keyring)
+          key_master = KeyMaster.new(@keyring)
 
           interface_file = key_master.name + '.h'
           implementation_file = key_master.name + '.m'
@@ -33,7 +34,7 @@ module Pod
           super
           verify_podfile_exists!
 
-          @keyring = CocoaPodsKeys::KeyringLiberator.get_keyring_named(@project_name) || CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
+          @keyring = KeyringLiberator.get_keyring_named(@project_name) || KeyringLiberator.get_keyring(Dir.getwd)
           help! "No keys associated with this directory or project name." unless @keyring
         end
       end

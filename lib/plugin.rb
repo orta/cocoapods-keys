@@ -9,13 +9,14 @@ end
 module Pod
   class Installer
     include Pod::Podfile::DSL
+    include CocoaPodsKeys
 
     alias_method :install_before_cocoapods_keys!, :install!
 
     def install!
       require 'preinstaller'
       user_options = config.podfile.plugins["cocoapods-keys"]
-      CocoaPodsKeys::PreInstaller.new(user_options).setup
+      PreInstaller.new(user_options).setup
 
       # Add our template podspec (needs to be remote, not local). 
       config.podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
@@ -43,19 +44,19 @@ module Pod
 
   class Specification
     class << self 
-
-      include Pod::Podfile::DSL
+      include Pod
+      include CocoaPodsKeys
 
       alias_method :from_string_from_cocoapods_keys, :from_string
 
       def from_string(spec_contents, path, subspec_name = nil)
         if path.to_s.include? "Keys.podspec"
-          user_options = Pod::Config.instance.podfile.plugins["cocoapods-keys"]
+          user_options = Config.instance.podfile.plugins["cocoapods-keys"]
 
-          keyring = CocoaPodsKeys::KeyringLiberator.get_keyring_named(user_options["project"]) || CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
+          keyring = KeyringLiberator.get_keyring_named(user_options["project"]) || KeyringLiberator.get_keyring(Dir.getwd)
           abort "Could not load keyring" unless keyring 
 
-          key_master = CocoaPodsKeys::KeyMaster.new(keyring)
+          key_master = KeyMaster.new(keyring)
 
           spec_contents.gsub!(/%%SOURCE_FILES%%/, "#{key_master.name}.{h,m}")
           spec_contents.gsub!(/%%PROJECT_NAME%%/, user_options["project"])
