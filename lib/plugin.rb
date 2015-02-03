@@ -21,6 +21,11 @@ module Pod
     alias_method :original_install_source_of_pod, :install_source_of_pod
 
     def install!
+      require 'preinstaller'
+
+      # TODO: ensure pre-installation works (needs to have Podfile parsed, I think that'll be OK.)
+      # PreInstaller.new(user_options).setup
+
       # Add our template podspec (needs to be remote, not local). 
       config.podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
 
