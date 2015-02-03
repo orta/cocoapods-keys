@@ -20,19 +20,22 @@ module Pod
         end
 
         def run
-            this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring_named(@project_name) || CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
-            if this_keyring
-              key_master = CocoaPodsKeys::KeyMaster.new(this_keyring)
+          key_master = CocoaPodsKeys::KeyMaster.new(@keyring)
 
-              interface_file = key_master.name + '.h'
-              implementation_file = key_master.name + '.m'
-           
-              File.open(interface_file, 'w') { |f| f.write(key_master.interface) }
-              File.open(implementation_file, 'w') { |f| f.write(key_master.implementation) }
-            else
-              abort "No keys associated with this directory or project name."
-            end
-        end        
+          interface_file = key_master.name + '.h'
+          implementation_file = key_master.name + '.m'
+       
+          File.write(interface_file, key_master.interface)
+          File.write(implementation_file, key_master.implementation)
+        end
+
+        def validate!
+          super
+          verify_podfile_exists!
+
+          @keyring = CocoaPodsKeys::KeyringLiberator.get_keyring_named(@project_name) || CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
+          help! "No keys associated with this directory or project name." unless @keyring
+        end
       end
     end
   end

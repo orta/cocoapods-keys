@@ -10,7 +10,7 @@ module Pod
   class Installer
     include Pod::Podfile::DSL
 
-    alias_method :original_install!, :install!
+    alias_method :install_before_cocoapods_keys!, :install!
 
     def install!
       require 'preinstaller'
@@ -20,13 +20,13 @@ module Pod
       # Add our template podspec (needs to be remote, not local). 
       config.podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
 
-      original_install!
+      install_before_cocoapods_keys!
     end
 
     class Analyzer
       class SandboxAnalyzer
 
-        alias_method :original_pod_state, :pod_state
+        alias_method :pod_state_from_cocoapods_keys, :pod_state
 
         def pod_state(pod) 
           if pod == 'Keys'
@@ -34,7 +34,7 @@ module Pod
             return :added if pod_added?(pod)
             :changed
           else
-            original_pod_state(pod)
+            pod_state_from_cocoapods_keys(pod)
           end
         end
       end
@@ -46,7 +46,7 @@ module Pod
 
       include Pod::Podfile::DSL
 
-      alias_method :original_from_string, :from_string
+      alias_method :from_string_from_cocoapods_keys, :from_string
 
       def from_string(spec_contents, path, subspec_name = nil)
         if path.to_s.include? "Keys.podspec"
@@ -61,7 +61,7 @@ module Pod
           spec_contents.gsub!(/%%PROJECT_NAME%%/, user_options["project"])
         end
         
-        original_from_string(spec_contents, path, subspec_name)
+        from_string_from_cocoapods_keys(spec_contents, path, subspec_name)
       end
     end
   end
