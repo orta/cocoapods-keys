@@ -14,9 +14,13 @@ module Pod
           generated in the current working directory.
         DESC
 
-        def run
+        def initialize(argv)
+          @project_name = argv.shift_argument
+          super
+        end
 
-            this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
+        def run
+            this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring_named(@project_name) || CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
             if this_keyring
               key_master = CocoaPodsKeys::KeyMaster.new(this_keyring)
 
@@ -26,7 +30,7 @@ module Pod
               File.open(interface_file, 'w') { |f| f.write(key_master.interface) }
               File.open(implementation_file, 'w') { |f| f.write(key_master.implementation) }
             else
-              abort "No keys associated with this directory."
+              abort "No keys associated with this directory or project name."
             end
         end        
       end
