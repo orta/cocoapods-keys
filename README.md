@@ -45,12 +45,12 @@ For example:
    └ redditAPIToken & mixpanelAPIToken
 ```
 
-After the next `pod install` or `pod update` keys will add a new Objective-C class to your Pods xcworkspace. This provides an API to your keys from Cocoa code. For example the application code above would look like:
+After the next `pod install` or `pod update` keys will add a new `Keys` framework to your Pods project. This provides an API to your keys from Cocoa code. For example the application code above would look like:
 
 ``` objc
 
 #import "ORAppDelegate.h"
-#import <CocoaPods-Keys/MyApplicationKeys.h>
+#import <Keys/MyApplicationKeys.h>
 #import <ARAnalytics/ARAnalytics.h>
 
 @implementation ORAppDelegate
@@ -88,13 +88,16 @@ Then running `pod install` will prompt for the keys not yet set and you can ensu
 
 #### Other commands
 
-CocoaPods-keys has 2 other commands:
+CocoaPods-keys has 3 other commands:
 
  * `pod keys get [key] [optional project]`
    Which will output the value of the key to STDOUT, useful for scripting.
 
  * `pod keys rm [key] [optional project]`
    Will remove a key from a project.
+
+ * `pod keys generate [optional project]`
+   Will generate the obfuscated Objective-C keys class (mainly used internally).
 
 #### Security
 
