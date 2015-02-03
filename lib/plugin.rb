@@ -1,10 +1,4 @@
 require 'cocoapods-core'
-require 'keyring_liberator'
-require 'key_master'
-
-module CocoaPodsKeys
-
-end
 
 module Pod
   class Installer
