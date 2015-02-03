@@ -1,16 +1,7 @@
 require 'cocoapods-core'
 
 module CocoaPodsKeys
-
-  # Pod::HooksManager.register('cocoapods-keys', :post_install) do |context, user_options|
-  #   require 'installer'
-  #   require 'preinstaller'
-
-  #   # PreInstaller.new(user_options).setup
-  #   # Installer.new(context.sandbox_root, user_options).install!
-  # end
 end
-
 
 module Pod
   class Installer
@@ -22,9 +13,8 @@ module Pod
 
     def install!
       require 'preinstaller'
-
-      # TODO: ensure pre-installation works (needs to have Podfile parsed, I think that'll be OK.)
-      # PreInstaller.new(user_options).setup
+      user_options = config.podfile.plugins["cocoapods-keys"]
+      CocoaPodsKeys::PreInstaller.new(user_options).setup
 
       # Add our template podspec (needs to be remote, not local). 
       config.podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
