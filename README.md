@@ -4,7 +4,7 @@ Its good security practice to keep production keys out of developer hands. Cocoa
 
 ## Requirements
 
-Requires CocoaPods 0.34+.
+Requires CocoaPods 0.36+ - which is currently in beta.
 
 ## Installation
 
