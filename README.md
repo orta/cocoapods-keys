@@ -4,7 +4,7 @@ Its good security practice to keep production keys out of developer hands. Cocoa
 
 ## Requirements
 
-Requires CocoaPods 0.36+ - which is currently in beta.
+Requires CocoaPods 0.36
 
 ## Installation
 
@@ -113,4 +113,4 @@ So in summary, the ideal way to store keys is to not store keys. In reality thou
 
 #### Thanks
 
-This was built with a lot of help from [@segiddins](https://github.com/segiddins).
+This was built with a lot of help from [@segiddins](https://github.com/segiddins) and [@ashfurrow](http://github.com/ashfurrow).
