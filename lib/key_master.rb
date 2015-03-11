@@ -17,6 +17,7 @@ module CocoaPodsKeys
 
     def generate_data
 
+      return nil if @keys.empty?
       # Generate a base64 hash string that is ~25 times the length of all keys
 
       @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
