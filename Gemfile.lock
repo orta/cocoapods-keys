@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-keys (1.0.0)
+    cocoapods-keys (1.0.1)
       osx_keychain
 
 GEM
