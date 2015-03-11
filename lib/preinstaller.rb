@@ -9,16 +9,19 @@ module CocoaPodsKeys
       require 'keyring_liberator'
       require 'pod/command/keys/set'
 
+      options = @user_options || {}
       current_dir = Dir.getwd
-      keyring = KeyringLiberator.get_keyring_named(@options["project"]) || KeyringLiberator.get_keyring(current_dir)
+      project = options.fetch('project', nil)
+      keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
       unless keyring
-        name = @options["project"] || CocoaPodsKeys::NameWhisperer.get_project_name
+        name = project || CocoaPodsKeys::NameWhisperer.get_project_name
         keyring = CocoaPodsKeys::Keyring.new(name, current_dir, [])
       end
       
       data = keyring.keychain_data
       has_shown_intro = false
-      @options["keys"].each do |key|
+      keys = options.fetch("keys", [])
+      keys.each do |key|
         unless data.keys.include? key
           
           unless has_shown_intro
