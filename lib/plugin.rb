@@ -3,12 +3,14 @@ require 'cocoapods-core'
 module CocoaPodsKeys
   class << self
     def podspec_for_current_project(spec_contents)
-      keyring = KeyringLiberator.get_keyring_named(user_options["project"]) || KeyringLiberator.get_keyring(Dir.getwd)
+      local_user_options = user_options || {}
+      project = local_user_options.fetch("project", CocoaPodsKeys::NameWhisperer.get_project_name)
+      keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
       raise Informative, "Could not load keyring" unless keyring 
       key_master = KeyMaster.new(keyring)
 
       spec_contents.gsub!(/%%SOURCE_FILES%%/, "#{key_master.name}.{h,m}")
-      spec_contents.gsub!(/%%PROJECT_NAME%%/, user_options["project"])
+      spec_contents.gsub!(/%%PROJECT_NAME%%/, project)
     end
 
     def setup

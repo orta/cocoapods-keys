@@ -11,12 +11,10 @@ module CocoaPodsKeys
 
       options = @user_options || {}
       current_dir = Dir.getwd
-      project = options.fetch('project', nil)
+      project = options.fetch('project', CocoaPodsKeys::NameWhisperer.get_project_name)
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
-      unless keyring
-        name = project || CocoaPodsKeys::NameWhisperer.get_project_name
-        keyring = CocoaPodsKeys::Keyring.new(name, current_dir, [])
-      end
+
+      keyring = CocoaPodsKeys::Keyring.new(name, current_dir, []) unless keyring
       
       data = keyring.keychain_data
       has_shown_intro = false
