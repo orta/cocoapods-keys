@@ -45,7 +45,7 @@ For example:
    └ redditAPIToken & mixpanelAPIToken
 ```
 
-After the next `pod install` or `pod update` keys will add a new `Keys` framework to your Pods project. This provides an API to your keys from Cocoa code. For example the application code above would look like:
+After the next `pod install` or `pod update` keys will add a new `Keys` pod to your Pods project, supporting both static libraries and frameworks. This provides an API to your keys from Cocoa code. For example the application code above would look like:
 
 ``` objc
 
