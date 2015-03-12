@@ -6,7 +6,7 @@ module CocoaPodsKeys
       local_user_options = user_options || {}
       project = local_user_options.fetch("project", CocoaPodsKeys::NameWhisperer.get_project_name)
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
-      raise Informative, "Could not load keyring" unless keyring 
+      raise Pod::Informative, "Could not load keyring" unless keyring 
       key_master = KeyMaster.new(keyring)
 
       spec_contents.gsub!(/%%SOURCE_FILES%%/, "#{key_master.name}.{h,m}")
