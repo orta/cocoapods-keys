@@ -1,7 +1,7 @@
 module CocoaPodsKeys
   class PreInstaller
     def initialize(user_options)
-      @options = user_options
+      @user_options = user_options
     end
 
     def setup
@@ -14,8 +14,8 @@ module CocoaPodsKeys
       project = options.fetch('project', CocoaPodsKeys::NameWhisperer.get_project_name)
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
 
-      keyring = CocoaPodsKeys::Keyring.new(name, current_dir, []) unless keyring
-      
+      keyring = CocoaPodsKeys::Keyring.new(project, current_dir, []) unless keyring
+
       data = keyring.keychain_data
       has_shown_intro = false
       keys = options.fetch("keys", [])
