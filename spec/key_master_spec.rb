@@ -10,12 +10,17 @@ describe CocoaPodsKeys::KeyMaster do
     IO.read(File.join(__dir__, "fixtures", "Keys_empty.m"))
   }
   
-  it "should init with an empty keyring" do
+  it "should work with an empty keyring" do
     keyring = double("Keyring", keychain_data: [], code_name: "Fake")
     keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
     expect(keymaster.name).to eq("FakeKeys")
     expect(keymaster.interface).to eq(empty_keys_interface)
     expect(keymaster.implementation).to eq(empty_keys_implementation)
+  end
+  
+  it "should generate valid empty objc files", requires_clang: true do
+    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
     expect(validate_syntax(keymaster)).to eq(true)
   end
   
