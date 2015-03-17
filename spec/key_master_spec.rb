@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'key_master'
+require 'tmpdir'
 
 describe CocoaPodsKeys::KeyMaster do
   let(:empty_keys_interface) {
