@@ -1,4 +1,4 @@
 language: ruby
 before_script:
 - env RACK_ENV=test bundle exec rake spec
-install: bundle install --deployment --without development production
+install: bundle install --deployment
