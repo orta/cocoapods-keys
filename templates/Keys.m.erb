@@ -46,7 +46,7 @@ static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SE
 }
 <% end %>
 
-static char <%= name %>Data[<%= @data_length %>] = "<%= @data %>";
+static char <%= name %>Data[<%= @data_length %>] = "<%= @data.gsub('\\', '\\\\\\').gsub('"', '\\"') if @data %>";
 
 - (NSString *)description
 {
