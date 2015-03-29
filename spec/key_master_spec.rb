@@ -24,7 +24,21 @@ describe CocoaPodsKeys::KeyMaster do
     keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
     expect(validate_syntax(keymaster)).to eq(true)
   end
-  
+
+  it "should escape backslashes" do
+    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
+    keymaster.instance_variable_set(:@data, '\4')
+    expect(keymaster.generate_implementation).to include('"\\\4"')
+  end
+
+  it "should escape double-quotes" do
+    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
+    keymaster.instance_variable_set(:@data, '"')
+    expect(keymaster.generate_implementation).to include('"\\""')
+  end
+
   def validate_syntax(keymaster)
     # write out the interface and the implementation to temp files
     Dir.mktmpdir do |dir|
@@ -36,7 +50,7 @@ describe CocoaPodsKeys::KeyMaster do
       IO.write(m_file, keymaster.implementation)
       # attempt to validate syntax with clang
       Dir.chdir(dir)
-      system("clang", "-fsyntax-only", m_file)
+      system(`xcrun --sdk macosx --find clang`.strip, "-fsyntax-only", m_file)
     end
   end
 end
