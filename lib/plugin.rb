@@ -64,7 +64,7 @@ module Pod
       alias_method :from_string_before_cocoapods_keys, :from_string
 
       def from_string(spec_contents, path, subspec_name = nil)
-        if path.to_s.include? "Keys.podspec"
+        if path.basename.to_s =~ /\AKeys.podspec(?:.json)\Z/
           CocoaPodsKeys.podspec_for_current_project(spec_contents)
         end
         from_string_before_cocoapods_keys(spec_contents, path, subspec_name)
