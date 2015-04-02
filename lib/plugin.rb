@@ -28,7 +28,13 @@ module CocoaPodsKeys
     end
 
     def user_options
-      podfile.plugins["cocoapods-keys"]
+      options = podfile.plugins["cocoapods-keys"]
+      # Until CocoaPods provides a HashWithIndifferentAccess, normalize the hash keys here.
+      # See https://github.com/CocoaPods/CocoaPods/issues/3354
+      options.inject({}) do |normalized_hash, (key, value)|
+        normalized_hash[key.to_s] = value
+        normalized_hash
+      end
     end
   end
 end
