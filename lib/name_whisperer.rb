@@ -27,7 +27,7 @@ module CocoaPodsKeys
           Pathname.new(xcodeprojects[0]).basename.to_s
         else
           error_message = (xcodeprojects.length > 1) ? "found too many" : "couldn't find any"
-          puts "Hello there, we " + error_message + " xcodeprojects. Please give a name for this project."
+          puts "CocoaPods-Keys " + error_message + " xcodeprojects. Please give a name for this project."
 
           answer = ""
           loop do
