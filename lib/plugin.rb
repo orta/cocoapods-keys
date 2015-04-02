@@ -4,7 +4,7 @@ module CocoaPodsKeys
   class << self
     def podspec_for_current_project(spec_contents)
       local_user_options = user_options || {}
-      project = local_user_options.fetch("project", CocoaPodsKeys::NameWhisperer.get_project_name)
+      project = local_user_options.fetch("project") { CocoaPodsKeys::NameWhisperer.get_project_name }
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
       raise Pod::Informative, "Could not load keyring" unless keyring 
       key_master = KeyMaster.new(keyring)
@@ -28,7 +28,13 @@ module CocoaPodsKeys
     end
 
     def user_options
-      podfile.plugins["cocoapods-keys"]
+      options = podfile.plugins["cocoapods-keys"]
+      # Until CocoaPods provides a HashWithIndifferentAccess, normalize the hash keys here.
+      # See https://github.com/CocoaPods/CocoaPods/issues/3354
+      options.inject({}) do |normalized_hash, (key, value)|
+        normalized_hash[key.to_s] = value
+        normalized_hash
+      end
     end
   end
 end
