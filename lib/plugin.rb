@@ -6,7 +6,7 @@ module CocoaPodsKeys
       local_user_options = user_options || {}
       project = local_user_options.fetch("project") { CocoaPodsKeys::NameWhisperer.get_project_name }
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
-      raise Pod::Informative, "Could not load keyring" unless keyring 
+      raise Pod::Informative, "Could not load keyring" unless keyring
       key_master = KeyMaster.new(keyring)
 
       spec_contents.gsub!(/%%SOURCE_FILES%%/, "#{key_master.name}.{h,m}")
@@ -44,15 +44,20 @@ module Pod
     alias_method :install_before_cocoapods_keys!, :install!
 
     def install!
-      CocoaPodsKeys.setup
+      CocoaPodsKeys.setup if validates_for_keys
+
       install_before_cocoapods_keys!
+    end
+
+    def validates_for_keys
+      Pod::Config.instance.podfile.plugins["cocoapods-keys"] != nil
     end
 
     class Analyzer
       class SandboxAnalyzer
         alias_method :pod_state_before_cocoapods_keys, :pod_state
 
-        def pod_state(pod) 
+        def pod_state(pod)
           if pod == 'Keys'
             # return :added if we were, otherwise assume the Keys have :changed since last install, following my mother's "Better Safe than Sorry" principle.
             return :added if pod_added?(pod)
@@ -66,7 +71,7 @@ module Pod
   end
 
   class Specification
-    class << self 
+    class << self
       alias_method :from_string_before_cocoapods_keys, :from_string
 
       def from_string(spec_contents, path, subspec_name = nil)
