@@ -1,0 +1,8 @@
+plugin 'cocoapods-keys', {
+    :project => 'TestProject',
+    :target => 'TestTarget',
+    :keys => [
+        'KeyWithData',
+        'KeyWithoutData',
+    ]
+}

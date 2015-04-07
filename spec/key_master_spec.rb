@@ -4,11 +4,11 @@ require 'tmpdir'
 
 describe CocoaPodsKeys::KeyMaster do
   let(:empty_keys_interface) {
-    IO.read(File.join(__dir__, "fixtures", "Keys_empty.h"))
+    File.read(fixture("Keys_empty.h"))
   }
   
   let(:empty_keys_implementation) {
-    IO.read(File.join(__dir__, "fixtures", "Keys_empty.m"))
+    File.read(fixture("Keys_empty.m"))
   }
   
   it "should work with an empty keyring" do
@@ -38,6 +38,8 @@ describe CocoaPodsKeys::KeyMaster do
     keymaster.instance_variable_set(:@data, '"')
     expect(keymaster.generate_implementation).to include('"\\""')
   end
+
+  private
 
   def validate_syntax(keymaster)
     # write out the interface and the implementation to temp files
