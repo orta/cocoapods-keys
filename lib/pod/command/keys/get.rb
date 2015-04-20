@@ -38,8 +38,8 @@ module Pod
 
           if keyring.keys.include? @key_name
             data = keyring.keychain_data
-            $stderr.puts data[@key_name]
-          else 
+            puts data[@key_name]
+          else
             $stderr.puts "Could not find value"
           end
         end

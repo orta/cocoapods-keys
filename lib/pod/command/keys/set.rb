@@ -6,6 +6,8 @@ module Pod
     class Keys
 
       class Set < Keys
+        include Config::Mixin
+
         self.summary = "A set values for keys."
 
         self.description = <<-DESC
@@ -43,7 +45,7 @@ module Pod
 
           keyring.save @key_name, @key_value
 
-          puts "Saved #{@key_name} to #{keyring.name}."
+          puts "Saved #{@key_name} to #{keyring.name}." unless config.silent?
         end
 
         def current_keyring

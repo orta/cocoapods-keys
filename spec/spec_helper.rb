@@ -5,6 +5,10 @@ def clang_available
   system("which -s clang")
 end
 
+def fixture(name)
+  File.join(__dir__, "fixtures", name)
+end
+
 RSpec.configure do |c|
   # exclude tests requiring clang when it's unavailable
   c.filter_run_excluding requires_clang: true unless clang_available
