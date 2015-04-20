@@ -17,8 +17,25 @@ module CocoaPodsKeys
       require 'preinstaller'
 
       PreInstaller.new(user_options).setup
+      
       # Add our template podspec (needs to be remote, not local).
-      podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
+      
+      if user_options["target"]
+        # Support correct scoping for a target
+        target = podfile.root_target_definitions.map(&:children).flatten.select do |target|
+          target.label == "Pods-" + user_options["target"].to_s
+        end.first
+                
+        if target
+          target.store_pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
+        else
+          puts "Could not find a target named '#{user_options["target"]}' in your Podfile. Stopping Keys."
+        end
+
+      else
+        # otherwise let it go in global
+        podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
+      end
     end
 
     private
