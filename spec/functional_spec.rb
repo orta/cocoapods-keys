@@ -12,7 +12,6 @@ describe 'CocoaPodsKeys functional tests' do
           platform :ios, '7'
           plugin 'cocoapods-keys', {
               :project => 'TestProject',
-              :target => 'TestTarget',
               :keys => [
                   'KeyWithData',
                   'AnotherKeyWithData',
@@ -31,7 +30,7 @@ describe 'CocoaPodsKeys functional tests' do
   end
 
   it "does not directly encode the keys into the implementation file" do
-    source = File.read(File.join(@tmpdir, 'Pods/Keys/TestProjectKeys.m'))
+    source = File.read(File.join(@tmpdir, 'Pods/CocoaPodsKeys/TestProjectKeys.m'))
     expect(source).to_not include('such-data')
     expect(source).to_not include('other-data')
   end
@@ -46,7 +45,7 @@ describe 'CocoaPodsKeys functional tests' do
   describe "with a built keys implementation" do
     before :all do
       name = 'TestProjectKeys'
-      dir = File.join(@tmpdir, 'Pods/Keys')
+      dir = File.join(@tmpdir, 'Pods/CocoaPodsKeys')
       Dir.chdir(dir) do
         system("xcrun clang -framework Foundation -bundle #{name}.m -o #{name}.bundle")
       end

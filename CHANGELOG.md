@@ -1,6 +1,9 @@
 ## Master
 
+## 1.2.0
+
 * Support for correctly scoping Keys to a target [orta]
+* Support CocoaPods 0.37+ via CocoaPods development Pods [orta]
 
 ## 1.1.0
 

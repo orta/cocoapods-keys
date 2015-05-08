@@ -1,0 +1,23 @@
+{
+  "name": "Keys",
+  "version": "1.0.0",
+  "summary": "Injected podspec used by CocoaPods-Keys plugin.",
+  "description": "This is intended to be used as an injected podspec template \n used by the [CocoaPods-Keys plugin](https://github.com/orta/cocoapods-keys).\n\n It should *not* be referenced outside of that context. \n",
+  "homepage": "https://github.com/orta/cocoapods-keys",
+  "license": {
+    "type": "MIT",
+    "text": "MIT LICENSE Found in the repo"
+  },
+  "authors": {
+    "Orta Therox": "orta.therox@gmail.com",
+    "Samuel Giddins": "segiddins@segiddins.me",
+    "Ash Furrow": "ash@ashfurrow.com"
+  },
+  "source": {
+    "git": "https://github.com/orta/cocoapods-keys.git",
+    "tag": "23"
+  },
+  "source_files": "*",
+  "frameworks": "Foundation",
+  "requires_arc": true
+}

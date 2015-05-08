@@ -2,39 +2,47 @@ require 'cocoapods-core'
 
 module CocoaPodsKeys
   class << self
-    def podspec_for_current_project(spec_contents)
-      local_user_options = user_options || {}
-      project = local_user_options.fetch("project") { CocoaPodsKeys::NameWhisperer.get_project_name }
-      keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
-      raise Pod::Informative, "Could not load keyring" unless keyring
-      key_master = KeyMaster.new(keyring)
-
-      spec_contents.gsub!(/%%SOURCE_FILES%%/, "#{key_master.name}.{h,m}")
-      spec_contents.gsub!(/%%PROJECT_NAME%%/, project)
-    end
 
     def setup
       require 'preinstaller'
 
       PreInstaller.new(user_options).setup
       
-      # Add our template podspec (needs to be remote, not local).
+      # move our podspec in to the Pods
+      `mkdir Pods/CocoaPodsKeys` unless Dir.exists? "Pods/CocoaPodsKeys"
+      podspec_path = File.join(__dir__, "../templates", "Keys.podspec.json")
+      `cp "#{podspec_path}" Pods/CocoaPodsKeys`
       
+      # Get all the keys
+      local_user_options = user_options || {}
+      project = local_user_options.fetch("project") { CocoaPodsKeys::NameWhisperer.get_project_name }
+      keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
+      raise Pod::Informative, "Could not load keyring" unless keyring
+  
+      # Create the h & m files in the same folder as the podspec
+      key_master = KeyMaster.new(keyring)
+      interface_file = File.join("Pods/CocoaPodsKeys", key_master.name + '.h')
+      implementation_file = File.join("Pods/CocoaPodsKeys", key_master.name + '.m')
+   
+      File.write(interface_file, key_master.interface)
+      File.write(implementation_file, key_master.implementation)
+      
+      # Add our template podspec
       if user_options["target"]
         # Support correct scoping for a target
-        target = podfile.root_target_definitions.map(&:children).flatten.select do |target|
+        target = podfile.root_target_definitions.map(&:children).flatten.find do |target|
           target.label == "Pods-" + user_options["target"].to_s
-        end.first
-                
+        end
+              
         if target
-          target.store_pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
+          target.store_pod 'Keys', :path => 'Pods/CocoaPodsKeys/'
         else
-          puts "Could not find a target named '#{user_options["target"]}' in your Podfile. Stopping Keys."
+          puts "Could not find a target named '#{user_options["target"]}' in your Podfile. Stopping Keys.".red
         end
 
       else
         # otherwise let it go in global
-        podfile.pod 'Keys', :git => 'https://github.com/ashfurrow/empty-podspec.git'
+        podfile.pod 'Keys', :path => 'Pods/CocoaPodsKeys/'
       end
     end
 
@@ -62,41 +70,11 @@ module Pod
 
     def install!
       CocoaPodsKeys.setup if validates_for_keys
-
       install_before_cocoapods_keys!
     end
 
     def validates_for_keys
       Pod::Config.instance.podfile.plugins["cocoapods-keys"] != nil
-    end
-
-    class Analyzer
-      class SandboxAnalyzer
-        alias_method :pod_state_before_cocoapods_keys, :pod_state
-
-        def pod_state(pod)
-          if pod == 'Keys'
-            # return :added if we were, otherwise assume the Keys have :changed since last install, following my mother's "Better Safe than Sorry" principle.
-            return :added if pod_added?(pod)
-            :changed
-          else
-            pod_state_before_cocoapods_keys(pod)
-          end
-        end
-      end
-    end
-  end
-
-  class Specification
-    class << self
-      alias_method :from_string_before_cocoapods_keys, :from_string
-
-      def from_string(spec_contents, path, subspec_name = nil)
-        if path.basename.to_s =~ /\AKeys.podspec(?:.json)\Z/
-          CocoaPodsKeys.podspec_for_current_project(spec_contents)
-        end
-        from_string_before_cocoapods_keys(spec_contents, path, subspec_name)
-      end
     end
   end
 end
