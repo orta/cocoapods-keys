@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/orta/cocoapods-keys.svg)
+
 A key value store for enviroment and application keys.
 
 Its good security practice to keep production keys out of developer hands. CocoaPods-keys makes it easy to have per-user config settings stored securely in the developer's keychain, and not in the application source. It is a plugin that once installed will run on every `pod install` or `pod update`.
