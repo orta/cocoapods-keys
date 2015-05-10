@@ -20,7 +20,10 @@ module CocoaPodsKeys
 
     def generate_data
 
-      return nil if @keys.empty?
+      # guard method; raises error if something in application keychain
+      # is nil. provides for better error message.
+      self.verify_keychain_integrity
+
       # Generate a base64 hash string that is ~25 times the length of all keys
 
       @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
@@ -67,7 +70,13 @@ module CocoaPodsKeys
     end
 
     :private
-    
+
+    def verify_keychain_integrity
+      if @keys.values.any? { |value| value.nil? } || @keys.any? { |value| value.nil? }
+        raise "A key/value pair in the application keychain is nil."
+      end
+    end
+
     def render_erb(erb_template)
       erb = IO.read(File.join(__dir__, "../templates", erb_template))
       ERB.new(erb, nil, '-').result(binding)
