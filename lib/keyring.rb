@@ -34,8 +34,12 @@ module CocoaPodsKeys
     def keychain_data
       keychain = OSXKeychain.new
       Hash[
-        @keys.map { |key| [key, keychain[self.class.keychain_prefix + name, key]] }
+        @keys.map { |key| [key, ENV[key] || keychain[self.class.keychain_prefix + name, key]] }
       ]
+    end
+
+    def camel_cased_keys
+      Hash[keychain_data.map { |(key, value)| [key[0].downcase + key[1..-1], value] }]
     end
 
   end

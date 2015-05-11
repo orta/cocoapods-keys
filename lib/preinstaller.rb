@@ -20,7 +20,7 @@ module CocoaPodsKeys
       has_shown_intro = false
       keys = options.fetch("keys", [])
       keys.each do |key|
-        unless data.keys.include? key
+        unless ENV[key] || data.keys.include?(key)
           
           unless has_shown_intro
             puts "\n CocoaPods-Keys has detected a keys mismatch for your setup."
