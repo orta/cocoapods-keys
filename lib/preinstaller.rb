@@ -4,6 +4,8 @@ module CocoaPodsKeys
       @user_options = user_options
     end
 
+    # Returns `true` if all keys specified by the user are satisfied by either an existing keyring or environment
+    # variables.
     def setup
       require 'key_master'
       require 'keyring_liberator'
@@ -14,6 +16,7 @@ module CocoaPodsKeys
       project = options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
 
+      existing_keyring = !keyring.nil?
       keyring = CocoaPodsKeys::Keyring.new(project, current_dir, []) unless keyring
 
       data = keyring.keychain_data
@@ -42,7 +45,8 @@ module CocoaPodsKeys
           
         end
       end
-      
+
+      existing_keyring || !keys.empty?
     end
   end
 end

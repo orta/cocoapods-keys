@@ -6,24 +6,27 @@ module CocoaPodsKeys
     def setup
       require 'preinstaller'
 
-      PreInstaller.new(user_options).setup
-      
+      unless PreInstaller.new(user_options).setup
+        raise Pod::Informative, "Could not load key data"
+      end
+
       # move our podspec in to the Pods
       `mkdir Pods/CocoaPodsKeys` unless Dir.exists? "Pods/CocoaPodsKeys"
       podspec_path = File.join(__dir__, "../templates", "Keys.podspec.json")
       `cp "#{podspec_path}" Pods/CocoaPodsKeys`
-      
+
       # Get all the keys
       local_user_options = user_options || {}
       project = local_user_options.fetch("project") { CocoaPodsKeys::NameWhisperer.get_project_name }
-      keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Dir.getwd)
-      raise Pod::Informative, "Could not load keyring" unless keyring
-  
+      keyring = KeyringLiberator.get_keyring_named(project) ||
+                KeyringLiberator.get_keyring(Dir.getwd) ||
+                Keyring.new(project, Dir.getwd, local_user_options['keys'])
+
       # Create the h & m files in the same folder as the podspec
       key_master = KeyMaster.new(keyring)
       interface_file = File.join("Pods/CocoaPodsKeys", key_master.name + '.h')
       implementation_file = File.join("Pods/CocoaPodsKeys", key_master.name + '.m')
-   
+
       File.write(interface_file, key_master.interface)
       File.write(implementation_file, key_master.implementation)
       
