@@ -20,6 +20,26 @@ The generated Objective-C classes are stored in the `Pods/Keys` directory, so if
 
 ## Usage
 
+Using the new Plugin API in CocoaPods we can automate a lot of the fiddly bits away. You define what keys you want inside your [Podfile](https://github.com/artsy/eidolon/blob/0a9f5947914eb637fd4abf364fa3532b56da3c52/Podfile#L6-L21) and Keys will detect what keys are not yet set. If you need to specify a different project name from the target name, use the key `:target` to specify it. 
+
+```
+plugin 'cocoapods-keys', {
+  :project => "Eidolon",
+  :keys => [
+    "ArtsyAPIClientSecret",
+    "ArtsyAPIClientKey",
+    "HockeyProductionSecret",
+    "HockeyBetaSecret",
+    "MixpanelProductionAPIClientKey",
+    ...
+  ]}
+```
+
+Then running `pod install` will prompt for the keys not yet set and you can ensure everyone has the same setup.
+
+
+## Alternative Usage
+
 You can save keys on a per-project basis by running the command:
 
     $ pod keys set KEY VALUE
@@ -47,7 +67,7 @@ For example:
    └ redditAPIToken & mixpanelAPIToken
 ```
 
-After the next `pod install` or `pod update` keys will add a new `Keys` pod to your Pods project, supporting both static libraries and frameworks. This provides an API to your keys from Cocoa code. For example the application code above would look like:
+After the next `pod install` or `pod update` keys will add a new `Keys` pod to your Pods project, supporting both static libraries and frameworks. *Note* you have to include `plugin 'cocoapods-keys'` in the Podfile for Keys to register that it should work. This provides an API to your keys from Cocoa code. For example the application code above would look like:
 
 ``` objc
 
@@ -68,25 +88,6 @@ After the next `pod install` or `pod update` keys will add a new `Keys` pod to y
 @end
 
 ```
-
-## Usage via CocoaPods 0.36
-
-Using the new Plugin API in CocoaPods we can automate a lot of the fiddly bits away. You define what keys you want inside your [Podfile](https://github.com/artsy/eidolon/blob/0a9f5947914eb637fd4abf364fa3532b56da3c52/Podfile#L6-L21) and Keys will detect what keys are not yet set. If you need to specify a different project name from the target name, use the key `:target` to specify it. 
-
-```
-plugin 'cocoapods-keys', {
-  :project => "Eidolon",
-  :keys => [
-    "ArtsyAPIClientSecret",
-    "ArtsyAPIClientKey",
-    "HockeyProductionSecret",
-    "HockeyBetaSecret",
-    "MixpanelProductionAPIClientKey",
-    ...
-  ]}
-```
-
-Then running `pod install` will prompt for the keys not yet set and you can ensure everyone has the same setup.
 
 #### Other commands
 
