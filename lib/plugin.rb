@@ -8,7 +8,7 @@ module CocoaPodsKeys
 
       PreInstaller.new(user_options).setup
       
-      keys_path = Pod::Config.instance.installation_root.to_s + "/Pods/CocoaPodsKeys/"
+      keys_path = Pod::Config.instance.installation_root + "Pods/CocoaPodsKeys/"
 
       # move our podspec in to the Pods
       `mkdir #{keys_path}` unless Dir.exists? keys_path
