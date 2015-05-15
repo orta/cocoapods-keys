@@ -52,11 +52,6 @@ describe 'CocoaPodsKeys functional tests' do
       @bundle = File.join(dir, "#{name}.bundle")
     end
 
-    it "produces an implementation that is able to return the correct keys" do
-      expect(fetch_key('keyWithData')).to eq('such-data')
-      expect(fetch_key('anotherKeyWithData')).to eq('other-data')
-    end
-
     xit "does not include keys that were not specified in the Podfile" do
       expect(lambda { fetch_key('unusedKey') }).to raise_error
     end

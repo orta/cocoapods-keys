@@ -3,41 +3,10 @@ require 'key_master'
 require 'tmpdir'
 
 describe CocoaPodsKeys::KeyMaster do
-  let(:empty_keys_interface) {
-    File.read(fixture("Keys_empty.h"))
-  }
-  
-  let(:empty_keys_implementation) {
-    File.read(fixture("Keys_empty.m"))
-  }
-  
-  it "should work with an empty keyring" do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
-    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
-    expect(keymaster.name).to eq("FakeKeys")
-    expect(keymaster.interface).to eq(empty_keys_interface)
-    expect(keymaster.implementation).to eq(empty_keys_implementation)
-  end
-  
-  it "should generate valid empty objc files", requires_clang: true do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
-    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
-    expect(validate_syntax(keymaster)).to eq(true)
-  end
 
-  it "should escape backslashes" do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
-    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
-    keymaster.instance_variable_set(:@data, '\4')
-    expect(keymaster.generate_implementation).to include('"\\\4"')
-  end
-
-  it "should escape double-quotes" do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
-    keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
-    keymaster.instance_variable_set(:@data, '"')
-    expect(keymaster.generate_implementation).to include('"\\""')
-  end
+  # Previous tests operated under assumption that
+  # empty keychains were OK. See for more info:
+  # github.com/orta/cocoapods-keys/pull/68
 
   private
 
