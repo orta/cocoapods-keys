@@ -6,10 +6,10 @@ file dump_keys_tool => dump_keys_source_file do
   sh "xcrun clang -framework Foundation #{dump_keys_source_file} -o #{dump_keys_tool}"
 end
 
-desc "Run tests"
+desc 'Run tests'
 task :spec => dump_keys_tool do
-  sh "bundle exec rspec spec/*_spec.rb"
-  sh "bundle exec rubocop"
+  sh 'bundle exec rspec spec/*_spec.rb'
+  sh 'bundle exec rubocop lib spec Rakefile'
 end
 
 task :default => :spec
