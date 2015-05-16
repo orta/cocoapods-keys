@@ -34,7 +34,7 @@ module Pod
             prefix = (index == data.length - 1) ? ' └ ' : ' ├ '
             UI.puts prefix + " #{key} - #{ value}"
           end
-          UI.puts ''
+          UI.puts
         end
 
         def display_keyring(keyring)
@@ -44,7 +44,7 @@ module Pod
           else
             UI.puts ' └ ' + keyring.keys[0...-1].join(' ') + ' & ' + keyring.keys[-1]
           end
-          UI.puts ''
+          UI.puts
         end
       end
     end
