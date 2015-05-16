@@ -8,10 +8,12 @@ module CocoaPodsKeys
 
       PreInstaller.new(user_options).setup
       
+      keys_path = Pod::Config.instance.installation_root + "Pods/CocoaPodsKeys/"
+
       # move our podspec in to the Pods
-      `mkdir Pods/CocoaPodsKeys` unless Dir.exists? "Pods/CocoaPodsKeys"
+      `mkdir #{keys_path}` unless Dir.exists? keys_path
       podspec_path = File.join(__dir__, "../templates", "Keys.podspec.json")
-      `cp "#{podspec_path}" Pods/CocoaPodsKeys`
+      `cp "#{podspec_path}" "#{keys_path}"`
       
       # Get all the keys
       local_user_options = user_options || {}
@@ -21,8 +23,8 @@ module CocoaPodsKeys
   
       # Create the h & m files in the same folder as the podspec
       key_master = KeyMaster.new(keyring)
-      interface_file = File.join("Pods/CocoaPodsKeys", key_master.name + '.h')
-      implementation_file = File.join("Pods/CocoaPodsKeys", key_master.name + '.m')
+      interface_file = File.join(keys_path, key_master.name + '.h')
+      implementation_file = File.join(keys_path, key_master.name + '.m')
    
       File.write(interface_file, key_master.interface)
       File.write(implementation_file, key_master.implementation)
