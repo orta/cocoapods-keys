@@ -40,7 +40,7 @@ module CocoaPodsKeys
               @indexed_keys[key][char_index] = index
               break
             else
-              index = rand data.length
+              index = SecureRandom.random_number data.length
               unless @used_indexes.include?(index)
                 data[index] = char
 

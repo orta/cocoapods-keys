@@ -31,15 +31,14 @@ module Pod
         def run
           keyring = get_current_keyring
           unless keyring
-            $stderr.puts 'Could not find a project for this folder'
-            return
+            raise Informative, 'Could not find a project for this folder'
           end
 
           if keyring.keys.include? @key_name
             data = keyring.keychain_data
-            puts data[@key_name]
+            UI.puts data[@key_name]
           else
-            $stderr.puts 'Could not find value'
+            raise Informative, 'Could not find value'
           end
         end
 

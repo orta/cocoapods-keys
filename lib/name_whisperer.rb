@@ -25,12 +25,12 @@ module CocoaPodsKeys
         Pathname(xcodeprojects.first).basename
       else
         error_message = (xcodeprojects.length > 1) ? 'found too many' : "couldn't find any"
-        puts 'CocoaPods-Keys ' + error_message + ' Xcode projects. Please give a name for this project.'
+        UI.puts 'CocoaPods-Keys ' + error_message + ' Xcode projects. Please give a name for this project.'
 
         answer = ''
         loop do
-          print ' > '
-          answer = STDIN.gets.chomp
+          UI.print ' > '
+          answer = UI.gets.strip
           break if answer.length > 0
         end
         answer

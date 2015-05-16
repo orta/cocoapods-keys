@@ -32,8 +32,7 @@ module Pod
         def run
           keyring = get_current_keyring
           unless keyring
-            $stderr.puts 'Could not find a project to remove the key from.'
-            return
+            raise Informative, 'Could not find a project to remove the key from.'
           end
 
           if keyring.keys.include? @key_name
@@ -46,14 +45,14 @@ module Pod
             delete_generic = `security delete-generic-password -a #{@key_name.shellescape} -l #{login.shellescape} 2>&1`
 
             if delete_generic.include? 'security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain.'
-              $stderr.puts "Removed value for #{@key_name}, but could not delete from Keychain."
+              raise Informative, "Removed value for #{@key_name}, but could not delete from Keychain."
             elsif delete_generic.include? 'password has been deleted.'
-              $stderr.puts "Removed value for #{@key_name}, and deleted associated key in Keychain."
+              raise Informative, "Removed value for #{@key_name}, and deleted associated key in Keychain."
             else
-              $stderr.puts "Removed value for #{@key_name}."
+              raise Informative, "Removed value for #{@key_name}."
             end
           else
-            $stderr.puts "Could not find key named #{@key_name}."
+            raise Informative, "Could not find key named #{@key_name}."
           end
         end
 

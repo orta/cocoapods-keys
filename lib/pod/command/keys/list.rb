@@ -28,23 +28,23 @@ module Pod
         end
 
         def display_current_keyring(keyring)
-          puts "Keys for #{keyring.name}"
+          UI.puts "Keys for #{keyring.name}"
           data = keyring.keychain_data
           data.each_with_index do |(key, value), index|
             prefix = (index == data.length - 1) ? ' └ ' : ' ├ '
-            puts prefix + " #{key} - #{ value}"
+            UI.puts prefix + " #{key} - #{ value}"
           end
-          puts ''
+          UI.puts ''
         end
 
         def display_keyring(keyring)
-          puts "#{keyring.name} - #{keyring.path}"
+          UI.puts "#{keyring.name} - #{keyring.path}"
           if keyring.keys.length == 1
-            puts ' └ ' + keyring.keys[0]
+            UI.puts ' └ ' + keyring.keys[0]
           else
-            puts ' └ ' + keyring.keys[0...-1].join(' ') + ' & ' + keyring.keys[-1]
+            UI.puts ' └ ' + keyring.keys[0...-1].join(' ') + ' & ' + keyring.keys[-1]
           end
-          puts ''
+          UI.puts ''
         end
       end
     end

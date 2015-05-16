@@ -42,7 +42,7 @@ module CocoaPodsKeys
         if target
           target.store_pod 'Keys', :path => keys_path.to_path
         else
-          puts "Could not find a target named '#{user_options['target']}' in your Podfile. Stopping Keys.".red
+          Pod::UI.puts "Could not find a target named '#{user_options['target']}' in your Podfile. Stopping Keys.".red
         end
 
       else
