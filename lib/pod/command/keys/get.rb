@@ -1,12 +1,11 @@
-require "keyring_liberator"
-require "name_whisperer"
+require 'keyring_liberator'
+require 'name_whisperer'
 
 module Pod
   class Command
     class Keys
-
       class Get < Keys
-        self.summary = "Print a values of a key."
+        self.summary = 'Print a values of a key.'
 
         self.description = <<-DESC
             Outputs the value of a key to SDTOUT
@@ -26,33 +25,31 @@ module Pod
         def validate!
           super
           verify_podfile_exists!
-          help! "A key name is required for lookup." unless @key_name
+          help! 'A key name is required for lookup.' unless @key_name
         end
 
         def run
           keyring = get_current_keyring
-          if !keyring
-            $stderr.puts "Could not find a project for this folder"
-            return
+          unless keyring
+            raise Informative, 'Could not find a project for this folder'
           end
 
           if keyring.keys.include? @key_name
             data = keyring.keychain_data
-            puts data[@key_name]
+            UI.puts data[@key_name]
           else
-            $stderr.puts "Could not find value"
+            raise Informative, 'Could not find value'
           end
         end
 
         def get_current_keyring
-          current_dir = Dir.getwd
+          current_dir = Pathname.pwd
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
           if !keyring && @project_name
             return CocoaPodsKeys::KeyringLiberator.get_keyring_named @project_name
           end
           keyring
         end
-
       end
     end
   end

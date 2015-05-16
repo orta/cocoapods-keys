@@ -3,37 +3,37 @@ require 'key_master'
 require 'tmpdir'
 
 describe CocoaPodsKeys::KeyMaster do
-  let(:empty_keys_interface) {
-    File.read(fixture("Keys_empty.h"))
-  }
-  
-  let(:empty_keys_implementation) {
-    File.read(fixture("Keys_empty.m"))
-  }
-  
-  it "should work with an empty keyring" do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+  let(:empty_keys_interface) do
+    File.read(fixture('Keys_empty.h'))
+  end
+
+  let(:empty_keys_implementation) do
+    File.read(fixture('Keys_empty.m'))
+  end
+
+  it 'should work with an empty keyring' do
+    keyring = double('Keyring', :keychain_data => [], :code_name => 'Fake')
     keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
-    expect(keymaster.name).to eq("FakeKeys")
+    expect(keymaster.name).to eq('FakeKeys')
     expect(keymaster.interface).to eq(empty_keys_interface)
     expect(keymaster.implementation).to eq(empty_keys_implementation)
   end
-  
-  it "should generate valid empty objc files", requires_clang: true do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+
+  it 'should generate valid empty objc files', :requires_clang => true do
+    keyring = double('Keyring', :keychain_data => [], :code_name => 'Fake')
     keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
     expect(validate_syntax(keymaster)).to eq(true)
   end
 
-  it "should escape backslashes" do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+  it 'should escape backslashes' do
+    keyring = double('Keyring', :keychain_data => [], :code_name => 'Fake')
     keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
     keymaster.instance_variable_set(:@data, '\4')
     expect(keymaster.generate_implementation).to include('"\\\4"')
   end
 
-  it "should escape double-quotes" do
-    keyring = double("Keyring", keychain_data: [], code_name: "Fake")
+  it 'should escape double-quotes' do
+    keyring = double('Keyring', :keychain_data => [], :code_name => 'Fake')
     keymaster = described_class.new(keyring, Time.new(2015, 3, 11))
     keymaster.instance_variable_set(:@data, '"')
     expect(keymaster.generate_implementation).to include('"\\""')
@@ -52,7 +52,7 @@ describe CocoaPodsKeys::KeyMaster do
       IO.write(m_file, keymaster.implementation)
       # attempt to validate syntax with clang
       Dir.chdir(dir)
-      system(`xcrun --sdk macosx --find clang`.strip, "-fsyntax-only", m_file)
+      system(`xcrun --sdk macosx --find clang`.strip, '-fsyntax-only', m_file)
     end
   end
 end

@@ -1,13 +1,13 @@
-require "keyring_liberator"
-require "keyring"
-require "name_whisperer"
+require 'keyring_liberator'
+require 'keyring'
+require 'name_whisperer'
+require 'shellwords'
 
 module Pod
   class Command
     class Keys
-
       class Rm < Keys
-        self.summary = "Remove a key-value pair from a project."
+        self.summary = 'Remove a key-value pair from a project.'
 
         self.description = <<-DESC
             Remove a key, and it's value from a project
@@ -26,45 +26,44 @@ module Pod
         def validate!
           super
           verify_podfile_exists!
-          help! "A key name is required for lookup." unless @key_name
+          help! 'A key name is required for lookup.' unless @key_name
         end
 
         def run
           keyring = get_current_keyring
-          if !keyring
-            $stderr.puts "Could not find a project to remove the key from."
-            return
+          unless keyring
+            raise Informative, 'Could not find a project to remove the key from.'
           end
 
           if keyring.keys.include? @key_name
-            keyring.save(@key_name, "")
+            keyring.save(@key_name, '')
             keyring.keys.delete @key_name
             CocoaPodsKeys::KeyringLiberator.save_keyring(keyring)
 
             prefix = CocoaPodsKeys::Keyring.keychain_prefix
-            delete_generic = `security delete-generic-password -a #{@key_name} -l #{prefix+keyring.name} 2>&1`
+            login = prefix + keyring.name
+            delete_generic = `security delete-generic-password -a #{@key_name.shellescape} -l #{login.shellescape} 2>&1`
 
-            if delete_generic.include? "security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain."
-              $stderr.puts "Removed value for #{@key_name}, but could not delete from Keychain."
-            elsif delete_generic.include? "password has been deleted."
-              $stderr.puts "Removed value for #{@key_name}, and deleted associated key in Keychain."
+            if delete_generic.include? 'security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain.'
+              raise Informative, "Removed value for #{@key_name}, but could not delete from Keychain."
+            elsif delete_generic.include? 'password has been deleted.'
+              raise Informative, "Removed value for #{@key_name}, and deleted associated key in Keychain."
             else
-              $stderr.puts "Removed value for #{@key_name}."
+              raise Informative, "Removed value for #{@key_name}."
             end
           else
-            $stderr.puts "Could not find key named #{@key_name}."
+            raise Informative, "Could not find key named #{@key_name}."
           end
         end
 
         def get_current_keyring
-          current_dir = Dir.getwd
+          current_dir = Pathname.pwd
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
           if !keyring && @project_name
             return CocoaPodsKeys::KeyringLiberator.get_keyring_named @project_name
           end
           keyring
         end
-
       end
     end
   end

@@ -1,13 +1,13 @@
 require 'set'
 require 'erb'
 require 'digest'
+require 'securerandom'
 
 module CocoaPodsKeys
   class KeyMaster
-
     attr_accessor :name, :interface, :implementation
 
-    def initialize(keyring, time=Time.now)
+    def initialize(keyring, time = Time.now)
       @time = time
       @keys = Hash[keyring.keychain_data.map { |(key, value)| [key[0].downcase + key[1..-1], value] }]
       @name = keyring.code_name + 'Keys'
@@ -19,13 +19,12 @@ module CocoaPodsKeys
     end
 
     def generate_data
-
       return nil if @keys.empty?
       # Generate a base64 hash string that is ~25 times the length of all keys
 
       @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
-      data = `head -c #{@data_length} /dev/random | base64 | head -c #{@data_length}`
-      data = data + '\\"'
+      data = SecureRandom.base64(@data_length)
+      data += '\\"'
       @data_length = data.length
 
       # Swap the characters within the hashed string with the characters from
@@ -36,13 +35,12 @@ module CocoaPodsKeys
 
         value.chars.each_with_index do |char, char_index|
           loop do
-
             if char == '"'
               index = data.delete('\\').length - 1
               @indexed_keys[key][char_index] = index
               break
             else
-              index = rand data.length
+              index = SecureRandom.random_number data.length
               unless @used_indexes.include?(index)
                 data[index] = char
 
@@ -59,23 +57,22 @@ module CocoaPodsKeys
     end
 
     def generate_interface
-      render_erb("Keys.h.erb")
+      render_erb('Keys.h.erb')
     end
 
     def generate_implementation
-      render_erb("Keys.m.erb")
+      render_erb('Keys.m.erb')
     end
 
-    :private
-    
+    private
+
     def render_erb(erb_template)
-      erb = IO.read(File.join(__dir__, "../templates", erb_template))
+      erb = (Pathname(__dir__).parent + 'templates' + erb_template).read
       ERB.new(erb, nil, '-').result(binding)
     end
 
     def key_data_arrays
-      Hash[@indexed_keys.map {|key, value| [key, value.map { |i| name + "Data[#{i}]" }.join(', ')]}]
+      Hash[@indexed_keys.map { |key, value| [key, value.map { |i| name + "Data[#{i}]" }.join(', ')] }]
     end
-
   end
 end

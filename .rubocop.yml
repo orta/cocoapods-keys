@@ -1,0 +1,10 @@
+inherit_from:
+ - .rubocop_cocoapods.yml
+ - .rubocop_todo.yml
+
+#- cocoapods-keys -------------------------------------------------------------
+
+Style/FileName:
+  Exclude:
+    - bin/*
+    - Rakefile

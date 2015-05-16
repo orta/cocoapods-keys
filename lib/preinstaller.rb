@@ -8,9 +8,12 @@ module CocoaPodsKeys
       require 'key_master'
       require 'keyring_liberator'
       require 'pod/command/keys/set'
+      require 'cocoapods/user_interface'
+
+      ui = Pod::UserInterface
 
       options = @user_options || {}
-      current_dir = Dir.getwd
+      current_dir = Pathname.pwd
       project = options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
 
@@ -18,31 +21,30 @@ module CocoaPodsKeys
 
       data = keyring.keychain_data
       has_shown_intro = false
-      keys = options.fetch("keys", [])
+      keys = options.fetch('keys', [])
       keys.each do |key|
         unless data.keys.include? key
-          
+
           unless has_shown_intro
-            puts "\n CocoaPods-Keys has detected a keys mismatch for your setup."
+            ui.puts "\n CocoaPods-Keys has detected a keys mismatch for your setup."
             has_shown_intro = true
           end
-          
-          puts " What is the key for " + key.green
-          answer = ""
+
+          ui.puts ' What is the key for ' + key.green
+          answer = ''
           loop do
-            print " > "
-            answer = STDIN.gets.chomp
+            ui.print ' > '
+            answer = ui.gets.strip
             break if answer.length > 0
           end
-          
-          puts ""
+
+          UI.puts
           args = CLAide::ARGV.new([key, answer, keyring.name])
           setter = Pod::Command::Keys::Set.new(args)
           setter.run
-          
+
         end
       end
-      
     end
   end
 end
