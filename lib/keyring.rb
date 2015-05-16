@@ -1,21 +1,21 @@
-require "osx_keychain"
+require 'osx_keychain'
 
 module CocoaPodsKeys
   class Keyring
     attr_accessor :keys, :path, :name
 
-    def initialize(name, path, keys=[])
+    def initialize(name, path, keys = [])
       @name = name
       @path = path
       @keys = keys
     end
 
     def self.from_hash(hash)
-      new(hash["name"], hash["path"], hash["keys"])
+      new(hash['name'], hash['path'], hash['keys'])
     end
 
     def to_hash
-      { "keys" => @keys, "path" => @path, "name" => @name }
+      { 'keys' => @keys, 'path' => @path, 'name' => @name }
     end
 
     def code_name
@@ -23,7 +23,7 @@ module CocoaPodsKeys
     end
 
     def self.keychain_prefix
-      "cocoapods-keys-"
+      'cocoapods-keys-'
     end
 
     def save(key, value)
@@ -37,6 +37,5 @@ module CocoaPodsKeys
         @keys.map { |key| [key, keychain[self.class.keychain_prefix + name, key]] }
       ]
     end
-
   end
 end

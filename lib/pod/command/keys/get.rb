@@ -1,12 +1,11 @@
-require "keyring_liberator"
-require "name_whisperer"
+require 'keyring_liberator'
+require 'name_whisperer'
 
 module Pod
   class Command
     class Keys
-
       class Get < Keys
-        self.summary = "Print a values of a key."
+        self.summary = 'Print a values of a key.'
 
         self.description = <<-DESC
             Outputs the value of a key to SDTOUT
@@ -26,13 +25,13 @@ module Pod
         def validate!
           super
           verify_podfile_exists!
-          help! "A key name is required for lookup." unless @key_name
+          help! 'A key name is required for lookup.' unless @key_name
         end
 
         def run
           keyring = get_current_keyring
-          if !keyring
-            $stderr.puts "Could not find a project for this folder"
+          unless keyring
+            $stderr.puts 'Could not find a project for this folder'
             return
           end
 
@@ -40,7 +39,7 @@ module Pod
             data = keyring.keychain_data
             puts data[@key_name]
           else
-            $stderr.puts "Could not find value"
+            $stderr.puts 'Could not find value'
           end
         end
 
@@ -52,7 +51,6 @@ module Pod
           end
           keyring
         end
-
       end
     end
   end

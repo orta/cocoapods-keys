@@ -9,6 +9,7 @@ end
 desc "Run tests"
 task :spec => dump_keys_tool do
   sh "bundle exec rspec spec/*_spec.rb"
+  sh "bundle exec rubocop"
 end
 
 task :default => :spec
