@@ -10,7 +10,7 @@ module CocoaPodsKeys
       require 'pod/command/keys/set'
 
       options = @user_options || {}
-      current_dir = Dir.getwd
+      current_dir = Pathname.pwd
       project = options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
 

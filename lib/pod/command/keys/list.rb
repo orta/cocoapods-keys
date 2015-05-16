@@ -14,7 +14,7 @@ module Pod
 
         def run
           # List all settings for current app
-          this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Dir.getwd)
+          this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Pathname.pwd)
           if this_keyring
             display_current_keyring this_keyring
           end

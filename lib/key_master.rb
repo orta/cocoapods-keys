@@ -1,6 +1,7 @@
 require 'set'
 require 'erb'
 require 'digest'
+require 'securerandom'
 
 module CocoaPodsKeys
   class KeyMaster
@@ -22,7 +23,7 @@ module CocoaPodsKeys
       # Generate a base64 hash string that is ~25 times the length of all keys
 
       @data_length = @keys.values.map(&:length).reduce(:+) * (20 + rand(10))
-      data = `head -c #{@data_length} /dev/random | base64 | head -c #{@data_length}`
+      data = SecureRandom.base64(@data_length)
       data += '\\"'
       @data_length = data.length
 
@@ -63,10 +64,10 @@ module CocoaPodsKeys
       render_erb('Keys.m.erb')
     end
 
-    :private
+    private
 
     def render_erb(erb_template)
-      erb = IO.read(File.join(__dir__, '../templates', erb_template))
+      erb = (Pathname(__dir__).parent + 'templates' + erb_template).read
       ERB.new(erb, nil, '-').result(binding)
     end
 

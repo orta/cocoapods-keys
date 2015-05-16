@@ -39,7 +39,7 @@ module Pod
           # info "Saving into the keychain."
 
           keyring = current_keyring
-          keyring.keys << @key_name.gsub('-', '_')
+          keyring.keys << @key_name.tr('-', '_')
           CocoaPodsKeys::KeyringLiberator.save_keyring keyring
 
           keyring.save @key_name, @key_value
@@ -48,7 +48,7 @@ module Pod
         end
 
         def current_keyring
-          current_dir = Dir.getwd
+          current_dir = Pathname.pwd
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
 
           unless keyring

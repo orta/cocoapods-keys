@@ -28,13 +28,13 @@ module CocoaPodsKeys
 
     def save(key, value)
       keychain = OSXKeychain.new
-      keychain[self.class.keychain_prefix + name, key] = value
+      keychain[self.class.keychain_prefix + name.to_s, key] = value
     end
 
     def keychain_data
       keychain = OSXKeychain.new
       Hash[
-        @keys.map { |key| [key, keychain[self.class.keychain_prefix + name, key]] }
+        @keys.map { |key| [key, keychain[self.class.keychain_prefix + name.to_s, key]] }
       ]
     end
   end

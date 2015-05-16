@@ -44,7 +44,7 @@ module Pod
         end
 
         def get_current_keyring
-          current_dir = Dir.getwd
+          current_dir = Pathname.pwd
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
           if !keyring && @project_name
             return CocoaPodsKeys::KeyringLiberator.get_keyring_named @project_name

@@ -8,12 +8,12 @@ module CocoaPodsKeys
     # by basically parsing it out of ~/.cocoapods/keys/"pathMD5".yml
 
     def self.keys_dir
-      Pathname.new('~/.cocoapods/keys/').expand_path.to_s
+      Pathname('~/.cocoapods/keys/').expand_path
     end
 
     def self.yaml_path_for_path(path)
-      sha = Digest::MD5.hexdigest(path)
-      File.join(keys_dir, sha + '.yml')
+      sha = Digest::MD5.hexdigest(path.to_s)
+      keys_dir + (sha + '.yml')
     end
 
     def self.get_keyring(path)
@@ -25,15 +25,15 @@ module CocoaPodsKeys
     end
 
     def self.save_keyring(keyring)
-      `mkdir -p #{keys_dir}`
+      keys_dir.mkpath
 
-      File.open(yaml_path_for_path(keyring.path), 'w') { |f| f.write(YAML.dump(keyring.to_hash)) }
+      yaml_path_for_path(keyring.path).open('w') { |f| f.write(YAML.dump(keyring.to_hash)) }
     end
 
     def self.get_all_keyrings
-      return [] unless Dir.exist? keys_dir
+      return [] unless keys_dir.directory?
       rings = []
-      Dir.glob(keys_dir + '/*.yml').each do |path|
+      Pathname.glob(keys_dir + '*.yml').each do |path|
         rings << get_keyring_at_path(path)
       end
       rings
@@ -42,7 +42,7 @@ module CocoaPodsKeys
     private
 
     def self.get_keyring_at_path(path)
-      Keyring.from_hash(YAML.load(File.read(path))) if File.exist?(path)
+      Keyring.from_hash(YAML.load(path.read)) if path.file?
     end
   end
 end

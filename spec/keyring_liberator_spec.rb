@@ -7,12 +7,12 @@ include CocoaPodsKeys
 
 describe KeyringLiberator do
   it 'should get the keys directory' do
-    expect(KeyringLiberator.keys_dir).to end_with('cocoapods/keys')
+    expect(KeyringLiberator.keys_dir.to_s).to end_with('cocoapods/keys')
   end
 
   it 'should append a sha + .yaml when getting the yaml path' do
-    expect(KeyringLiberator.yaml_path_for_path('test')).to include('cocoapods/keys/')
-    expect(KeyringLiberator.yaml_path_for_path('test')).to end_with('098f6bcd4621d373cade4e832627b4f6.yml')
+    expect(KeyringLiberator.yaml_path_for_path('test').to_s).to include('cocoapods/keys/')
+    expect(KeyringLiberator.yaml_path_for_path('test').to_s).to end_with('098f6bcd4621d373cade4e832627b4f6.yml')
   end
 
   it 'should find by name' do
