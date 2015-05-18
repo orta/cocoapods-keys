@@ -41,7 +41,6 @@ module CocoaPodsKeys
 
         # Iterate through each target specified in the Keys plugin
         keys_target_list.each do |keys_target|
-
           # Find a matching Pod target
           pod_target = podfile.root_target_definitions.flat_map(&:children).find do |target|
             target.label == "Pods-#{keys_target}"
