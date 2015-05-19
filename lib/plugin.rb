@@ -32,9 +32,13 @@ module CocoaPodsKeys
       File.write(interface_file, key_master.interface)
       File.write(implementation_file, key_master.implementation)
 
-      keys_targets = user_options['target'] || user_options['targets']
-
       # Add our template podspec
+      add_keys_to_pods(keys_path, user_options)
+    end
+
+    def add_keys_to_pods(keys_path, options)
+      keys_targets = options['target'] || options['targets']
+
       if keys_targets
         # Get a list of targets, even if only one was specified
         keys_target_list = ([] << keys_targets).flatten
