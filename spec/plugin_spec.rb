@@ -44,7 +44,7 @@ describe CocoaPodsKeys, '#plugin' do
       CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), {})
     end
 
-    ['target', 'targets'].each do |target_tag|
+    %w(target targets).each do |target_tag|
       context "with a non-existant target specified as a string in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything)
@@ -84,7 +84,7 @@ describe CocoaPodsKeys, '#plugin' do
       end
     end
 
-    ['target', 'targets'].each do |target_tag|
+    %w(target targets).each do |target_tag|
       context "with a string specified in '#{target_tag}'" do
         it 'adds Keys to the target' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything)
@@ -143,7 +143,7 @@ describe CocoaPodsKeys, '#plugin' do
       end
     end
 
-    ['target', 'targets'].each do |target_tag|
+    %w(target targets).each do |target_tag|
       context "with 'TargetA' specified as a string in '#{target_tag}'" do
         it 'adds Keys to Target A' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything)
