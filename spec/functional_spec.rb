@@ -22,27 +22,27 @@ describe 'CocoaPodsKeys functional tests' do
         PODFILE
       end
 
-      system("pod keys set KeyWithData such-data --silent")
-      system("pod keys set AnotherKeyWithData other-data --silent")
-      system("pod keys set UnusedKey - --silent")
-      system("pod install --silent --no-repo-update --no-integrate")
+      system('pod keys set KeyWithData such-data --silent')
+      system('pod keys set AnotherKeyWithData other-data --silent')
+      system('pod keys set UnusedKey - --silent')
+      system('pod install --silent --no-repo-update --no-integrate')
     end
   end
 
-  it "does not directly encode the keys into the implementation file" do
+  it 'does not directly encode the keys into the implementation file' do
     source = File.read(File.join(@tmpdir, 'Pods/CocoaPodsKeys/TestProjectKeys.m'))
     expect(source).to_not include('such-data')
     expect(source).to_not include('other-data')
   end
 
-  it "is able to retrieve the correct keys from the command-line" do
+  it 'is able to retrieve the correct keys from the command-line' do
     Dir.chdir(@tmpdir) do
       expect(`pod keys get KeyWithData`.strip).to eq('such-data')
       expect(`pod keys get AnotherKeyWithData`.strip).to eq('other-data')
     end
   end
 
-  describe "with a built keys implementation" do
+  describe 'with a built keys implementation' do
     before :all do
       name = 'TestProjectKeys'
       dir = File.join(@tmpdir, 'Pods/CocoaPodsKeys')
@@ -50,10 +50,6 @@ describe 'CocoaPodsKeys functional tests' do
         system("xcrun clang -framework Foundation -bundle #{name}.m -o #{name}.bundle")
       end
       @bundle = File.join(dir, "#{name}.bundle")
-    end
-
-    xit "does not include keys that were not specified in the Podfile" do
-      expect(lambda { fetch_key('unusedKey') }).to raise_error
     end
 
     private

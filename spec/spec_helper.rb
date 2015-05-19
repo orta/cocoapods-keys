@@ -2,11 +2,11 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 def clang_available
   # uses a shell to ensure we get a reasonable PATH
-  system("which -s clang")
+  system('which -s clang')
 end
 
 def fixture(name)
-  File.join(__dir__, "fixtures", name)
+  File.join(__dir__, 'fixtures', name)
 end
 
 RSpec.configure do |c|

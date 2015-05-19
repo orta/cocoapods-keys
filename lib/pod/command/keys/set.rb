@@ -1,14 +1,13 @@
-require "keyring_liberator"
-require "name_whisperer"
+require 'keyring_liberator'
+require 'name_whisperer'
 
 module Pod
   class Command
     class Keys
-
       class Set < Keys
         include Config::Mixin
 
-        self.summary = "A set values for keys."
+        self.summary = 'A set values for keys.'
 
         self.description = <<-DESC
             Save a environment key to be added to your project on the next pod install.
@@ -31,8 +30,8 @@ module Pod
         def validate!
           super
           verify_podfile_exists!
-          help! "A key name is required to save." unless @key_name
-          help! "A value is required for the key." unless @key_value
+          help! 'A key name is required to save.' unless @key_name
+          help! 'A value is required for the key.' unless @key_value
         end
 
         def run
@@ -40,16 +39,16 @@ module Pod
           # info "Saving into the keychain."
 
           keyring = current_keyring
-          keyring.keys << @key_name.gsub("-", "_")
+          keyring.keys << @key_name.tr('-', '_')
           CocoaPodsKeys::KeyringLiberator.save_keyring keyring
 
           keyring.save @key_name, @key_value
 
-          puts "Saved #{@key_name} to #{keyring.name}." unless config.silent?
+          UI.puts "Saved #{@key_name} to #{keyring.name}." unless config.silent?
         end
 
         def current_keyring
-          current_dir = Dir.getwd
+          current_dir = Pathname.pwd
           keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
 
           unless keyring
@@ -59,7 +58,6 @@ module Pod
 
           keyring
         end
-
       end
     end
   end

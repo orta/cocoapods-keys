@@ -21,7 +21,7 @@ describe CocoaPodsKeys::KeyMaster do
       IO.write(m_file, keymaster.implementation)
       # attempt to validate syntax with clang
       Dir.chdir(dir)
-      system(`xcrun --sdk macosx --find clang`.strip, "-fsyntax-only", m_file)
+      system(`xcrun --sdk macosx --find clang`.strip, '-fsyntax-only', m_file)
     end
   end
 end
