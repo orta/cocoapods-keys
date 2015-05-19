@@ -39,7 +39,7 @@ describe CocoaPodsKeys, '#plugin' do
     end
 
     it 'adds Keys to the global Pod' do
-      expect(@podfile).to receive(:pod).with('Keys', anything())
+      expect(@podfile).to receive(:pod).with('Keys', anything)
 
       CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), {})
     end
@@ -47,7 +47,7 @@ describe CocoaPodsKeys, '#plugin' do
     ['target', 'targets'].each do |target_tag|
       context "with a non-existant target specified as a string in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetA\' in your Podfile. Stopping keys'.red)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetA')
@@ -56,7 +56,7 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with a non-existant target specified as an array in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetA\' in your Podfile. Stopping keys'.red)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetA'])
@@ -77,8 +77,8 @@ describe CocoaPodsKeys, '#plugin' do
 
     context 'with no targets specified' do
       it 'adds Keys to the global Pod' do
-        expect(@podfile).to receive(:pod).with('Keys', anything())
-        expect(@targetA).not_to receive(:store_pod).with('Keys', anything())
+        expect(@podfile).to receive(:pod).with('Keys', anything)
+        expect(@targetA).not_to receive(:store_pod).with('Keys', anything)
 
         CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), {})
       end
@@ -87,8 +87,8 @@ describe CocoaPodsKeys, '#plugin' do
     ['target', 'targets'].each do |target_tag|
       context "with a string specified in '#{target_tag}'" do
         it 'adds Keys to the target' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
-          expect(@targetA).to receive(:store_pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
+          expect(@targetA).to receive(:store_pod).with('Keys', anything)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetA')
         end
@@ -96,8 +96,8 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with an array specified in '#{target_tag}'" do
         it 'adds Keys to the target' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
-          expect(@targetA).to receive(:store_pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
+          expect(@targetA).to receive(:store_pod).with('Keys', anything)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetA'])
         end
@@ -105,7 +105,7 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with a non-existant target specified as a string in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetB\' in your Podfile. Stopping keys'.red)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetB')
@@ -114,7 +114,7 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with a non-existant target specified as an array in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetB\' in your Podfile. Stopping keys'.red)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetB'])
@@ -135,9 +135,9 @@ describe CocoaPodsKeys, '#plugin' do
 
     context 'with no targets specified' do
       it 'adds Keys to the global Pod' do
-        expect(@podfile).to receive(:pod).with('Keys', anything())
-        expect(@targetA).not_to receive(:store_pod).with('Keys', anything())
-        expect(@targetB).not_to receive(:store_pod).with('Keys', anything())
+        expect(@podfile).to receive(:pod).with('Keys', anything)
+        expect(@targetA).not_to receive(:store_pod).with('Keys', anything)
+        expect(@targetB).not_to receive(:store_pod).with('Keys', anything)
 
         CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), {})
       end
@@ -146,9 +146,9 @@ describe CocoaPodsKeys, '#plugin' do
     ['target', 'targets'].each do |target_tag|
       context "with 'TargetA' specified as a string in '#{target_tag}'" do
         it 'adds Keys to Target A' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
-          expect(@targetA).to receive(:store_pod).with('Keys', anything())
-          expect(@targetB).not_to receive(:store_pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
+          expect(@targetA).to receive(:store_pod).with('Keys', anything)
+          expect(@targetB).not_to receive(:store_pod).with('Keys', anything)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetA')
         end
@@ -156,9 +156,9 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with 'TargetA' specified in an array in '#{target_tag}'" do
         it 'adds Keys to Target A' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
-          expect(@targetA).to receive(:store_pod).with('Keys', anything())
-          expect(@targetB).not_to receive(:store_pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
+          expect(@targetA).to receive(:store_pod).with('Keys', anything)
+          expect(@targetB).not_to receive(:store_pod).with('Keys', anything)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetA'])
         end
@@ -166,9 +166,9 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with 'TargetA' specified as a string in '#{target_tag}'" do
         it 'adds Keys to Target B' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
-          expect(@targetA).not_to receive(:store_pod).with('Keys', anything())
-          expect(@targetB).to receive(:store_pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
+          expect(@targetA).not_to receive(:store_pod).with('Keys', anything)
+          expect(@targetB).to receive(:store_pod).with('Keys', anything)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetB')
         end
@@ -176,9 +176,9 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with 'TargetB' specified in an array in '#{target_tag}'" do
         it 'adds Keys to Target B' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
-          expect(@targetA).not_to receive(:store_pod).with('Keys', anything())
-          expect(@targetB).to receive(:store_pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
+          expect(@targetA).not_to receive(:store_pod).with('Keys', anything)
+          expect(@targetB).to receive(:store_pod).with('Keys', anything)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetB'])
         end
@@ -186,7 +186,7 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with a non-existant target specified as a string in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetC\' in your Podfile. Stopping keys'.red)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetC')
@@ -195,7 +195,7 @@ describe CocoaPodsKeys, '#plugin' do
 
       context "with a non-existant target specified as an array in '#{target_tag}'" do
         it 'fails to assign the key to the tag' do
-          expect(@podfile).not_to receive(:pod).with('Keys', anything())
+          expect(@podfile).not_to receive(:pod).with('Keys', anything)
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetC\' in your Podfile. Stopping keys'.red)
 
           CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetC'])
