@@ -50,7 +50,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetA\' in your Podfile. Stopping keys'.red)
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => 'TargetA' })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetA')
         end
       end
 
@@ -59,7 +59,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetA\' in your Podfile. Stopping keys'.red)
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => ['TargetA'] })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetA'])
         end
       end
     end
@@ -90,7 +90,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(@targetA).to receive(:store_pod).with('Keys', anything())
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => 'TargetA' })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetA')
         end
       end
 
@@ -99,7 +99,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(@targetA).to receive(:store_pod).with('Keys', anything())
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => ['TargetA'] })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetA'])
         end
       end
 
@@ -108,7 +108,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetB\' in your Podfile. Stopping keys'.red)
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => 'TargetB' })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetB')
         end
       end
 
@@ -117,7 +117,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetB\' in your Podfile. Stopping keys'.red)
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => ['TargetB'] })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetB'])
         end
       end
     end
@@ -150,7 +150,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@targetA).to receive(:store_pod).with('Keys', anything())
           expect(@targetB).not_to receive(:store_pod).with('Keys', anything())
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => 'TargetA' })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetA')
         end
       end
 
@@ -160,7 +160,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@targetA).to receive(:store_pod).with('Keys', anything())
           expect(@targetB).not_to receive(:store_pod).with('Keys', anything())
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => ['TargetA'] })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetA'])
         end
       end
 
@@ -170,7 +170,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@targetA).not_to receive(:store_pod).with('Keys', anything())
           expect(@targetB).to receive(:store_pod).with('Keys', anything())
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => 'TargetB' })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetB')
         end
       end
 
@@ -180,7 +180,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@targetA).not_to receive(:store_pod).with('Keys', anything())
           expect(@targetB).to receive(:store_pod).with('Keys', anything())
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => ['TargetB'] })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetB'])
         end
       end
 
@@ -189,7 +189,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetC\' in your Podfile. Stopping keys'.red)
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => 'TargetC' })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => 'TargetC')
         end
       end
 
@@ -198,7 +198,7 @@ describe CocoaPodsKeys, '#plugin' do
           expect(@podfile).not_to receive(:pod).with('Keys', anything())
           expect(Pod::UI).to receive(:puts).with('Could not find a target named \'TargetC\' in your Podfile. Stopping keys'.red)
 
-          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), { target_tag => ['TargetC'] })
+          CocoaPodsKeys.add_keys_to_pods(Pathname.new('Pods/CocoaPodsKeys/'), target_tag => ['TargetC'])
         end
       end
     end
