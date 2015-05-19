@@ -11,7 +11,7 @@ end
 
 RSpec.configure do |c|
   # exclude tests requiring clang when it's unavailable
-  c.filter_run_excluding requires_clang: true unless clang_available
+  c.filter_run_excluding :requires_clang => true unless clang_available
 
   c.color = true
 end

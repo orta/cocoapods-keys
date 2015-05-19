@@ -3,7 +3,6 @@ require 'key_master'
 require 'tmpdir'
 
 describe CocoaPodsKeys::KeyMaster do
-
   # Previous tests operated under assumption that
   # empty keychains were OK. See for more info:
   # github.com/orta/cocoapods-keys/pull/68
