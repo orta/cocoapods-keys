@@ -68,7 +68,7 @@ module CocoaPodsKeys
     end
 
     def verify_keychain_integrity
-      if @keys.values.any?(nil?) || @keys.any?(nil?)
+      if @keys.values.any?.nil? || @keys.any?.nil?
         raise 'A key/value pair in the application keychain is nil.'
       end
     end
