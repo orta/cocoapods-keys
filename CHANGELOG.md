@@ -1,5 +1,7 @@
 ## Master
 
+* Support for not including keys in Podfile [ashfurrow]
+
 ## 1.2.0
 
 * Support for correctly scoping Keys to a target [orta]

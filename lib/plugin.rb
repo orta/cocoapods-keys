@@ -76,7 +76,8 @@ module Pod
     end
 
     def validates_for_keys
-      !Pod::Config.instance.podfile.plugins['cocoapods-keys'].nil?
+      podfile = Pod::Config.instance.podfile
+      !(podfile.nil? || podfile.plugins.nil? || podfile.plugins['cocoapods-keys'].nil?)
     end
   end
 end
