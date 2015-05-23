@@ -33,16 +33,28 @@ module CocoaPodsKeys
       File.write(implementation_file, key_master.implementation)
 
       # Add our template podspec
-      if user_options['target']
-        # Support correct scoping for a target
-        target = podfile.root_target_definitions.flat_map(&:children).find do |target|
-          target.label == 'Pods-' + user_options['target'].to_s
-        end
+      add_keys_to_pods(keys_path, user_options)
+    end
 
-        if target
-          target.store_pod 'Keys', :path => keys_path.to_path
-        else
-          Pod::UI.puts "Could not find a target named '#{user_options['target']}' in your Podfile. Stopping Keys.".red
+    def add_keys_to_pods(keys_path, options)
+      keys_targets = options['target'] || options['targets']
+
+      if keys_targets
+        # Get a list of targets, even if only one was specified
+        keys_target_list = ([] << keys_targets).flatten
+
+        # Iterate through each target specified in the Keys plugin
+        keys_target_list.each do |keys_target|
+          # Find a matching Pod target
+          pod_target = podfile.root_target_definitions.flat_map(&:children).find do |target|
+            target.label == "Pods-#{keys_target}"
+          end
+
+          if pod_target
+            pod_target.store_pod 'Keys', :path => keys_path.to_path
+          else
+            Pod::UI.puts "Could not find a target named '#{keys_target}' in your Podfile. Stopping keys".red
+          end
         end
 
       else
