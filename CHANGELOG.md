@@ -1,5 +1,7 @@
 ## Master
 
+## 1.3.0
+
 * Support for not including keys in Podfile [ashfurrow]
 
 ## 1.2.0
