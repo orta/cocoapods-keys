@@ -38,7 +38,7 @@ module CocoaPodsKeys
             break if answer.length > 0
           end
 
-          UI.puts
+          ui.puts
           args = CLAide::ARGV.new([key, answer, keyring.name])
           setter = Pod::Command::Keys::Set.new(args)
           setter.run
