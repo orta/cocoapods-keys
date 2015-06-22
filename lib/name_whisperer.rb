@@ -20,17 +20,18 @@ module CocoaPodsKeys
     end
 
     def self.search_folders_for_xcodeproj
+      ui = Pod::UserInterface
       xcodeprojects = Pathname.glob('**/*.xcodeproj')
       if xcodeprojects.length == 1
         Pathname(xcodeprojects.first).basename
       else
         error_message = (xcodeprojects.length > 1) ? 'found too many' : "couldn't find any"
-        UI.puts 'CocoaPods-Keys ' + error_message + ' Xcode projects. Please give a name for this project.'
+        ui.puts 'CocoaPods-Keys ' + error_message + ' Xcode projects. Please give a name for this project.'
 
         answer = ''
         loop do
-          UI.print ' > '
-          answer = UI.gets.strip
+          ui.print ' > '
+          answer = ui.gets.strip
           break if answer.length > 0
         end
         answer
