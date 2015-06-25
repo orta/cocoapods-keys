@@ -1,5 +1,9 @@
 ## Master
 
+## 1.3.2
+
+* Use relative paths for generated Podspec [segiddins]
+
 ## 1.3.1
 
 * Fix for accidental `ui puts` crash [eliesoueidy]
