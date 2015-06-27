@@ -12,7 +12,7 @@ module CocoaPodsKeys
       PreInstaller.new(user_options).setup
 
       installation_root = Pod::Config.instance.installation_root
-      keys_path = installation_root.+('Pods/CocoaPodsKeys/').relative_path_from(installation_root)
+      keys_path = installation_root.+('Pods/CocoaPodsKeys/')
 
       # move our podspec in to the Pods
       mkdir_p keys_path
@@ -34,7 +34,7 @@ module CocoaPodsKeys
       File.write(implementation_file, key_master.implementation)
 
       # Add our template podspec
-      add_keys_to_pods(keys_path, user_options)
+      add_keys_to_pods(keys_path.relative_path_from(installation_root), user_options)
     end
 
     def add_keys_to_pods(keys_path, options)
