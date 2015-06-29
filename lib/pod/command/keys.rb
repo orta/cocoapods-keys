@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Keys < Command
+      include ProjectDirectory
+
       require 'pod/command/keys/list'
       require 'pod/command/keys/set'
       require 'pod/command/keys/get'
