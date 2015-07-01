@@ -9,8 +9,9 @@ module CocoaPodsKeys
 
     def initialize(keyring, time = Time.now)
       @time = time
-      @keys = Hash[keyring.keychain_data.map { |(key, value)| [key[0].downcase + key[1..-1], value] }]
+      @keys = keyring.camel_cased_keys
       @name = keyring.code_name.capitalize + 'Keys'
+
       @used_indexes = Set.new
       @indexed_keys = {}
       @data = generate_data
