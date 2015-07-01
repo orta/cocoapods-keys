@@ -9,7 +9,9 @@ module CocoaPodsKeys
     def setup
       require 'preinstaller'
 
-      PreInstaller.new(user_options).setup
+      unless PreInstaller.new(user_options).setup
+        raise Pod::Informative, "Could not load key data"
+      end
 
       installation_root = Pod::Config.instance.installation_root
       keys_path = installation_root.+('Pods/CocoaPodsKeys/')
@@ -22,6 +24,11 @@ module CocoaPodsKeys
       # Get all the keys
       local_user_options = user_options || {}
       project = local_user_options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
+
+      keyring = KeyringLiberator.get_keyring_named(project) ||
+                KeyringLiberator.get_keyring(Dir.getwd)     ||
+                Keyring.new(project, Dir.getwd, local_user_options['keys'])
+
       keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(Pathname.pwd)
       raise Pod::Informative, 'Could not load keyring' unless keyring
 
@@ -29,6 +36,7 @@ module CocoaPodsKeys
       key_master = KeyMaster.new(keyring)
       interface_file = keys_path + (key_master.name + '.h')
       implementation_file = keys_path + (key_master.name + '.m')
+
 
       File.write(interface_file, key_master.interface)
       File.write(implementation_file, key_master.implementation)
