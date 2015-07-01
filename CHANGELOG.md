@@ -1,5 +1,9 @@
 ## Master
 
+## 1.4.0
+
+* Adds support for ENV VAR based keys, this makes CI much easier to work with [alloy, orta]
+
 ## 1.3.2
 
 * Use relative paths for generated Podspec [segiddins]
