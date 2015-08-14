@@ -21,11 +21,15 @@ module CocoaPodsKeys
     end
 
     def self.get_keyring_named(name)
-      get_all_keyrings.find { |k| k.name == name }
+      get_all_keyrings.find { |k| k.name == name && k.path == Dir.getwd }
     end
 
     def self.save_keyring(keyring)
       keys_dir.mkpath
+
+      if get_keyring_named(keyring)
+        puts "About to create a duplicate keyring file for project #{keyring.name.green}"
+      end
 
       yaml_path_for_path(keyring.path).open('w') { |f| f.write(YAML.dump(keyring.to_hash)) }
     end
