@@ -6,7 +6,7 @@ module CocoaPodsKeys
 
     def initialize(name, path, keys = [])
       @name = name.to_s
-      @path = path
+      @path = path.to_s
       @keys = keys
     end
 
