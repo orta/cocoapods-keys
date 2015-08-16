@@ -21,7 +21,7 @@ module CocoaPodsKeys
     end
 
     def self.get_keyring_named(name)
-      get_all_keyrings.find { |k| k.name == name && k.path == Dir.getwd }
+      get_all_keyrings.find { |k| k.name == name }
     end
 
     def self.save_keyring(keyring)
