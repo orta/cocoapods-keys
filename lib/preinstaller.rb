@@ -21,16 +21,7 @@ module CocoaPodsKeys
       keyring = KeyringLiberator.get_current_keyring(project, current_dir)
 
       unless keyring
-        keyrings = KeyringLiberator.get_all_keyrings_named(project)
-        if keyrings.count > 1 && keyring.nil?
-          ui.puts "Found multiple keyrings for project #{project.inspect}, but"
-          ui.puts "no match found for current path (#{current_dir}):"
-          keyrings.each do |found_keyring|
-            ui.puts "- #{found_keyring.path}"
-          end
-          ui.puts "\nPress enter to create a new keyring, or `ctrl + c` to cancel"
-          ui.gets
-        end
+        check_for_multiple_keyrings(project)
       end
 
       existing_keyring = !keyring.nil?
@@ -62,6 +53,20 @@ module CocoaPodsKeys
       end
 
       existing_keyring || !keys.empty?
+    end
+
+    def check_for_multiple_keyrings(project)
+      ui = Pod::UserInterface
+      keyrings = KeyringLiberator.get_all_keyrings_named(project)
+      if keyrings.count > 1 && keyring.nil?
+        ui.puts "Found multiple keyrings for project #{project.inspect}, but"
+        ui.puts "no match found for current path (#{current_dir}):"
+        keyrings.each do |found_keyring|
+          ui.puts "- #{found_keyring.path}"
+        end
+        ui.puts "\nPress enter to create a new keyring, or `ctrl + c` to cancel"
+        ui.gets
+      end
     end
   end
 end
