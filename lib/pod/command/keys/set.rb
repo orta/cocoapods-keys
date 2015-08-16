@@ -38,25 +38,13 @@ module Pod
           # set a key to a folder id in ~/.cocoapods/keys
           # info "Saving into the keychain."
 
-          keyring = current_keyring
+          keyring = get_current_keyring || create_keyring
           keyring.keys << @key_name.tr('-', '_')
           CocoaPodsKeys::KeyringLiberator.save_keyring keyring
 
           keyring.save @key_name, @key_value
 
           UI.puts "Saved #{@key_name} to #{keyring.name}." unless config.silent?
-        end
-
-        def current_keyring
-          current_dir = Pathname.pwd
-          keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
-
-          unless keyring
-            name = @project_name || CocoaPodsKeys::NameWhisperer.get_project_name
-            keyring = CocoaPodsKeys::Keyring.new(name, current_dir, [])
-          end
-
-          keyring
         end
       end
     end
