@@ -25,8 +25,7 @@ module CocoaPodsKeys
       local_user_options = user_options || {}
       project = local_user_options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
 
-      keyring = KeyringLiberator.get_keyring_named(project) ||
-        KeyringLiberator.get_keyring(Dir.getwd) ||
+      keyring = KeyringLiberator.get_current_keyring(project, Dir.getwd) ||
         Keyring.new(project, Dir.getwd, local_user_options['keys'])
 
       raise Pod::Informative, 'Could not load keyring' unless keyring
