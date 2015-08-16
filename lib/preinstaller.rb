@@ -17,7 +17,21 @@ module CocoaPodsKeys
       options = @user_options || {}
       current_dir = Pathname.pwd
       project = options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
-      keyring = KeyringLiberator.get_keyring_named(project) || KeyringLiberator.get_keyring(current_dir)
+
+      keyring = KeyringLiberator.get_current_keyring(project, current_dir)
+
+      unless keyring
+        keyrings = KeyringLiberator.get_all_keyrings_named(project)
+        if keyrings.count > 1 && keyring.nil?
+          ui.puts "Found multiple keyrings for project #{project.inspect}, but"
+          ui.puts "no match found for current path (#{current_dir}):"
+          keyrings.each do |found_keyring|
+            ui.puts "- #{found_keyring.path}"
+          end
+          ui.puts "\nPress enter to create a new keyring, or `ctrl + c` to cancel"
+          ui.gets
+        end
+      end
 
       existing_keyring = !keyring.nil?
       keyring = CocoaPodsKeys::Keyring.new(project, current_dir, []) unless keyring

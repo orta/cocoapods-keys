@@ -24,6 +24,15 @@ module CocoaPodsKeys
       get_all_keyrings.find { |k| k.name == name }
     end
 
+    def self.get_current_keyring(name, cwd)
+      found_by_name = name && get_all_keyrings.find { |k| k.name == name && k.path == cwd.to_s }
+      found_by_name || KeyringLiberator.get_keyring(cwd)
+    end
+
+    def self.get_all_keyrings_named(name)
+      get_all_keyrings.find_all { |k| k.name == name }
+    end
+
     def self.save_keyring(keyring)
       keys_dir.mkpath
 
