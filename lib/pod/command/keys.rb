@@ -16,6 +16,11 @@ module Pod
 
       self.abstract_command = true
       self.default_subcommand = 'list'
+
+      def get_current_keyring
+        current_dir = Pathname.pwd
+        CocoaPodsKeys::KeyringLiberator.get_current_keyring(@project_name, current_dir)
+      end
     end
   end
 end
