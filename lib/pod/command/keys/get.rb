@@ -35,8 +35,8 @@ module Pod
           end
 
           if keyring.keys.include? @key_name
-            data = keyring.keychain_data
-            UI.puts data[@key_name]
+            data = keyring.keychain_value(@key_name)
+            UI.puts data
           else
             raise Informative, 'Could not find value'
           end

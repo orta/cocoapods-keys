@@ -27,11 +27,10 @@ module CocoaPodsKeys
       existing_keyring = !keyring.nil?
       keyring = CocoaPodsKeys::Keyring.new(project, current_dir, []) unless keyring
 
-      data = keyring.keychain_data
       has_shown_intro = false
       keys = options.fetch('keys', [])
       keys.each do |key|
-        unless ENV[key] || data.keys.include?(key)
+        unless keyring.keychain_has_key?(key)
           unless has_shown_intro
             ui.puts "\n CocoaPods-Keys has detected a keys mismatch for your setup."
             has_shown_intro = true
