@@ -36,7 +36,8 @@ module CocoaPodsKeys
     def self.save_keyring(keyring)
       keys_dir.mkpath
 
-      if get_keyring_named(keyring)
+      existing = get_keyring_named(keyring.name)
+      if existing && yaml_path_for_path(existing.path) != yaml_path_for_path(keyring.path)
         ui = Pod::UserInterface
         ui.puts "About to create a duplicate keyring file for project #{keyring.name.green}"
         ui.puts "\nPress enter to continue, or `ctrl + c` to cancel"
