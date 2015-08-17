@@ -36,8 +36,9 @@ module CocoaPodsKeys
     def self.save_keyring(keyring)
       keys_dir.mkpath
 
-      existing = get_keyring_named(keyring.name)
-      if existing && yaml_path_for_path(existing.path) != yaml_path_for_path(keyring.path)
+      keyrings = get_all_keyrings_named(keyring.name)
+      already_exists = File.exists?(yaml_path_for_path(keyring.path))
+      if !already_exists && keyrings.any? { |existing_keyring| File.exists?(yaml_path_for_path(existing_keyring.path)) }
         ui = Pod::UserInterface
         ui.puts "About to create a duplicate keyring file for project #{keyring.name.green}"
         ui.puts "Entries in your Apple Keychain will be shared between both projects."
