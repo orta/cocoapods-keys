@@ -50,6 +50,7 @@ module CocoaPodsKeys
           setter.run
         end
       end
+      CocoaPodsKeys::KeyringLiberator.save_keyring(keyring)
 
       existing_keyring || !keys.empty?
     end
