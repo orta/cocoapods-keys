@@ -40,6 +40,7 @@ module CocoaPodsKeys
       if existing && yaml_path_for_path(existing.path) != yaml_path_for_path(keyring.path)
         ui = Pod::UserInterface
         ui.puts "About to create a duplicate keyring file for project #{keyring.name.green}"
+        ui.puts "Entries in your Apple Keychain will be shared between both projects."
         ui.puts "\nPress enter to continue, or `ctrl + c` to cancel"
         ui.gets
       end
