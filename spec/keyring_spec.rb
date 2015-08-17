@@ -9,7 +9,7 @@ class FakeKeychain
   end
 
   def [](_, key)
-    data[key]
+    @data[key]
   end
 end
 
@@ -31,7 +31,7 @@ describe KeyringLiberator do
     keyring = Keyring.new('test', '/', ['ARMyKey'])
     keyring.instance_variable_set(:@keychain, FakeKeychain.new('KeychainKey' => 'abcde'))
     expect(keyring.keychain_has_key?('KeychainKey')).to be_truthy
-    expect(keyring.keychain_value('KeychainKey')).to eq('12345')
+    expect(keyring.keychain_value('KeychainKey')).to eq('abcde')
     expect(keyring.keychain_has_key?('NotMyKey')).to be_falsey
   end
 
@@ -53,8 +53,8 @@ describe KeyringLiberator do
     keyring.keychain_has_key?('EnvKey')
     keyring.keychain_has_key?('NotMyKey')
 
-    expect(keyring.keys).to include?('KeychainKey')
-    expect(keyring.keys).to include?('EnvKey')
-    expect(keyring.keys).not_to include?('NotMyKey')
+    expect(keyring.keys.include?('KeychainKey')).to be_truthy
+    expect(keyring.keys.include?('EnvKey')).to be_truthy
+    expect(keyring.keys.include?('NotMyKey')).to be_falsey
   end
 end
