@@ -36,8 +36,24 @@ module CocoaPodsKeys
 
     def keychain_data
       Hash[
-        @keys.map { |key| [key, ENV[key] || keychain[self.class.keychain_prefix + name, key]] }
+        @keys.map { |key| [key, keychain_value(key)] }
       ]
+    end
+
+    def keychain_has_key?(key)
+      has_key = !keychain_value(key).nil?
+
+      if has_key && !@keys.include?(key)
+        @keys << key
+      elsif !has_key && @keys.include?(key)
+        @keys.delete(key)
+      end
+
+      has_key
+    end
+
+    def keychain_value(key)
+      ENV[key] || keychain[self.class.keychain_prefix + name, key]
     end
 
     def camel_cased_keys
