@@ -55,15 +55,6 @@ module Pod
             raise Informative, "Could not find key named #{@key_name}."
           end
         end
-
-        def get_current_keyring
-          current_dir = Pathname.pwd
-          keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
-          if !keyring && @project_name
-            return CocoaPodsKeys::KeyringLiberator.get_keyring_named @project_name
-          end
-          keyring
-        end
       end
     end
   end

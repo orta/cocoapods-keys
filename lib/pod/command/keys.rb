@@ -16,6 +16,18 @@ module Pod
 
       self.abstract_command = true
       self.default_subcommand = 'list'
+
+      def create_keyring
+        current_dir = Pathname.pwd
+        name = @project_name || CocoaPodsKeys::NameWhisperer.get_project_name
+        CocoaPodsKeys::Keyring.new(name, current_dir, [])
+      end
+
+      def get_current_keyring
+        current_dir = Pathname.pwd
+        project = @project_name || CocoaPodsKeys::NameWhisperer.get_project_name
+        CocoaPodsKeys::KeyringLiberator.get_current_keyring(project, current_dir)
+      end
     end
   end
 end

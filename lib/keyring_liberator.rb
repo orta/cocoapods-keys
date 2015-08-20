@@ -24,9 +24,30 @@ module CocoaPodsKeys
       get_all_keyrings.find { |k| k.name == name }
     end
 
+    def self.get_current_keyring(name, cwd)
+      found_by_name = name && get_all_keyrings.find { |k| k.name == name && k.path == cwd.to_s }
+      found_by_name || KeyringLiberator.get_keyring(cwd)
+    end
+
+    def self.get_all_keyrings_named(name)
+      get_all_keyrings.find_all { |k| k.name == name }
+    end
+
+    def self.prompt_if_already_existing(keyring)
+      keyrings = get_all_keyrings_named(keyring.name)
+      already_exists = File.exist?(yaml_path_for_path(keyring.path))
+      if !already_exists && keyrings.any? { |existing_keyring| File.exist?(yaml_path_for_path(existing_keyring.path)) }
+        ui = Pod::UserInterface
+        ui.puts "About to create a duplicate keyring file for project #{keyring.name.green}"
+        ui.puts 'Entries in your Apple Keychain will be shared between both projects.'
+        ui.puts "\nPress enter to continue, or `ctrl + c` to cancel"
+        ui.gets
+      end
+    end
+
     def self.save_keyring(keyring)
       keys_dir.mkpath
-
+      prompt_if_already_existing(keyring)
       yaml_path_for_path(keyring.path).open('w') { |f| f.write(YAML.dump(keyring.to_hash)) }
     end
 

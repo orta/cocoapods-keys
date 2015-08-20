@@ -35,20 +35,11 @@ module Pod
           end
 
           if keyring.keys.include? @key_name
-            data = keyring.keychain_data
-            UI.puts data[@key_name]
+            data = keyring.keychain_value(@key_name)
+            UI.puts data
           else
             raise Informative, 'Could not find value'
           end
-        end
-
-        def get_current_keyring
-          current_dir = Pathname.pwd
-          keyring = CocoaPodsKeys::KeyringLiberator.get_keyring current_dir
-          if !keyring && @project_name
-            return CocoaPodsKeys::KeyringLiberator.get_keyring_named @project_name
-          end
-          keyring
         end
       end
     end

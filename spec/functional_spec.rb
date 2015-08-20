@@ -29,6 +29,13 @@ describe 'CocoaPodsKeys functional tests' do
     end
   end
 
+  after :all do
+    KeyringLiberator.get_all_keyrings_named('TestProject').each do |keyring|
+      file = KeyringLiberator.yaml_path_for_path(keyring.path)
+      FileUtils.rm(file) if File.exist?(file)
+    end
+  end
+
   it 'does not directly encode the keys into the implementation file' do
     source = File.read(File.join(@tmpdir, 'Pods/CocoaPodsKeys/TestProjectKeys.m'))
     expect(source).to_not include('such-data')

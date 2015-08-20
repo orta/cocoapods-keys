@@ -21,6 +21,13 @@ describe KeyringLiberator do
     expect(KeyringLiberator.get_keyring_named('test')).to equal(keyring)
   end
 
+  it 'should find many by name' do
+    keyring1 = Keyring.from_hash('name' => 'test', 'path' => 'testpath1', 'keys' => [])
+    keyring2 = Keyring.from_hash('name' => 'test', 'path' => 'testpath2', 'keys' => [])
+    allow(KeyringLiberator).to receive(:get_all_keyrings).and_return([keyring1, keyring2])
+    expect(KeyringLiberator.get_all_keyrings_named('test')).to eq([keyring1, keyring2])
+  end
+
   it 'should be nil if nothing found find by name' do
     keyring = Keyring.from_hash('name' => 'test', 'path' => 'testpath', 'keys' => [])
     allow(KeyringLiberator).to receive(:get_all_keyrings).and_return([keyring])

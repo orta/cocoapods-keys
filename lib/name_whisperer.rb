@@ -21,7 +21,7 @@ module CocoaPodsKeys
 
     def self.search_folders_for_xcodeproj
       ui = Pod::UserInterface
-      xcodeprojects = Pathname.glob('**/*.xcodeproj')
+      xcodeprojects = Pathname.glob('**/*.xcodeproj').reject { |path| path.to_s.end_with?('Pods/Pods.xcodeproj') }
       if xcodeprojects.length == 1
         Pathname(xcodeprojects.first).basename('.xcodeproj')
       else
