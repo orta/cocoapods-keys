@@ -3,16 +3,6 @@ require 'keyring'
 
 include CocoaPodsKeys
 
-class FakeKeychain
-  def initialize(data)
-    @data = data
-  end
-
-  def [](_, key)
-    @data[key]
-  end
-end
-
 describe KeyringLiberator do
   before(:each) do
     ENV['ARMyKey'] = 'Hello'
