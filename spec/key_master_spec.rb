@@ -27,14 +27,14 @@ describe CocoaPodsKeys::KeyMaster do
     end
   end
 
-  describe "#name" do
-    it "takes keyring with name that starts with number returns augmented the name with underscore" do
+  describe '#name' do
+    it 'takes keyring with name that starts with number returns augmented the name with underscore' do
       keyring = Keyring.new('500px', '/', ['ARMyKey'])
       keyring.instance_variable_set(:@keychain, FakeKeychain.new('ARMyKey' => 'secretkey'))
       key_master = KeyMaster.new(keyring)
       expect(key_master.name).to eq('_500pxKeys')
     end
-    it "takes keyring with proper name returns proper Keys file" do
+    it 'takes keyring with proper name returns proper Keys file' do
       keyring = Keyring.new('Artsy', '/', ['ARMyKey'])
       keyring.instance_variable_set(:@keychain, FakeKeychain.new('ARMyKey' => 'secretkey'))
       key_master = KeyMaster.new(keyring)
