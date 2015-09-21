@@ -11,6 +11,9 @@ module CocoaPodsKeys
       @time = time
       @keys = keyring.camel_cased_keys
       @name = keyring.code_name.capitalize + 'Keys'
+      if /^\d/.match(@name)
+        @name = '_' + @name
+      end
 
       @used_indexes = Set.new
       @indexed_keys = {}

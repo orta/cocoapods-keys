@@ -15,3 +15,13 @@ RSpec.configure do |c|
 
   c.color = true
 end
+
+class FakeKeychain
+  def initialize(data)
+    @data = data
+  end
+
+  def [](_, key)
+    @data[key]
+  end
+end
