@@ -1,5 +1,10 @@
 ## Master
 
+## 1.5.0
+
+* Minor error handling improvements [orta]
+* Don't create a shared scheme for Keys [orta]
+
 ## 1.4.0
 
 * Adds support for ENV VAR based keys, this makes CI much easier to work with [alloy, orta]
