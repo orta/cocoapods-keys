@@ -14,13 +14,12 @@ module Pod
 
         def run
           # List all settings for current app
-          this_keyring = CocoaPodsKeys::KeyringLiberator.get_keyring(Pathname.pwd)
+          this_keyring = get_current_keyring
           if this_keyring
             display_current_keyring this_keyring
           end
 
           # List all known bundle ids
-
           all_keyrings = CocoaPodsKeys::KeyringLiberator.get_all_keyrings
           all_keyrings.each do |keyring|
             display_keyring(keyring) if !this_keyring || keyring.path != this_keyring.path

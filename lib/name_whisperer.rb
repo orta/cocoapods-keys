@@ -21,12 +21,13 @@ module CocoaPodsKeys
 
     def self.search_folders_for_xcodeproj
       ui = Pod::UserInterface
-      xcodeprojects = Pathname.glob('**/*.xcodeproj').reject { |path| path.to_s.end_with?('Pods/Pods.xcodeproj') }
+      xcodeprojects = Pathname.glob('**/*.xcodeproj').reject { |path| path.to_s.start_with?('Pods/') }
       if xcodeprojects.length == 1
         Pathname(xcodeprojects.first).basename('.xcodeproj')
       else
         error_message = (xcodeprojects.length > 1) ? 'found too many' : "couldn't find any"
-        ui.puts 'CocoaPods-Keys ' + error_message + ' Xcode projects. Please give a name for this project.'
+        projects = xcodeprojects.map(&:basename).join(' ')
+        ui.puts 'CocoaPods-Keys ' + error_message + ' Xcode projects (' + projects + '). Please give a name for this project.'
 
         answer = ''
         loop do
