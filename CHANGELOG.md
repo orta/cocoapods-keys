@@ -1,5 +1,9 @@
 ## Master
 
+## 1.5.1
+
+* Support .env files [x2on]
+
 ## 1.5.0
 
 * Minor error handling improvements [orta]
