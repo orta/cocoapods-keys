@@ -11,11 +11,13 @@ module CocoaPodsKeys
       require 'keyring_liberator'
       require 'pod/command/keys/set'
       require 'cocoapods/user_interface'
+      require 'dotenv'
 
       ui = Pod::UserInterface
 
       options = @user_options || {}
       current_dir = Pathname.pwd
+      Dotenv.load
       project = options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
 
       keyring = KeyringLiberator.get_current_keyring(project, current_dir)
