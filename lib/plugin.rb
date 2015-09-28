@@ -42,11 +42,10 @@ module CocoaPodsKeys
       add_keys_to_pods(keys_path.relative_path_from(installation_root), user_options)
 
       # Remove the shared scheme for this pod
-      Pod::HooksManager.register('cocoapods-keys', :post_install) do |context, user_options|
-        shared_scheme_path = "Pods/Pods.xcodeproj/xcshareddata/xcschemes/Keys.xcscheme"
+      Pod::HooksManager.register('cocoapods-keys', :post_install) do
+        shared_scheme_path = 'Pods/Pods.xcodeproj/xcshareddata/xcschemes/Keys.xcscheme'
         FileUtils.rm(shared_scheme_path) if File.exist?(shared_scheme_path)
       end
-
     end
 
     def add_keys_to_pods(keys_path, options)
