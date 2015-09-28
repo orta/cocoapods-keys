@@ -104,6 +104,10 @@ CocoaPods-keys has 3 other commands:
  * `pod keys generate [optional project]`
    Will generate the obfuscated Objective-C keys class (mainly used internally).
 
+#### Continuous Integration
+
+It's rarely a good idea to mess around with the keychain in your CI, so keys will look for an environment var with the same string before looking in the keychain.
+
 #### Security
 
 Key security is difficult. Right now even the biggest apps get their keys [leaked](https://threatpost.com/twitter-oauth-api-keys-leaked-030713/77597). This is neatly summed up by John Adams of the Twitter Security Team on [Quora](http://www.quora.com/Twitter-1/How-were-the-Twitter-iPhone-and-Android-OAuth-keys-leaked).
