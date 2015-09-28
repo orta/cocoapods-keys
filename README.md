@@ -106,7 +106,7 @@ CocoaPods-keys has 3 other commands:
 
 #### Continuous Integration
 
-It's rarely a good idea to mess around with the keychain in your CI, so keys will look for an environment var with the same string before looking in the keychain.
+It's rarely a good idea to mess around with the keychain in your CI, so keys will look for an environment var with the same string before looking in the keychain. Also you could create a `.env` file in your project folder.
 
 #### Security
 
