@@ -47,7 +47,9 @@ module CocoaPodsKeys
 
     def self.save_keyring(keyring)
       keys_dir.mkpath
-      prompt_if_already_existing(keyring)
+      if !ENV['TRAVIS'] && !ENV['TEAMCITY_VERSION']
+        prompt_if_already_existing(keyring)
+      end
       yaml_path_for_path(keyring.path).open('w') { |f| f.write(YAML.dump(keyring.to_hash)) }
     end
 
