@@ -23,7 +23,9 @@ module CocoaPodsKeys
       keyring = KeyringLiberator.get_current_keyring(project, current_dir)
 
       unless keyring
-        check_for_multiple_keyrings(project, current_dir)
+        if !ENV['TRAVIS'] && !ENV['TEAMCITY_VERSION'] && !ENV['CIRCLECI']
+          check_for_multiple_keyrings(project, current_dir)
+        end
       end
 
       existing_keyring = !keyring.nil?
