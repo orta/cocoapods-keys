@@ -1,5 +1,10 @@
 ## Master
 
+## 1.5.2
+
+* Don't ask for input in CI [x2on]
+* Fix for first run crash [segiddins]
+
 ## 1.5.1
 
 * Support .env files [x2on]
