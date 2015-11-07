@@ -1,5 +1,7 @@
 ## Master
 
+* Adds `export` command to export keys in consumable way [ashfurrow]
+
 ## 1.5.2
 
 * Don't ask for input in CI [x2on]
