@@ -1,5 +1,7 @@
 ## Master
 
+## 1.6.0
+
 * Adds `export` command to export keys in consumable way [ashfurrow]
 
 ## 1.5.2
