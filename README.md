@@ -99,7 +99,10 @@ CocoaPods-keys has 3 other commands:
    Which will output the value of the key to STDOUT, useful for scripting.
 
  * `pod keys rm [key] [optional project]`
-   Will remove a key from a project.
+   Will remove a key from a project.  
+
+   If Wildcards are included, it will remove the keys matching the pattern. E.g.: `pod keys rm "G*og*"` will remove *all* the keys that begin with 'G', have 'og' in the middle and end with anything.  
+	To nuke all the keys, run either `pod keys rm "*"` or `pod keys rm --all`
 
  * `pod keys generate [optional project]`
    Will generate the obfuscated Objective-C keys class (mainly used internally).
