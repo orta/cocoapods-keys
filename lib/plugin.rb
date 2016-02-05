@@ -6,6 +6,11 @@ module CocoaPodsKeys
   class << self
     include FileUtils
 
+    # Register for the pre-install hooks to setup & run Keys
+    Pod::HooksManager.register('cocoapods-keys', :pre_install) do
+      CocoaPodsKeys.setup
+    end
+
     def setup
       require 'preinstaller'
 
@@ -86,21 +91,6 @@ module CocoaPodsKeys
       # Until CocoaPods provides a HashWithIndifferentAccess, normalize the hash keys here.
       # See https://github.com/CocoaPods/CocoaPods/issues/3354
       options.with_indifferent_access
-    end
-  end
-end
-
-module Pod
-  class Installer
-    alias_method :install_before_cocoapods_keys!, :install!
-
-    def install!
-      CocoaPodsKeys.setup if validates_for_keys
-      install_before_cocoapods_keys!
-    end
-
-    def validates_for_keys
-      podfile && podfile.plugins && !podfile.plugins['cocoapods-keys'].nil?
     end
   end
 end

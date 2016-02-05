@@ -2,6 +2,10 @@
 
 ## 1.6.0
 
+* Uses CocoaPods 0.37's pre-install plugins hooks, fixes issues with migrations to 1.0
+
+## 1.6.0
+
 * Adds `export` command to export keys in consumable way [ashfurrow]
 
 ## 1.5.2
