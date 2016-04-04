@@ -31,7 +31,7 @@ module Pod
           data = keyring.keychain_data
           data.each_with_index do |(key, value), index|
             prefix = (index == data.length - 1) ? ' └ ' : ' ├ '
-            UI.puts prefix + " #{key} - #{ value}"
+            UI.puts prefix + " #{key} - #{value}"
           end
           UI.puts
         end

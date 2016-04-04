@@ -37,11 +37,6 @@ SingleLineBlockParams:
 Encoding:
   Enabled: false
 
-# Having these make it easier to *not* forget to add one when adding a new
-# value and you can simply copy the previous line.
-TrailingComma:
-  EnforcedStyleForMultiline: comma
-
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
 

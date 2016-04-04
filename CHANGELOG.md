@@ -1,8 +1,8 @@
 ## Master
 
-## 1.6.0
+## 1.6.1
 
-* Uses CocoaPods 0.37's pre-install plugins hooks, fixes issues with migrations to 1.0
+* Uses CocoaPods 0.37's pre-install plugins hooks, this fixes issues with migrations to 1.0 [orta]
 
 ## 1.6.0
 
