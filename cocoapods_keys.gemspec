@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Orta Therox", 'Samuel E. Giddins']
   spec.email         = ["orta.therox@gmail.com", 'segiddins@segiddins.me']
   spec.description   = %q{A key value store for environment settings in Cocoa Apps.}
-  spec.summary       = %q{CocoaPods Keys will store sensitive data in your Mac's keychain. Then on running pod install they will be installed into your app's source code via the Pods library.}
-  spec.homepage      = "https://github.com/cocoapods/cocoapods-keys"
+  spec.summary       = %q{CocoaPods Keys will store sensitive data in your Mac's keychain. Then on running `pod install` they will be installed into your app's source code by creating a Development Pod.}
+  spec.homepage      = "https://github.com/orta/cocoapods-keys"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,6 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "osx_keychain"
   spec.add_runtime_dependency "dotenv"
+  # spec.add_runtime_dependency "cocoapods", "> 1"
+
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"

@@ -43,7 +43,7 @@ module CocoaPodsKeys
           loop do
             ui.print ' > '
             answer = ui.gets.strip
-            break if answer.length > 0
+            break unless answer.empty?
           end
 
           ui.puts

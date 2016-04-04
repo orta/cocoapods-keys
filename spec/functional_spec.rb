@@ -10,6 +10,8 @@ describe 'CocoaPodsKeys functional tests' do
       File.open('Podfile', 'w') do |podfile|
         podfile.puts <<-PODFILE
           platform :ios, '7'
+          install! 'cocoapods', :integrate_targets => false
+
           plugin 'cocoapods-keys', {
               :project => 'TestProject',
               :keys => [
@@ -25,7 +27,7 @@ describe 'CocoaPodsKeys functional tests' do
       system('pod keys set KeyWithData such-data --silent')
       system('pod keys set AnotherKeyWithData other-data --silent')
       system('pod keys set UnusedKey - --silent')
-      system('pod install --silent --no-repo-update --no-integrate')
+      system('pod install --silent')
     end
   end
 

@@ -33,10 +33,13 @@ module CocoaPodsKeys
         loop do
           ui.print ' > '
           answer = ui.gets.strip
-          break if answer.length > 0
+          break unless answer.empty?
         end
         answer
       end
     end
+
+    private_class_method :xcodeproj_from_podfile
+    private_class_method :search_folders_for_xcodeproj
   end
 end

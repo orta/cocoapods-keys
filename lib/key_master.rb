@@ -11,7 +11,7 @@ module CocoaPodsKeys
       @time = time
       @keys = keyring.camel_cased_keys
       @name = keyring.code_name.capitalize + 'Keys'
-      if /^\d/.match(@name)
+      if /^\d/ =~ @name
         @name = '_' + @name
       end
 

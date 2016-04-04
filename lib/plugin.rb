@@ -6,10 +6,15 @@ module CocoaPodsKeys
   class << self
     include FileUtils
 
-    def setup
+    # Register for the pre-install hooks to setup & run Keys
+    Pod::HooksManager.register('cocoapods-keys', :pre_install) do |context, options|
+      CocoaPodsKeys.setup(context.podfile, options)
+    end
+
+    def setup(podfile, options)
       require 'preinstaller'
 
-      unless PreInstaller.new(user_options).setup
+      unless PreInstaller.new(options).setup
         raise Pod::Informative, 'Could not load key data'
       end
 
@@ -22,7 +27,7 @@ module CocoaPodsKeys
       cp podspec_path, keys_path
 
       # Get all the keys
-      local_user_options = user_options || {}
+      local_user_options = options || {}
       project = local_user_options.fetch('project') { CocoaPodsKeys::NameWhisperer.get_project_name }
 
       keyring = KeyringLiberator.get_current_keyring(project, Dir.getwd) ||
@@ -39,7 +44,7 @@ module CocoaPodsKeys
       File.write(implementation_file, key_master.implementation)
 
       # Add our template podspec
-      add_keys_to_pods(keys_path.relative_path_from(installation_root), user_options)
+      add_keys_to_pods(podfile, keys_path.relative_path_from(installation_root), options)
 
       # Remove the shared scheme for this pod
       Pod::HooksManager.register('cocoapods-keys', :post_install) do
@@ -48,7 +53,7 @@ module CocoaPodsKeys
       end
     end
 
-    def add_keys_to_pods(keys_path, options)
+    def add_keys_to_pods(podfile, keys_path, options)
       keys_targets = options['target'] || options['targets']
 
       if keys_targets
@@ -73,34 +78,6 @@ module CocoaPodsKeys
         # otherwise let it go in global
         podfile.pod 'Keys', :path => keys_path.to_path
       end
-    end
-
-    private
-
-    def podfile
-      Pod::Config.instance.podfile
-    end
-
-    def user_options
-      options = podfile.plugins['cocoapods-keys']
-      # Until CocoaPods provides a HashWithIndifferentAccess, normalize the hash keys here.
-      # See https://github.com/CocoaPods/CocoaPods/issues/3354
-      options.with_indifferent_access
-    end
-  end
-end
-
-module Pod
-  class Installer
-    alias_method :install_before_cocoapods_keys!, :install!
-
-    def install!
-      CocoaPodsKeys.setup if validates_for_keys
-      install_before_cocoapods_keys!
-    end
-
-    def validates_for_keys
-      podfile && podfile.plugins && !podfile.plugins['cocoapods-keys'].nil?
     end
   end
 end

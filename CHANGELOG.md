@@ -1,5 +1,9 @@
 ## Master
 
+## 1.6.1
+
+* Uses CocoaPods 0.37's pre-install plugins hooks, this fixes issues with migrations to 1.0 [orta]
+
 ## 1.6.0
 
 * Adds `export` command to export keys in consumable way [ashfurrow]
