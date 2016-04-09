@@ -9,7 +9,7 @@ module Pod
       require 'pod/command/keys/rm'
       require 'pod/command/keys/export'
 
-      self.summary = 'A key value store for environment settings in Cocoa Apps.'
+      self.summary = 'A key value store for environment settings in Cocoa Apps'
 
       self.description = <<-DESC
         CocoaPods Keys will store sensitive data in your Mac's keychain. Then on running pod install they will be installed into your app's source code via the Pods library.
