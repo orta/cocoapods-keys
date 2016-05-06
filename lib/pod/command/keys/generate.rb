@@ -1,5 +1,6 @@
 require 'keyring_liberator'
 require 'key_master'
+require 'dotenv'
 
 module Pod
   class Command
@@ -12,14 +13,17 @@ module Pod
         DESC
 
         def run
-          installation_root = Pod::Config.instance.installation_root
-          keys_path = installation_root.+('Pods/CocoaPodsKeys/')
-      
-          # List all settings for current app
+          
+          Dotenv.load
           keyring = get_current_keyring
+        
           if keyring
-            
+           
             # Create the h & m files in the same folder as the podspec
+            
+            installation_root = Pod::Config.instance.installation_root
+            keys_path = installation_root.+('Pods/CocoaPodsKeys/')
+          
             key_master = CocoaPodsKeys::KeyMaster.new(keyring)
             interface_file = keys_path + (key_master.name + '.h')
             implementation_file = keys_path + (key_master.name + '.m')
