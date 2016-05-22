@@ -31,6 +31,15 @@ module CocoaPodsKeys
 
       has_shown_intro = false
       keys = options.fetch('keys', [])
+      
+      # Remove keys from the keyring that no longer exist
+      original_keyring_keys = keyring.keys.clone
+      original_keyring_keys.each do |key|
+        keyring.keychain_has_key?(key)
+      end
+      
+      # Add keys to the keyring that have been added,
+      # and prompt for their value if needed.
       keys.each do |key|
         unless keyring.keychain_has_key?(key)
           unless has_shown_intro
