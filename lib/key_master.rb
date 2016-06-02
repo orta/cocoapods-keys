@@ -28,8 +28,7 @@ module CocoaPodsKeys
       verify_keychain_integrity
 
       # Generate a base64 hash string that is ~25 times the length of all keys
-      keys_length = @keys.values.map(&:length).reduce(:+) || 0
-      @data_length = keys_length * (20 + rand(10))
+      @data_length = @keys.values.map(&:length).reduce(0, :+) * (20 + rand(10))
       data = SecureRandom.base64(@data_length)
       data += '\\"'
       @data_length = data.length
