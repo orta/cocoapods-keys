@@ -1,5 +1,9 @@
 ## Master
 
+## 1.7.0
+
+* Fixes undefined method '*' for nil:NilClass issue on first run [rpassis]
+
 ## 1.6.1
 
 * Uses CocoaPods 0.37's pre-install plugins hooks, this fixes issues with migrations to 1.0 [orta]

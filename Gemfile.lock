@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-keys (1.6.1)
+    cocoapods-keys (1.7.0)
       dotenv
       osx_keychain
 
@@ -110,4 +110,4 @@ DEPENDENCIES
   rubocop
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
