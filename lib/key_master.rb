@@ -10,7 +10,7 @@ module CocoaPodsKeys
     def initialize(keyring, time = Time.now)
       @time = time
       @keys = keyring.camel_cased_keys
-      @name = keyring.code_name.capitalize + 'Keys'
+      @name = keyring.code_name + 'Keys'
       if /^\d/ =~ @name
         @name = '_' + @name
       end
