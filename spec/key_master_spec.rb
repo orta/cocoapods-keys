@@ -34,8 +34,23 @@ describe CocoaPodsKeys::KeyMaster do
       key_master = KeyMaster.new(keyring)
       expect(key_master.name).to eq('_500pxKeys')
     end
+
     it 'takes keyring with proper name returns proper Keys file' do
       keyring = Keyring.new('Artsy', '/', ['ARMyKey'])
+      keyring.instance_variable_set(:@keychain, FakeKeychain.new('ARMyKey' => 'secretkey'))
+      key_master = KeyMaster.new(keyring)
+      expect(key_master.name).to eq('ArtsyKeys')
+    end
+
+    it 'takes keyring with multiple words returns proper Keys file' do
+      keyring = Keyring.new('ArtsyExample', '/', ['ARMyKey'])
+      keyring.instance_variable_set(:@keychain, FakeKeychain.new('ARMyKey' => 'secretkey'))
+      key_master = KeyMaster.new(keyring)
+      expect(key_master.name).to eq('ArtsyExampleKeys')
+    end
+
+    it 'takes keyring with lowercase name returns proper Keys file' do
+      keyring = Keyring.new('artsy', '/', ['ARMyKey'])
       keyring.instance_variable_set(:@keychain, FakeKeychain.new('ARMyKey' => 'secretkey'))
       key_master = KeyMaster.new(keyring)
       expect(key_master.name).to eq('ArtsyKeys')
