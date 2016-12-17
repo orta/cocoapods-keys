@@ -1,4 +1,4 @@
-# Using Cocoapods-Keys in Swift projects
+# Using CocoaPods-Keys in Swift projects
 
 Once you've followed the setup instructions described in the [Usage](README.md#usage)
 section of the README, you have two choices.
