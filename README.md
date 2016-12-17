@@ -22,7 +22,7 @@ The generated Objective-C classes are stored in the `Pods/CocoaPodsKeys` directo
 
 Using the new Plugin API in CocoaPods we can automate a lot of the fiddly bits away. You define what keys you want inside your [Podfile](https://github.com/artsy/eidolon/blob/0a9f5947914eb637fd4abf364fa3532b56da3c52/Podfile#L6-L21) and Keys will detect what keys are not yet set. If you need to specify a different project name from the target name, use the key `:target` to specify it.
 
-```
+```ruby
 plugin 'cocoapods-keys', {
   :project => "Eidolon",
   :keys => [
