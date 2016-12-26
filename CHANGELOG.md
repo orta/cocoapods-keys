@@ -1,5 +1,10 @@
 ## Master
 
+## 1.8.0
+
+* Handles casing correctly in genrated key names [marcelofabri] 
+* Adds Nullability notations to default erb template [Skogetroll]
+
 ## 1.7.0
 
 * Fixes undefined method '*' for nil:NilClass issue on first run [rpassis]
