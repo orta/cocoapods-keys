@@ -12,7 +12,6 @@
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
 
 @implementation <%= @name %>
-
 <% @keys.each do |key, value| %>
   @dynamic <%= key %>;<% end %>
 
