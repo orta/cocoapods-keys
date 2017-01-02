@@ -42,6 +42,10 @@ module CocoaPodsKeys
       # and prompt for their value if needed.
       keys.each do |key|
         unless keyring.keychain_has_key?(key)
+          if ENV['CI']
+            raise Informative, "CocoaPods-Keys could not find a key named: #{key}"
+          end
+
           unless has_shown_intro
             ui.puts "\n CocoaPods-Keys has detected a keys mismatch for your setup."
             has_shown_intro = true
