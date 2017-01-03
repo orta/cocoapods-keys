@@ -6,7 +6,7 @@ Its good security practice to keep production keys out of developer hands. Cocoa
 
 ## Requirements
 
-Requires CocoaPods 0.36
+Requires CocoaPods 0.36+
 
 ## Installation
 
@@ -111,6 +111,10 @@ CocoaPods-keys has 3 other commands:
 
 It's rarely a good idea to mess around with the keychain in your CI, so keys will look for an environment var with the same string before looking in the keychain. Also you could create a `.env` file in your project folder.
 
+#### Maintainance State
+
+CocoaPods Keys is effectively "done" software from Artsy's perspective. It has done everything we've needed for years. So, I wouldn't recommend making issues requesting new features, simply because we won't be building them ourselves. We'll definitely continue making sure it works etc though, we use it in production.
+
 #### Security
 
 Key security is difficult. Right now even the biggest apps get their keys [leaked](https://threatpost.com/twitter-oauth-api-keys-leaked-030713/77597). This is neatly summed up by John Adams of the Twitter Security Team on [Quora](http://www.quora.com/Twitter-1/How-were-the-Twitter-iPhone-and-Android-OAuth-keys-leaked).
@@ -125,4 +129,4 @@ So in summary, the ideal way to store keys is to not store keys. In reality thou
 
 #### Thanks
 
-This was built with a lot of help from [@segiddins](https://github.com/segiddins) and [@ashfurrow](http://github.com/ashfurrow).
+This was built with a lot of help from [@segiddins](https://github.com/segiddins), [@ashfurrow](http://github.com/ashfurrow) and [@marcelofabri](https://github.com/marcelofabri).
