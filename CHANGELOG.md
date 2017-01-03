@@ -1,5 +1,7 @@
 ## Master
 
+* Don't ask for keys on the command line when running on CI. [dantoml]
+
 ## 1.7.0
 
 * Fixes undefined method '*' for nil:NilClass issue on first run [rpassis]
