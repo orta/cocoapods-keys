@@ -1,9 +1,11 @@
 ## Master
 
-## 1.8.0
+## 2.0.0
 
-* Handles casing correctly in genrated key names [marcelofabri] 
+* Handles casing correctly in generated key names [breaking] [marcelofabri] 
 * Adds Nullability notations to default erb template [Skogetroll]
+* Use properties for accessing key values instead of functions [breaking, for swift] [Skogetroll]
+* Don't ask for keys on the command line when running on CI. [dantoml]
 
 ## 1.7.0
 
