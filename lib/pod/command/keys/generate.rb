@@ -12,6 +12,17 @@ module Pod
           Generates the obfuscated Objective-C h/m files using the current key values.
         DESC
 
+        def self.options
+          [
+            ['--output-directory=/output/dir', 'Allows override of .h/.m file output']
+          ].concat(super)
+        end
+
+        def initialize(argv)
+          @output_directory = argv.option('output-directory')
+          super
+        end
+
         def run
           Dotenv.load
           keyring = get_current_keyring
@@ -21,7 +32,7 @@ module Pod
             # Create the h & m files in the same folder as the podspec
 
             installation_root = Pod::Config.instance.installation_root
-            keys_path = installation_root.+('Pods/CocoaPodsKeys/')
+            keys_path = @output_directory || installation_root.+('Pods/CocoaPodsKeys/')
 
             key_master = CocoaPodsKeys::KeyMaster.new(keyring)
             interface_file = keys_path + (key_master.name + '.h')
