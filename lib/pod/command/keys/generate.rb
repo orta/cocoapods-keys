@@ -10,7 +10,16 @@ module Pod
 
         self.description = <<-DESC
           Generates the obfuscated Objective-C h/m files using the current key values.
+
+          An optional operator can be done to force a project name.
         DESC
+
+        self.arguments = [CLAide::Argument.new('project_name', false)]
+
+        def initialize(argv)
+          @project_name = argv.shift_argument
+          super
+        end
 
         def run
           Dotenv.load
