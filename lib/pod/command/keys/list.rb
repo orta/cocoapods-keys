@@ -30,7 +30,7 @@ module Pod
           UI.puts "Keys for #{keyring.name}"
           data = keyring.keychain_data
           data.each_with_index do |(key, value), index|
-            prefix = (index == data.length - 1) ? ' └ ' : ' ├ '
+            prefix = index == data.length - 1 ? ' └ ' : ' ├ '
             UI.puts prefix + " #{key} - #{value}"
           end
           UI.puts

@@ -8,3 +8,7 @@ Style/FileName:
   Exclude:
     - bin/*
     - Rakefile
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

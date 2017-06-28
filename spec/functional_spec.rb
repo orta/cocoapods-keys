@@ -53,10 +53,10 @@ describe 'CocoaPodsKeys functional tests' do
 
   it 'is able to export the correct keys from the command-line' do
     Dir.chdir(@tmpdir) do
-      exported_keys = <<-EOS
-pod keys set KeyWithData "such-data" TestProject
-pod keys set AnotherKeyWithData "other-data" TestProject
-pod keys set UnusedKey "-" TestProject
+      exported_keys = <<-EOS.strip_heredoc
+  pod keys set KeyWithData "such-data" TestProject
+  pod keys set AnotherKeyWithData "other-data" TestProject
+  pod keys set UnusedKey "-" TestProject
 EOS
       expect(`pod keys export`.strip).to eq(exported_keys.strip)
     end
