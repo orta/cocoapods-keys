@@ -38,7 +38,9 @@ module Pod
 
         def display_keyring(keyring)
           UI.puts "#{keyring.name} - #{keyring.path}"
-          if keyring.keys.length == 1
+          if keyring.keys.empty?
+            # Skip
+          elsif keyring.keys.length == 1
             UI.puts ' └ ' + keyring.keys[0]
           else
             UI.puts ' └ ' + keyring.keys[0...-1].join(' ') + ' & ' + keyring.keys[-1]
