@@ -37,7 +37,7 @@ SingleLineBlockParams:
 Encoding:
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
 # Clashes with CLAide Command#validate!

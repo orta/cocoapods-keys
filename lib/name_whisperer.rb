@@ -25,7 +25,7 @@ module CocoaPodsKeys
       if xcodeprojects.length == 1
         Pathname(xcodeprojects.first).basename('.xcodeproj')
       else
-        error_message = (xcodeprojects.length > 1) ? 'found too many' : "couldn't find any"
+        error_message = xcodeprojects.length > 1 ? 'found too many' : "couldn't find any"
         projects = xcodeprojects.map(&:basename).join(' ')
         ui.puts 'CocoaPods-Keys ' + error_message + ' Xcode projects (' + projects + '). Please give a name for this project.'
 

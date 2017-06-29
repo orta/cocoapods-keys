@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'cocoapods', '1.0.0.beta.6'
+gem 'activesupport', '< 5'

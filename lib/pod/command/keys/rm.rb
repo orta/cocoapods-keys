@@ -81,9 +81,9 @@ module Pod
 
         def matches(keys)
           if @key_name.include? '*'
-            return keys.select { |e| e =~ create_regex(@key_name) }
+            keys.select { |e| e =~ create_regex(@key_name) }
           else
-            return keys.select { |e| e == @key_name }
+            keys.select { |e| e == @key_name }
           end
         end
 
