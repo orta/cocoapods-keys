@@ -12,3 +12,8 @@ Style/FileName:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+#- cocoapods-keys support for Ruby 2.0.0 -------------------------------------#
+
+Security/YAMLLoad:
+  Enabled: false

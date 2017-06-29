@@ -114,6 +114,3 @@ DEPENDENCIES
   rake
   rspec
   rubocop
-
-BUNDLED WITH
-   1.15.1
