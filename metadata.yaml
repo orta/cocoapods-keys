@@ -1,0 +1,11 @@
+service:     "CocoaPods-iOS-keys"
+usecase:     "AutoScout24-ios-application-dependency"
+segment:     "coreexperience"
+vertical:    "as24"
+owner:       "iosteam@scout24.com"
+team:        "MobileApps-CxP-iOS"
+criticality: “silver”
+confidentiality: "company-internal"
+integrity: "critical"
+availability: "critical"
+data_protection_relevant: yes
