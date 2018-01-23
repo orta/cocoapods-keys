@@ -42,7 +42,7 @@ module CocoaPodsKeys
       # and prompt for their value if needed.
       keys.each do |key|
         unless keyring.keychain_has_key?(key)
-          if ENV['CI']
+          if ci?
             raise Pod::Informative, "CocoaPods-Keys could not find a key named: #{key}"
           end
 
@@ -71,7 +71,7 @@ module CocoaPodsKeys
     end
 
     def check_for_multiple_keyrings(project, current_dir)
-      if !ENV['TRAVIS'] && !ENV['TEAMCITY_VERSION'] && !ENV['CIRCLECI']
+      unless ci?
         ui = Pod::UserInterface
         keyrings = KeyringLiberator.get_all_keyrings_named(project)
         if keyrings.count > 1
@@ -84,6 +84,13 @@ module CocoaPodsKeys
           ui.gets
         end
       end
+    end
+
+    def ci?
+      %w([JENKINS_HOME TRAVIS CIRCLECI CI TEAMCITY_VERSION GO_PIPELINE_NAME bamboo_buildKey GITLAB_CI XCS]).each do |current|
+        return true if ENV.key?(current)
+      end
+      false
     end
   end
 end
