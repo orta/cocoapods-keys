@@ -1,5 +1,9 @@
 ## Master
 
+## 2.0.1
+
+* Handles more CI types [m-ruhl] 
+
 ## 2.0.0
 
 * Handles casing correctly in generated key names [breaking] [marcelofabri] 
