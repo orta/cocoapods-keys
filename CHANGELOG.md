@@ -1,5 +1,9 @@
 ## Master
 
+## 2.0.2
+
+* Sets a minimum iOS target of 8.0 [orta] 
+
 ## 2.0.1
 
 * Handles more CI types [m-ruhl] 
