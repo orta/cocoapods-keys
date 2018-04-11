@@ -18,10 +18,10 @@
     "tag": "23"
   },
   "platforms": {
-    "ios": "8.0",
-    "osx": "10.10",
-    "watchos": "8.3",
-    "tvos": "8.3"
+    "ios": "5.0",
+    "osx": "10.7",
+    "watchos": "2.0",
+    "tvos": "9.0"
   },
   "source_files": "*.{h,m,swift}",
   "frameworks": "Foundation",
