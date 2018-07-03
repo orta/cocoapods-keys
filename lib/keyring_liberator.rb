@@ -68,7 +68,7 @@ module CocoaPodsKeys
 
     private_class_method :get_keyring_at_path
 
-    def ci?
+    def self.ci?
       %w([JENKINS_HOME TRAVIS CIRCLECI CI TEAMCITY_VERSION GO_PIPELINE_NAME bamboo_buildKey GITLAB_CI XCS]).each do |current|
         return true if ENV.key?(current)
       end
