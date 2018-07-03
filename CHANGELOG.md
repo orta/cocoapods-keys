@@ -1,5 +1,13 @@
 ## Master
 
+## 2.0.4
+
+* Handles more CIs [SlaunchaMan]
+
+## 2.0.3
+
+??
+
 ## 2.0.2
 
 * Sets a minimum iOS target of 8.0 [orta] 
