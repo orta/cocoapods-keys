@@ -47,7 +47,7 @@ module CocoaPodsKeys
 
     def self.save_keyring(keyring)
       keys_dir.mkpath
-      if !ENV['TRAVIS'] && !ENV['TEAMCITY_VERSION'] && !ENV['CIRCLECI']
+      if ci?
         prompt_if_already_existing(keyring)
       end
       yaml_path_for_path(keyring.path).open('w') { |f| f.write(YAML.dump(keyring.to_hash)) }
@@ -67,5 +67,12 @@ module CocoaPodsKeys
     end
 
     private_class_method :get_keyring_at_path
+
+    def self.ci?
+      %w([JENKINS_HOME TRAVIS CIRCLECI CI TEAMCITY_VERSION GO_PIPELINE_NAME bamboo_buildKey GITLAB_CI XCS]).each do |current|
+        return true if ENV.key?(current)
+      end
+      false
+    end
   end
 end
