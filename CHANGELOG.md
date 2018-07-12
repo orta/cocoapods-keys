@@ -1,6 +1,6 @@
 ## Master
 
-## 2.0.4
+## 2.0.4 - 2.0.5
 
 * Handles more CIs [SlaunchaMan]
 
