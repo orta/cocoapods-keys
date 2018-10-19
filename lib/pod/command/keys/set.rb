@@ -40,6 +40,7 @@ module Pod
 
           keyring = get_current_keyring || create_keyring
           keyring.keys << @key_name.tr('-', '_')
+          keyring.keys.uniq!
           CocoaPodsKeys::KeyringLiberator.save_keyring keyring
 
           keyring.save @key_name, @key_value
