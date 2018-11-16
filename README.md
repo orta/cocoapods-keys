@@ -42,23 +42,23 @@ Then running `pod install` will prompt for the keys not yet set and you can ensu
 
 You can save keys on a per-project basis by running the command:
 
-    $ pod keys set KEY VALUE
+    $ bundle exec pod keys set KEY VALUE
 
 You can list all known keys by running:
 
-    $ pod keys
+    $ bundle exec pod keys
 
 For example:
 
 ``` sh
   $ cd MyApplication
-  $ pod keys set "NetworkAPIToken" "AH2ZMiraGQbyUd9GkNTNfWEdxlwXcmHciEOH"
+  $ bundle exec pod keys set "NetworkAPIToken" "AH2ZMiraGQbyUd9GkNTNfWEdxlwXcmHciEOH"
   Saved NetworkAPIToken to MyApplication.
 
-  $ pod keys set "AnalyticsToken" "6TYKGVCn7sBSBFpwfSUCclzDoSBtEXw7"
+  $ bundle exec pod keys set "AnalyticsToken" "6TYKGVCn7sBSBFpwfSUCclzDoSBtEXw7"
   Saved AnalyticsToken to MyApplication.
 
-  $ pod keys
+  $ bundle exec pod keys
   Keys for MyApplication
    ├  NetworkAPIToken - AH2ZMiraGQbyUd9GkNTNfWEdxlwXcmHciEOH
    └  AnalyticsToken - 6TYKGVCn7sBSBFpwfSUCclzDoSBtEXw7
@@ -95,16 +95,16 @@ Some documentation is also available to [use cocoapods-keys in Swift projects](S
 
 CocoaPods-keys has 3 other commands:
 
- * `pod keys get [key] [optional project]`
+ * `bundle exec pod keys get [key] [optional project]`
    Which will output the value of the key to STDOUT, useful for scripting.
 
- * `pod keys rm [key] [optional project]`
-   Will remove a key from a project.  
+ * `bundle exec pod keys rm [key] [optional project]`
+   Will remove a key from a project.
 
-   If Wildcards are included, it will remove the keys matching the pattern. E.g.: `pod keys rm "G*og*"` will remove *all* the keys that begin with 'G', have 'og' in the middle and end with anything.  
-	To nuke all the keys, run either `pod keys rm "*"` or `pod keys rm --all`
+   If Wildcards are included, it will remove the keys matching the pattern. E.g.: `bundle exec pod keys rm "G*og*"` will remove *all* the keys that begin with 'G', have 'og' in the middle and end with anything.
+	To nuke all the keys, run either `bundle exec pod keys rm "*"` or `bundle exec pod keys rm --all`
 
- * `pod keys generate [optional project]`
+ * `bundle exec pod keys generate [optional project]`
    Will generate the obfuscated Objective-C keys class (mainly used internally).
 
 #### Continuous Integration
