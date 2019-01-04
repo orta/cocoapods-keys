@@ -1,5 +1,7 @@
 ## Master
 
+## 2.0.7
+
 * Fix keys not recorded in YML on first run. [ileitch]
 
 ## 2.0.6
