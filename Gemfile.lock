@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-keys (2.0.6)
+    cocoapods-keys (2.0.7)
       dotenv
       osx_keychain
 
