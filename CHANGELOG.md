@@ -1,5 +1,11 @@
 ## Master
 
+* Fix keys not recorded in YML on first run. [ileitch]
+
+## 2.0.6
+
+* Makes list of keys unique on the yaml file [leoformaggio]
+
 ## 2.0.4 - 2.0.5
 
 * Handles more CIs [SlaunchaMan]
@@ -10,15 +16,15 @@
 
 ## 2.0.2
 
-* Sets a minimum iOS target of 8.0 [orta] 
+* Sets a minimum iOS target of 8.0 [orta]
 
 ## 2.0.1
 
-* Handles more CI types [m-ruhl] 
+* Handles more CI types [m-ruhl]
 
 ## 2.0.0
 
-* Handles casing correctly in generated key names [breaking] [marcelofabri] 
+* Handles casing correctly in generated key names [breaking] [marcelofabri]
 * Adds Nullability notations to default erb template [Skogetroll]
 * Use properties for accessing key values instead of functions [breaking, for swift] [Skogetroll]
 * Don't ask for keys on the command line when running on CI. [dantoml]
