@@ -16,14 +16,19 @@ module Pod
 
         self.arguments = [CLAide::Argument.new('project_name', false)]
 
+        def self.options
+          [['--keys=key1,key2...', 'An array of keys to add if no keyring is found']].concat(super)
+        end
+
         def initialize(argv)
           @project_name = argv.shift_argument
+          @keys = argv.option('keys', '').split(',')
           super
         end
 
         def run
           Dotenv.load
-          keyring = get_current_keyring
+          keyring = get_current_keyring || CocoaPodsKeys::Keyring.new(@project_name, '/', @keys)
 
           if keyring
 
