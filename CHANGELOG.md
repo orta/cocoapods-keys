@@ -1,5 +1,7 @@
 ## Master
 
+* Add the ability to manually specify keys when running `pod keys generate`. [fwal]
+
 ## 2.0.7
 
 * Fix keys not recorded in YML on first run. [ileitch]
