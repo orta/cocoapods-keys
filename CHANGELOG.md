@@ -1,5 +1,7 @@
 ## Master
 
+## 2.1.0
+
 * Add the ability to manually specify keys when running `pod keys generate`. [fwal]
 
 ## 2.0.7
