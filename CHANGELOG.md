@@ -1,5 +1,9 @@
 ## Master
 
+## 2.2.0
+
+* Revised template which doesn't allow for secrets to appear in the binaries in modern Xcode builds. [ashfurrow]
+
 ## 2.1.0
 
 * Add the ability to manually specify keys when running `pod keys generate`. [fwal]
