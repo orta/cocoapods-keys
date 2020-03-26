@@ -84,7 +84,7 @@ module CocoaPodsKeys
     end
 
     def key_data_arrays
-      Hash[@indexed_keys.map { |key, value| [key, value.map { |i| "[" + name + "Data characterAtIndex:#{i}]" }.join(', ')] }]
+      Hash[@indexed_keys.map { |key, value| [key, value.map { |i| '[' + name + "Data characterAtIndex:#{i}]" }.join(', ')] }]
     end
   end
 end
