@@ -4,51 +4,39 @@
 // For more information see https://github.com/orta/cocoapods-keys
 //
 
-#import <objc/runtime.h>
 #import <Foundation/NSDictionary.h>
 #import "<%= @name %>.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincomplete-implementation"
+@interface <%= @name %> ()
+
+<% @keys.each do |key, value| %>@property (nonatomic, copy) NSString *<%= key %>;
+<% end %>
+
+@end
 
 @implementation <%= @name %>
-<% @keys.each do |key, value| %>
-  @dynamic <%= key %>;<% end %>
 
-#pragma clang diagnostic pop
-
-+ (BOOL)resolveInstanceMethod:(SEL)name
+- (instancetype)init
 {
-  NSString *key = NSStringFromSelector(name);
-  NSString * (*implementation)(<%= name %> *, SEL) = NULL;
-<% @keys.each do |key, value| %>
-  if ([key isEqualToString:@"<%= key %>"]) {
-    implementation = _podKeys<%= Digest::MD5.hexdigest(key) %>;
-  }
-<% end %>
-  if (!implementation) {
-    return [super resolveInstanceMethod:name];
-  }
+    if (!(self = [super init])) { return nil; }
 
-  return class_addMethod([self class], name, (IMP)implementation, "@@:");
-}
-<% @keys.each do |key, value| %>
-static NSString *_podKeys<%= Digest::MD5.hexdigest(key) %>(<%= name %> *self, SEL _cmd)
-{
-  <% if @indexed_keys.length > 0 %>
-    <% if @indexed_keys[key].length > 0 %>
-      char cString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\0' };
-    <% else %>
-      char cString[1] = { '\0' };
+    <% @keys.each do |key, value| %>
+    char <%= key %>CString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\0' };
+    _<%= key %> = <% if @indexed_keys.length > 0 %>
+        <% if @indexed_keys[key].length > 0 %>
+          [NSString stringWithCString:<%= key %>CString encoding:NSUTF8StringEncoding];
+        <% else %>
+          @"";
+        <% end %>
+      <% else %>
+        @"";
+      <% end %>
     <% end %>
-    return [NSString stringWithCString:cString encoding:NSUTF8StringEncoding];
-  <% else %>
-    return @"";
-  <% end %>
+    
+    return self;
 }
-<% end %>
 
-static char <%= name %>Data[<%= @data_length %>] = "<%= @data.gsub('\\', '\\\\\\').gsub('"', '\\"') if @data %>";
+static NSString *<%= name %>Data = @"<%= @data.gsub('\\', '\\\\\\').gsub('"', '\\"') if @data %>";
 
 - (NSString *)description
 {
