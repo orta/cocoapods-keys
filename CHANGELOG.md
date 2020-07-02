@@ -1,5 +1,9 @@
 ## Master
 
+## 2.2.1
+
+* Fixed Keys.m generation when there are empty-string keys. [rogerluan]
+
 ## 2.2.0
 
 * Revised template which doesn't allow for secrets to appear in the binaries in modern Xcode builds. [ashfurrow]
