@@ -21,7 +21,11 @@
     if (!(self = [super init])) { return nil; }
 
     <% @keys.each do |key, value| %>
-    char <%= key %>CString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\0' };
+    <% if @indexed_keys[key].length > 0 %>
+      char <%= key %>CString[<%= @indexed_keys[key].length + 1 %>] = { <%= key_data_arrays[key] %>, '\0' };
+    <% else %>
+      char <%= key %>CString[<%= @indexed_keys[key].length + 1 %>] = { '\0' };
+    <% end %>
     _<%= key %> = <% if @indexed_keys.length > 0 %>
         <% if @indexed_keys[key].length > 0 %>
           [NSString stringWithCString:<%= key %>CString encoding:NSUTF8StringEncoding];
@@ -32,7 +36,7 @@
         @"";
       <% end %>
     <% end %>
-    
+
     return self;
 }
 
