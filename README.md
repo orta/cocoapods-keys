@@ -1,4 +1,4 @@
-![Build Status](https://travis-ci.org/orta/cocoapods-keys.svg)
+[![Build Status](https://travis-ci.org/orta/cocoapods-keys.svg?branch=master)](https://travis-ci.org/orta/cocoapods-keys)
 
 A key value store for enviroment and application keys.
 
