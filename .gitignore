@@ -5,3 +5,4 @@ spec/fixtures/dump-key
 vendor
 install
 .bundle
+*.gem
