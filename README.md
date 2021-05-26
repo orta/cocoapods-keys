@@ -35,7 +35,7 @@ plugin 'cocoapods-keys', {
   ]}
 ```
 > Please do not use dash in key names ([Reason why here in this issue #197](https://github.com/orta/cocoapods-keys/issues/197)).
-<br>For example convert any key like this `WRONG-DEFINED-KEY` to `CorrectlyDefinedKey`.
+<br>For example convert any key like this `WRONGLY-DEFINED-KEY` to `CorrectlyDefinedKey`.
 
 Then running `pod install` will prompt for the keys not yet set and you can ensure everyone has the same setup.
 
