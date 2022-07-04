@@ -4,6 +4,10 @@ A key value store for enviroment and application keys.
 
 Its good security practice to keep production keys out of developer hands. CocoaPods-keys makes it easy to have per-user config settings stored securely in the developer's keychain, and not in the application source. It is a plugin that once installed will run on every `pod install` or `pod update`.
 
+## Alternatives
+
+CocoaPods Keys has had a great run since its creation in 2014, and still works perfectly fine today. If you're interested in a fresh re-think of the concept, check out https://github.com/rogerluan/arkana 
+
 ## Requirements
 
 Requires CocoaPods 0.36+
