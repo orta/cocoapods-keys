@@ -80,7 +80,7 @@ module CocoaPodsKeys
 
     def render_erb(erb_template)
       erb = (Pathname(__dir__).parent + 'templates' + erb_template).read
-      ERB.new(erb, nil, '-').result(binding)
+      ERB.new(erb, trim_mode: '-').result(binding)
     end
 
     def key_data_arrays
