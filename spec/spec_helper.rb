@@ -16,12 +16,22 @@ RSpec.configure do |c|
   c.color = true
 end
 
+class FakeKeychainItem
+  attr_accessor :password
+
+  def initialize(password)
+    @password = password
+  end
+end
+
 class FakeKeychain
   def initialize(data)
     @data = data
   end
 
-  def [](_, key)
-    @data[key]
+  def where(conditions)
+    password = @data[conditions[:account]]
+    item = FakeKeychainItem.new(password)
+    [item]
   end
 end

@@ -1,4 +1,6 @@
-require 'osx_keychain'
+require 'keychain'
+require 'base64'
+require 'json'
 
 module CocoaPodsKeys
   class Keyring
@@ -27,11 +29,17 @@ module CocoaPodsKeys
     end
 
     def keychain
-      @keychain ||= OSXKeychain.new
+      @keychain ||= Keychain.generic_passwords
     end
 
     def save(key, value)
-      keychain[self.class.keychain_prefix + name, key] = value
+      item = keychain.where(service: self.class.keychain_prefix + name, account: key).first
+      if item
+        item.password = value
+        item.save!
+      else
+        keychain_has_keykeychain.create(service: self.class.keychain_prefix + name, password: value, account: key)
+      end
     end
 
     def keychain_data
@@ -53,7 +61,7 @@ module CocoaPodsKeys
     end
 
     def keychain_value(key)
-      ENV[key] || keychain[self.class.keychain_prefix + name, key]
+      ENV[key] || keychain.where(service: self.class.keychain_prefix + name, account: key).first.password
     end
 
     def camel_cased_keys
