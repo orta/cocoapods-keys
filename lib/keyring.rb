@@ -61,7 +61,8 @@ module CocoaPodsKeys
     end
 
     def keychain_value(key)
-      ENV[key] || keychain.where(service: self.class.keychain_prefix + name, account: key).first.password
+      item = keychain.where(service: self.class.keychain_prefix + name, account: key).first
+      ENV[key] || item&.password
     end
 
     def camel_cased_keys
