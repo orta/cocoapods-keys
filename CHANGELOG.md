@@ -1,5 +1,9 @@
 ## Master
 
+## 2.3.0
+
+* Switched dependencies for the keychain, should fix m-class OS issues . [tritter]
+
 ## 2.2.1
 
 * Fixed Keys.m generation when there are empty-string keys. [rogerluan]
