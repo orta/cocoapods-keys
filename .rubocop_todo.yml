@@ -23,7 +23,7 @@ Lint/Void:
 
 # Offense count: 38
 # Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
+Layout/LineLength:
   Max: 173
 
 # Offense count: 1
@@ -31,7 +31,7 @@ Metrics/PerceivedComplexity:
   Max: 9
 
 # Offense count: 4
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # Offense count: 1

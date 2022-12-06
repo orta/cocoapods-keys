@@ -17,7 +17,7 @@ describe KeyringLiberator do
     expect(keyring.keychain_data).to eq('ARMyKey' => 'Hello')
   end
 
-  it 'looks up keys from the OSXKeychain' do
+  it 'looks up keys from Keychain Access' do
     keyring = Keyring.new('test', '/', ['ARMyKey'])
     keyring.instance_variable_set(:@keychain, FakeKeychain.new('KeychainKey' => 'abcde'))
     expect(keyring.keychain_has_key?('KeychainKey')).to be_truthy

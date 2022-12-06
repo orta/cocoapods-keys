@@ -4,5 +4,5 @@ plugin 'cocoapods-keys', {
     :keys => [
         'KeyWithData',
         'KeyWithoutData',
-    ]
+    ],
 }
