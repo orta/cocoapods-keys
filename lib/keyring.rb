@@ -38,7 +38,7 @@ module CocoaPodsKeys
         item.password = value
         item.save!
       else
-        keychain_has_keykeychain.create(service: self.class.keychain_prefix + name, password: value, account: key)
+        keychain.create(service: self.class.keychain_prefix + name, password: value, account: key)
       end
     end
 
