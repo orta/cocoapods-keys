@@ -38,7 +38,7 @@ module CocoaPodsKeys
         item.password = value
         item.save!
       else
-        keychain_has_keykeychain.create(service: self.class.keychain_prefix + name, password: value, account: key)
+        keychain.create(service: self.class.keychain_prefix + name, password: value, account: key)
       end
     end
 
@@ -61,7 +61,7 @@ module CocoaPodsKeys
     end
 
     def keychain_value(key)
-      ENV[key] || keychain.where(service: self.class.keychain_prefix + name, account: key).first.password
+      ENV[key] || keychain.where(service: self.class.keychain_prefix + name, account: key).first&.password
     end
 
     def camel_cased_keys
