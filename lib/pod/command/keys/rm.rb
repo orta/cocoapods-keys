@@ -55,7 +55,7 @@ module Pod
           matching_keys = matches(keyring.keys)
           if matching_keys.count > 0
             messages = matching_keys.map { |e| delete_key(e, keyring) }
-            raise Informative, messages.join("\n")
+            UI.puts messages.join("\n") unless config.silent?
           else
             raise Informative, "Could not find key that matched \"#{@key_name}\"."
           end
