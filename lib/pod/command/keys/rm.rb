@@ -48,6 +48,11 @@ module Pod
             raise Informative, 'Could not find a project to remove the key from.'
           end
 
+          unless keyring.keys.count > 0
+              UI.puts "Project does not have keys to remove."
+              return
+          end
+
           if @wipe_all
             @key_name = '*'
           end
