@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/orta/cocoapods-keys.svg?branch=master)](https://travis-ci.org/orta/cocoapods-keys)
 
-A key value store for enviroment and application keys.
+A key value store for environment and application keys.
 
-Its good security practice to keep production keys out of developer hands. CocoaPods-keys makes it easy to have per-user config settings stored securely in the developer's keychain, and not in the application source. It is a plugin that once installed will run on every `pod install` or `pod update`.
+It's good security practice to keep production keys out of the developer's hands. CocoaPods-keys make it easy to have per-user config settings stored securely in the developer's keychain, and not in the application source. It is a plugin that once installed will run on every `pod install` or `pod update`.
 
 ## Alternatives
 
@@ -40,7 +40,7 @@ plugin 'cocoapods-keys', {
 ```
 > Please do not use dash in key names ([Reason why here in this issue #197](https://github.com/orta/cocoapods-keys/issues/197)).
 > 
-> For example convert any key like this `WRONGLY-DEFINED-KEY` to `CorrectlyDefinedKey`.
+> For example, convert any key like this `WRONGLY-DEFINED-KEY` to `CorrectlyDefinedKey`.
 
 Then running `pod install` will prompt for the keys not yet set and you can ensure everyone has the same setup.
 
@@ -74,7 +74,7 @@ For example:
    └ redditAPIToken & mixpanelAPIToken
 ```
 
-After the next `pod install` or `pod update` keys will add a new `Keys` pod to your Pods project, supporting both static libraries and frameworks. *Note* you have to include `plugin 'cocoapods-keys'` in the Podfile for Keys to register that it should work. This provides an API to your keys from Cocoa code. For example the application code above would look like:
+After the next `pod install` or `pod update` keys will add a new `Keys` pod to your Pods project, supporting both static libraries and frameworks. *Note* You have to include `plugin 'cocoapods-keys'` in the Podfile for Keys to register that it should work. This provides an API to your keys from Cocoa code. For example, the application code above would look like:
 
 ``` objc
 
@@ -108,7 +108,7 @@ CocoaPods-keys has 3 other commands:
  * `bundle exec pod keys rm [key] [optional project]`
    Will remove a key from a project.
 
-   If Wildcards are included, it will remove the keys matching the pattern. E.g.: `bundle exec pod keys rm "G*og*"` will remove *all* the keys that begin with 'G', have 'og' in the middle and end with anything.
+   If Wildcards are included, it will remove the keys matching the pattern. E.g.: `bundle exec pod keys rm "G*og*"` will remove *all* the keys that begin with 'G', have 'og' in the middle, and end with anything.
 	To nuke all the keys, run either `bundle exec pod keys rm "*"` or `bundle exec pod keys rm --all`
 
  * `bundle exec pod keys generate [optional project]`
@@ -116,11 +116,11 @@ CocoaPods-keys has 3 other commands:
 
 #### Continuous Integration
 
-It's rarely a good idea to mess around with the keychain in your CI, so keys will look for an environment var with the same string before looking in the keychain. Also you could create a `.env` file in your project folder.
+It's rarely a good idea to mess around with the keychain in your CI, so keys will look for an environment var with the same string before looking in the keychain. Also, you could create a `.env` file in your project folder.
 
 #### Maintainance State
 
-CocoaPods Keys is effectively "done" software from Artsy's perspective. It has done everything we've needed for years. So, I wouldn't recommend making issues requesting new features, simply because we won't be building them ourselves. We'll definitely continue making sure it works etc though, we use it in production.
+CocoaPods Keys is effectively "done" software from Artsy's perspective. It has done everything we've needed for years. So, I wouldn't recommend making issues requesting new features, simply because we won't be building them ourselves. We'll definitely continue making sure it works etc. though, we use it in production.
 
 #### Security
 
@@ -128,11 +128,11 @@ Key security is difficult. Right now even the biggest apps get their keys [leake
 
 > Putting this in the context of, "should you be storing keys in software", is more appropriate. Many companies do this. It's never a good idea.
 
-> When developers do that, other developers can use debuggers and string searching commands to extract those keys from the running application. There are numerous talks on how to do that, but leave that as an exercise to the reader to find those talks.
+> When developers do that, other developers can use debuggers and string searching commands to extract those keys from the running application. There are numerous talks on how to do that, but leave that as an exercise for the reader to find those talks.
 
 > Many people believe that obfuscating these keys in code will help. It usually won't because you can just run a debugger and find the fully functional keys.
 
-So in summary, the ideal way to store keys is to not store keys. In reality though most Apps embed keys, and this does that and adds some rudimentary obfuscation to the keys. A well motivated app cracker could probably extract this within a few minutes however.
+So in summary, the ideal way to store keys is to not store keys. In reality, though most Apps embed keys, and this does that and adds some rudimentary obfuscation to the keys. A well motivated app cracker could probably extract this within a few minutes however.
 
 #### Thanks
 
