@@ -86,7 +86,7 @@ module CocoaPodsKeys
     end
 
     def ci?
-      %w([JENKINS_HOME TRAVIS CIRCLECI CI TEAMCITY_VERSION GO_PIPELINE_NAME bamboo_buildKey GITLAB_CI XCS]).each do |current|
+      %w([JENKINS_HOME TRAVIS CIRCLECI CI TEAMCITY_VERSION GO_PIPELINE_NAME bamboo_buildKey GITLAB_CI XCS TF_BUILD GITHUB_ACTIONS]).each do |current|
         return true if ENV.key?(current)
       end
       false
